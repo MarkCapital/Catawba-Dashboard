@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catawba Facilities — Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f3ef;--surface:#ffffff;--surface2:#f0efe9;--border:#e2e0d8;--text:#1a1916;--text2:#6b6a63;--text3:#9b9a93;--accent:#2a5298;--accent2:#1a3d78;--green:#1a6b45;--green-bg:#e8f5ee;--amber:#7a4f00;--amber-bg:#fef3d8;--red:#8b2020;--red-bg:#fde8e8;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+.header{background:var(--accent);color:white;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+.header-left{display:flex;align-items:center;gap:14px;}
+.header-logo{height:52px;width:auto;background:white;border-radius:6px;padding:4px 6px;}
+.header-text h1{font-size:17px;font-weight:600;letter-spacing:-0.01em;}
+.header-text p{font-size:11px;opacity:0.65;margin-top:2px;font-family:'DM Mono',monospace;}
+.header-right{font-size:11px;opacity:0.6;font-family:'DM Mono',monospace;text-align:right;}
+.quicklinks{background:var(--accent2);padding:9px 32px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.ql-label{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-right:4px;white-space:nowrap;}
+.ql-btn{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:6px;padding:5px 12px;color:white;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:500;text-decoration:none;transition:background 0.15s;cursor:pointer;white-space:nowrap;}
+.ql-btn:hover{background:rgba(255,255,255,0.2);}
+.main{max-width:1200px;margin:0 auto;padding:24px 32px 56px;}
+.section-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;margin-top:32px;}
+.section-head h2{font-size:11px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:var(--text3);white-space:nowrap;}
+.section-head .divider{flex:1;height:1px;background:var(--border);}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px;}
+.tab{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 14px;font-size:12px;font-weight:500;color:var(--text2);cursor:pointer;transition:all 0.15s;font-family:'DM Sans',sans-serif;}
+.tab:hover{border-color:var(--accent);color:var(--accent);}
+.tab.active{background:var(--accent);border-color:var(--accent);color:white;}
+.kpi-row{display:grid;gap:10px;margin-bottom:10px;}
+.kpi-row-1{grid-template-columns:repeat(6,1fr);}
+.kpi-row-2{grid-template-columns:repeat(4,1fr);}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;}
+.kpi.accent{border-left:3px solid var(--accent);}
+.kpi-label{font-size:11px;color:var(--text3);font-weight:500;letter-spacing:0.02em;margin-bottom:5px;}
+.kpi-val{font-size:23px;font-weight:600;color:var(--text);line-height:1;}
+.kpi-sub{font-size:10px;color:var(--text3);margin-top:4px;font-family:'DM Mono',monospace;}
+.charts-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.chart-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 18px 14px;}
+.chart-title{font-size:11px;font-weight:600;color:var(--text2);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:4px;}
+.chart-legend{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:10px;}
+.leg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3);}
+.leg-sq{width:9px;height:9px;border-radius:2px;flex-shrink:0;}
+.chart-wrap{position:relative;width:100%;}
+.table-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px;}
+.table-card table{width:100%;border-collapse:collapse;font-size:13px;}
+.table-card th{background:var(--surface2);padding:8px 13px;text-align:left;font-size:10px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);border-bottom:1px solid var(--border);}
+.table-card td{padding:9px 13px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:middle;}
+.table-card tr:last-child td{border-bottom:none;}
+.table-card tr.total-row td{background:var(--surface2);font-weight:600;}
+.table-card tr:hover:not(.total-row) td{background:#fafaf8;}
+.badge{display:inline-block;padding:2px 8px;border-radius:99px;font-size:10px;font-weight:600;}
+.badge-green{background:var(--green-bg);color:var(--green);}
+.badge-amber{background:var(--amber-bg);color:var(--amber);}
+.badge-red{background:var(--red-bg);color:var(--red);}
+.mono{font-family:'DM Mono',monospace;font-size:12px;}
+.footer{text-align:center;padding:22px;font-size:11px;color:var(--text3);border-top:1px solid var(--border);margin-top:40px;}
+@media(max-width:700px){.main{padding:14px 14px 40px;}.charts-row{grid-template-columns:1fr;}.kpi-row-1{grid-template-columns:repeat(3,1fr);}.header{padding:12px 16px;}.quicklinks{padding:8px 14px;}}
+
+@media print {
+  body * { visibility: hidden !important; }
+  #printArea, #printArea * { visibility: visible !important; }
+  #printArea { position: absolute; top: 0; left: 0; width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <img class="header-logo" src="data:image/png;base64,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" alt="Catawba College" />
+    <div class="header-text">
+      <h1>Catawba College — Facilities</h1>
+      <p>The Budd Group &nbsp;·&nbsp; Operations Dashboard</p>
+    </div>
+  </div>
+  <div class="header-right">Updated 5/12/26</div>
+</div>
+
+<div class="quicklinks">
+  <span class="ql-label">Quick Links</span>
+  <a class="ql-btn" href="https://assetessentials.dudesolutions.com/BuddGroupCatawbaCollege/Home/Index" target="_blank">🔧 Asset Essentials</a>
+  <a class="ql-btn" href="https://25live.collegenet.com/pro/catawba#!/home/dash" target="_blank">📅 25Live</a>
+  <a class="ql-btn" href="https://docs.google.com/spreadsheets/d/1A54u8Q-zl50lVcyWytF86MxFQlCF3Crn3NzJQrdXHM8/edit?usp=sharing" target="_blank">⏱ Overtime by Week</a>
+  <a class="ql-btn" href="https://docs.google.com/spreadsheets/d/1gjGRVk1-KqQkvQ5OBOfhJVtaL1wwfqEQm8ZBivPj8dY/edit?usp=sharing" target="_blank">📋 PR / PO Log</a>
+  <a class="ql-btn" href="https://drive.google.com/drive/folders/1lePN90OBTvKoX15KWxsyG6ZfOvasiW4q?usp=drive_link" target="_blank">✅ Approved POs</a>
+  <a class="ql-btn" href="https://docs.google.com/spreadsheets/d/1slS4AwmpMkJ3v7f-ZnYshP2ZbU_Bj9h-4LE6Vqbjxi0/edit?usp=sharing" target="_blank">👤 Open Positions</a>
+  <a class="ql-btn" href="https://drive.google.com/drive/folders/1jzFTza6v9ZFUiVFNvh_viBrqnaaRWoXu?usp=drive_link" target="_blank">📁 Processed Invoices</a>
+</div>
+
+<div class="main">
+
+  <div class="section-head">
+    <h2>Monthly snapshot</h2>
+    <div class="divider"></div>
+    <button id="printBtn" onclick="printSummary()" style="display:none;background:var(--accent);color:white;border:none;border-radius:6px;padding:6px 14px;font-size:12px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;margin-left:8px;">🖨 Print Summary</button>
+  </div>
+  <div class="tabs" id="tabRow"></div>
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+    <span style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);">Month to date</span>
+    <div style="flex:1;height:1px;background:var(--border);"></div>
+  </div>
+  <div class="kpi-row kpi-row-1" id="kpiRow1"></div>
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;margin-top:10px;" id="lastWeekRow">
+    <span style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);" id="lastWeekLabel">Last week</span>
+    <div style="flex:1;height:1px;background:var(--border);"></div>
+  </div>
+  <div class="kpi-row kpi-row-2" id="kpiRow2" style="margin-bottom:20px;"></div>
+
+  <!-- Row A: 3 charts always shown -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;">
+    <div class="chart-card">
+      <div class="chart-title">Inspections &amp; APPA score</div>
+      <div class="chart-legend">
+        <span class="leg"><span class="leg-sq" style="background:#2a5298;"></span>Inspections</span>
+        <span class="leg"><span class="leg-sq" style="background:#c0392b;"></span>Avg APPA (right)</span>
+      </div>
+      <div class="chart-wrap" style="height:200px;"><canvas id="inspChart" role="img" aria-label="Inspections and APPA score by month"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">PO Request $ by month</div>
+      <div class="chart-legend"><span class="leg"><span class="leg-sq" style="background:#1a6b45;"></span>PO $</span></div>
+      <div class="chart-wrap" style="height:200px;"><canvas id="poChart" role="img" aria-label="PO request dollars by month"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Work orders by month</div>
+      <div class="chart-legend">
+        <span class="leg"><span class="leg-sq" style="background:#2a5298;"></span>Created</span>
+        <span class="leg"><span class="leg-sq" style="background:#888780;"></span>Closed</span>
+      </div>
+      <div class="chart-wrap" style="height:200px;"><canvas id="woChart" role="img" aria-label="Work orders created vs closed"></canvas></div>
+    </div>
+  </div>
+
+  <!-- Row B: current month only — Open WOs + PM/RM + WO by Week -->
+  <div style="display:none;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;" id="chartRowB">
+    <div class="chart-card" id="openWoCard">
+      <div class="chart-title">Open WOs as of 5/12/26</div>
+      <div class="chart-legend">
+        <span class="leg"><span class="leg-sq" style="background:#c0392b;"></span>Maintenance</span>
+        <span class="leg"><span class="leg-sq" style="background:#2a5298;"></span>Housekeeping</span>
+        <span class="leg"><span class="leg-sq" style="background:#1a6b45;"></span>Grounds</span>
+      </div>
+      <div class="chart-wrap" style="height:200px;"><canvas id="openWoChart" role="img" aria-label="Open work orders by department"></canvas></div>
+    </div>
+    <div class="chart-card" id="pmRmCard">
+      <div class="chart-title">Maintenance WO type as of 5/12/26 — <span id="pmRmLabel" style="text-transform:none;letter-spacing:0;font-weight:400;color:var(--text2);"></span></div>
+      <div class="chart-legend">
+        <span class="leg"><span class="leg-sq" style="background:#2a5298;"></span>Preventive (PM)</span>
+        <span class="leg"><span class="leg-sq" style="background:#c0392b;"></span>Reactive (RM)</span>
+      </div>
+      <div class="chart-wrap" style="height:200px;"><canvas id="pmRmChart" role="img" aria-label="PM vs RM work orders"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Work orders by week — <span id="woWeekChartLabel" style="text-transform:none;letter-spacing:0;font-weight:400;color:var(--text2);"></span></div>
+      <div class="chart-legend">
+        <span class="leg"><span class="leg-sq" style="background:#2a5298;"></span>Created</span>
+        <span class="leg"><span class="leg-sq" style="background:#888780;"></span>Closed</span>
+      </div>
+      <div class="chart-wrap" style="height:200px;"><canvas id="woWeekChart" role="img" aria-label="Work orders by week"></canvas></div>
+    </div>
+  </div>
+  <!-- Row B historical: WO by week centered at 2/3 width to balance 3-col row above -->
+  <div style="display:none;justify-content:center;margin-bottom:14px;" id="chartRowBHistorical">
+    <div class="chart-card" style="width:66.6%;min-width:300px;">
+      <div class="chart-title">Work orders by week — <span id="woWeekChartLabelHist" style="text-transform:none;letter-spacing:0;font-weight:400;color:var(--text2);"></span></div>
+      <div class="chart-legend">
+        <span class="leg"><span class="leg-sq" style="background:#2a5298;"></span>Created</span>
+        <span class="leg"><span class="leg-sq" style="background:#888780;"></span>Closed</span>
+      </div>
+      <div class="chart-wrap" style="height:200px;"><canvas id="woWeekChartHist" role="img" aria-label="Work orders by week historical"></canvas></div>
+    </div>
+  </div>
+
+  <div class="section-head"><h2>Weekly detail — <span id="weekLabel" style="text-transform:none;letter-spacing:0;font-size:12px;font-weight:600;color:var(--text2);"></span></h2><div class="divider"></div></div>
+  <div class="table-card">
+    <table>
+      <thead><tr><th>Week</th><th>Inspections</th><th>Avg APPA</th><th>Open Positions</th><th>PO Requests</th><th>PO $</th><th>After-Hrs</th></tr></thead>
+      <tbody id="weekBody"></tbody>
+    </table>
+  </div>
+
+  <div class="section-head"><h2>Overtime by week</h2><div class="divider"></div></div>
+  <div class="charts-row">
+    <div class="chart-card">
+      <div class="chart-title">OT hours by week — stacked by dept</div>
+      <div class="chart-legend">
+        <span class="leg"><span class="leg-sq" style="background:#c0392b;"></span>Maintenance</span>
+        <span class="leg"><span class="leg-sq" style="background:#2a5298;"></span>Housekeeping</span>
+        <span class="leg"><span class="leg-sq" style="background:#1a6b45;"></span>Grounds</span>
+      </div>
+      <div class="chart-wrap" style="height:240px;"><canvas id="otHrsChart" role="img" aria-label="OT hours stacked by department by week"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">OT pay $ by week</div>
+      <div class="chart-legend"><span class="leg"><span class="leg-sq" style="background:#b84a00;"></span>Total OT pay</span></div>
+      <div class="chart-wrap" style="height:240px;"><canvas id="otPayChart" role="img" aria-label="OT pay dollars by week"></canvas></div>
+    </div>
+  </div>
+
+  <div class="section-head"><h2>Rolling 12-month summary</h2><div class="divider"></div></div>
+  <div class="table-card">
+    <table>
+      <thead><tr><th>Month</th><th>Inspections</th><th>Avg APPA</th><th>PO Req</th><th>PO $</th><th>After-Hrs</th><th>WO Created</th><th>WO Closed</th></tr></thead>
+      <tbody id="summBody"></tbody>
+    </table>
+  </div>
+
+</div>
+<div class="footer">Catawba College Facilities &nbsp;·&nbsp; The Budd Group &nbsp;·&nbsp; Updated 5/12/26</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const UPDATED = '5/12/26';
+const CURRENT_MONTH_IDX = 7;
+
+function fmtDol(v){return '$'+v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function fmtK(v){if(v>=1000000)return '$'+(v/1000000).toFixed(2)+'M';if(v>=1000)return '$'+(v/1000).toFixed(1)+'K';return '$'+Math.round(v);}
+function fmtDolShort(v){
+  if(v>=1000000)return '$'+(v/1000000).toFixed(2)+'M';
+  if(v>=1000)return '$'+Math.round(v/1000).toLocaleString()+'K';
+  return '$'+Math.round(v).toLocaleString();
+}
+function appaBadge(v){if(v===null)return '<span style="color:#aaa">N/A</span>';const cls=v<=2.5?'badge-green':v<=3.0?'badge-amber':'badge-red';return `<span class="badge ${cls}">${v.toFixed(2)}</span>`;}
+function kpi(label,val,sub,accent){return `<div class="kpi${accent?' accent':''}"><div class="kpi-label">${label}</div><div class="kpi-val">${val}</div>${sub?`<div class="kpi-sub">${sub}</div>`:''}</div>`;}
+
+const months=[
+  {key:'oct',label:'Oct 2025',short:'Oct',insp:230,appa:2.42,openPos:3,poReq:21,poDol:2548552.81,afterHrs:1,woCreated:{maint:434,hk:49,grnds:23},woClosed:{maint:409,hk:49,grnds:25},openWO:{maint:94,hk:5,grnds:25},pmRm:{pm:1,rm:123},weeks:[{w:'10/20–10/26',insp:46,appa:2.6,pos:'5: 4 HK, 1 Grnds',po:9,poDol:393345.46,ah:0,woCreated:257,woClosed:241},{w:'10/27–11/2',insp:63,appa:2.5,pos:'3: 1 HK, 1 Grnds, 1 HVAC',po:6,poDol:190440.59,ah:0,woCreated:249,woClosed:242}]},
+  {key:'nov',label:'Nov 2025',short:'Nov',insp:215,appa:2.52,openPos:5,poReq:12,poDol:616108.79,afterHrs:4,woCreated:{maint:277,hk:64,grnds:16},woClosed:{maint:286,hk:62,grnds:14},openWO:{maint:88,hk:7,grnds:14},pmRm:{pm:4,rm:105},weeks:[{w:'11/3–11/9',insp:60,appa:2.6,pos:'4: 2 HK, 1 Grnds, 1 Maint',po:3,poDol:540039.78,ah:1,woCreated:83,woClosed:96},{w:'11/10–11/16',insp:69,appa:2.56,pos:'5: 3 HK, 1 Grnds, 1 Maint',po:4,poDol:24868.91,ah:2,woCreated:115,woClosed:109},{w:'11/17–11/23',insp:49,appa:2.4,pos:'6: 4 HK, 1 Grnds, 1 Maint',po:4,poDol:43122.78,ah:0,woCreated:129,woClosed:104},{w:'11/24–11/30',insp:37,appa:2.6,pos:'6: 4 HK, 1 Grnds, 1 Maint',po:1,poDol:8077.32,ah:1,woCreated:30,woClosed:53}]},
+  {key:'dec',label:'Dec 2025',short:'Dec',insp:167,appa:2.83,openPos:2,poReq:14,poDol:507575.59,afterHrs:1,woCreated:{maint:189,hk:37,grnds:9},woClosed:{maint:212,hk:44,grnds:3},openWO:{maint:59,hk:4,grnds:16},pmRm:{pm:11,rm:68},weeks:[{w:'12/1–12/7',insp:72,appa:2.4,pos:'3: 2 HK, 1 Grnds',po:6,poDol:429378.60,ah:0,woCreated:75,woClosed:102},{w:'12/8–12/14',insp:63,appa:2.5,pos:'1 HK',po:4,poDol:30543.41,ah:0,woCreated:75,woClosed:65},{w:'12/15–12/21',insp:28,appa:2.3,pos:'2 HK',po:3,poDol:42690.92,ah:0,woCreated:62,woClosed:65},{w:'12/22–12/28',insp:0,appa:null,pos:'2 HK',po:0,poDol:0,ah:0,woCreated:3,woClosed:0},{w:'12/29–1/4',insp:4,appa:4.1,pos:'2 HK',po:1,poDol:4962.66,ah:1,woCreated:20,woClosed:27}]},
+  {key:'jan',label:'Jan 2026',short:'Jan',insp:185,appa:2.58,openPos:0,poReq:20,poDol:3340737.30,afterHrs:5,woCreated:{maint:343,hk:42,grnds:16},woClosed:{maint:334,hk:40,grnds:11},openWO:{maint:62,hk:5,grnds:20},pmRm:{pm:9,rm:78},weeks:[{w:'1/5–1/11',insp:20,appa:2.5,pos:'0',po:11,poDol:1976633.62,ah:1,woCreated:137,woClosed:122},{w:'1/12–1/18',insp:92,appa:2.6,pos:'0',po:5,poDol:1326479.20,ah:1,woCreated:134,woClosed:130},{w:'1/19–1/25',insp:45,appa:2.6,pos:'0',po:1,poDol:2250,ah:2,woCreated:76,woClosed:72},{w:'1/26–2/1',insp:28,appa:2.6,pos:'1 HK',po:3,poDol:35374.48,ah:1,woCreated:54,woClosed:61}]},
+  {key:'feb',label:'Feb 2026',short:'Feb',insp:224,appa:2.45,openPos:2,poReq:8,poDol:94280.87,afterHrs:4,woCreated:{maint:240,hk:47,grnds:27},woClosed:{maint:225,hk:46,grnds:25},openWO:{maint:69,hk:8,grnds:18},pmRm:{pm:4,rm:91},weeks:[{w:'2/2–2/8',insp:49,appa:2.6,pos:'1',po:3,poDol:54607.39,ah:1,woCreated:57,woClosed:54},{w:'2/9–2/15',insp:31,appa:2.3,pos:'2',po:1,poDol:2173.71,ah:0,woCreated:98,woClosed:77},{w:'2/16–2/22',insp:95,appa:2.6,pos:'2',po:3,poDol:33999.77,ah:1,woCreated:83,woClosed:84},{w:'2/23–3/1',insp:49,appa:2.3,pos:'0',po:1,poDol:3500,ah:2,woCreated:76,woClosed:81}]},
+  {key:'mar',label:'Mar 2026',short:'Mar',insp:203,appa:2.48,openPos:2,poReq:9,poDol:144352.25,afterHrs:1,woCreated:{maint:202,hk:37,grnds:26},woClosed:{maint:215,hk:35,grnds:18},openWO:{maint:59,hk:9,grnds:20},pmRm:{pm:1,rm:87},weeks:[{w:'3/2–3/8',insp:67,appa:2.6,pos:'0',po:3,poDol:24921.57,ah:1,woCreated:69,woClosed:72},{w:'3/9–3/15',insp:66,appa:2.4,pos:'2',po:2,poDol:41561.81,ah:0,woCreated:54,woClosed:50},{w:'3/16–3/22',insp:44,appa:2.4,pos:'4',po:3,poDol:71095,ah:0,woCreated:75,woClosed:54},{w:'3/23–3/29',insp:26,appa:2.5,pos:'2',po:1,poDol:6773.87,ah:0,woCreated:67,woClosed:92}]},
+  {key:'apr',label:'Apr 2026',short:'Apr',insp:172,appa:2.4,openPos:1,poReq:5,poDol:470801.28,afterHrs:6,woCreated:{maint:284,hk:69,grnds:25},woClosed:{maint:279,hk:67,grnds:21},openWO:{maint:58,hk:7,grnds:24},pmRm:{pm:7,rm:51},weeks:[{w:'3/30–4/5',insp:25,appa:2.6,pos:'3',po:3,poDol:69383.88,ah:2,woCreated:94,woClosed:49},{w:'4/6–4/12',insp:41,appa:2.5,pos:'2',po:0,poDol:0,ah:3,woCreated:95,woClosed:116},{w:'4/13–4/19',insp:46,appa:2.3,pos:'2',po:2,poDol:401417.4,ah:0,woCreated:97,woClosed:107},{w:'4/20–4/26',insp:60,appa:2.2,pos:'1',po:0,poDol:0,ah:1,woCreated:92,woClosed:95}]},
+  {key:'may',label:'May 2026',short:'May',insp:49,appa:2.2,openPos:1,poReq:5,poDol:147050.39,afterHrs:3,woCreated:{maint:57,hk:9,grnds:8},woClosed:{maint:33,hk:8,grnds:68},openWO:{maint:79,hk:5,grnds:24},pmRm:{pm:32,rm:47},weeks:[{w:'4/26–5/3',insp:6,appa:2.1,pos:'1',po:4,poDol:125947.39,ah:3,woCreated:58,woClosed:67},{w:'5/4–5/10',insp:43,appa:2.3,pos:'1',po:1,poDol:21103,ah:0,woCreated:74,woClosed:109}]}
+];
+
+const otWeeks=[
+  {w:'9/22–9/28',  hrs:43.0,  pay:1331.25, mHrs:21.8,hHrs:20.2,gHrs:1.0},
+  {w:'9/29–10/5',  hrs:30.0,  pay:882.92,  mHrs:11.8,hHrs:18.2,gHrs:0.0},
+  {w:'10/6–10/12', hrs:11.75, pay:371.44,  mHrs:4.2, hHrs:7.5, gHrs:0.0},
+  {w:'10/13–10/19',hrs:5.25,  pay:173.62,  mHrs:2.5, hHrs:2.8, gHrs:0.0},
+  {w:'10/20–10/26',hrs:75.0,  pay:1884.58, mHrs:7.5, hHrs:67.0,gHrs:0.5},
+  {w:'10/27–11/2', hrs:8.5,   pay:305.06,  mHrs:5.5, hHrs:2.5, gHrs:0.5},
+  {w:'11/3–11/9',  hrs:20.0,  pay:614.72,  mHrs:9.2, hHrs:10.8,gHrs:0.0},
+  {w:'11/10–11/16',hrs:24.0,  pay:767.53,  mHrs:13.0,hHrs:10.5,gHrs:0.5},
+  {w:'11/17–11/23',hrs:13.5,  pay:437.91,  mHrs:7.0, hHrs:6.5, gHrs:0.0},
+  {w:'12/1–12/7',  hrs:6.5,   pay:234.84,  mHrs:4.0, hHrs:2.2, gHrs:0.2},
+  {w:'12/8–12/14', hrs:1.75,  pay:61.31,   mHrs:1.0, hHrs:0.8, gHrs:0.0},
+  {w:'1/5–1/11',   hrs:12.0,  pay:427.22,  mHrs:7.2, hHrs:4.0, gHrs:0.8},
+  {w:'1/12–1/18',  hrs:17.75, pay:631.97,  mHrs:13.2,hHrs:3.2, gHrs:1.2},
+  {w:'1/19–1/25',  hrs:8.0,   pay:189.0,   mHrs:0.0, hHrs:8.0, gHrs:0.0},
+  {w:'2/2–2/8',    hrs:16.25, pay:526.88,  mHrs:6.2, hHrs:10.0,gHrs:0.0},
+  {w:'2/9–2/15',   hrs:25.0,  pay:630.66,  mHrs:1.8, hHrs:22.8,gHrs:0.5},
+  {w:'2/16–2/22',  hrs:25.75, pay:809.81,  mHrs:10.8,hHrs:15.0,gHrs:0.0},
+  {w:'2/23–3/1',   hrs:23.0,  pay:752.16,  mHrs:13.5,hHrs:9.0, gHrs:0.5},
+  {w:'3/2–3/8',    hrs:20.0,  pay:566.63,  mHrs:4.5, hHrs:15.0,gHrs:0.5},
+  {w:'3/23–3/29',  hrs:10.25, pay:342.62,  mHrs:5.2, hHrs:5.0, gHrs:0.0},
+  {w:'3/30–4/5',   hrs:0.5,   pay:18.75,   mHrs:0.5, hHrs:0.0, gHrs:0.0},
+  {w:'4/6–4/12',   hrs:14.5,  pay:508.69,  mHrs:8.8, hHrs:3.5, gHrs:2.2},
+  {w:'4/13–4/19',  hrs:20.0,  pay:537.47,  mHrs:2.5, hHrs:16.0,gHrs:1.5},
+  {w:'4/20–4/26',  hrs:11.5,  pay:306.10,  mHrs:0.5, hHrs:8.5, gHrs:2.5},
+  {w:'4/27–5/3',   hrs:31.5,  pay:1163.91, mHrs:23.5,hHrs:6.8, gHrs:1.2},
+  {w:'5/4–5/10',   hrs:123.5, pay:3663.55, mHrs:35.2,hHrs:72.8,gHrs:15.5},
+];
+
+let sel = CURRENT_MONTH_IDX;
+let openWoInst = null, pmRmInst = null;
+
+const tabRow = document.getElementById('tabRow');
+months.forEach((m,i) => {
+  const b = document.createElement('button');
+  b.className = 'tab'+(i===sel?' active':'');
+  b.textContent = m.label;
+  b.onclick = ()=>{ sel=i; refresh(); };
+  tabRow.appendChild(b);
+});
+
+function refresh(){
+  document.querySelectorAll('.tab').forEach((b,i)=>b.classList.toggle('active',i===sel));
+  const mo = months[sel];
+  const isCurrent = sel === CURRENT_MONTH_IDX;
+
+  document.getElementById('weekLabel').textContent = mo.label;
+  // Update last week label with date range of most recent week
+  const lastWkEl = document.getElementById('lastWeekLabel');
+  if(lastWkEl && mo.weeks && mo.weeks.length > 0){
+    const lastWk = mo.weeks[mo.weeks.length-1];
+    lastWkEl.textContent = `Last week (${lastWk.w})`;
+  }
+  if(isCurrent) document.getElementById('pmRmLabel').textContent = mo.label;
+  const rowB = document.getElementById('chartRowB');
+  const rowBHist = document.getElementById('chartRowBHistorical');
+  rowB.style.display = isCurrent ? 'grid' : 'none';
+  rowBHist.style.display = isCurrent ? 'none' : 'flex';
+  document.getElementById('lastWeekRow').style.display = isCurrent ? '' : 'none';
+  document.getElementById('printBtn').style.display = isCurrent ? '' : 'none';
+
+  const tc  = mo.woCreated.maint+mo.woCreated.hk+mo.woCreated.grnds;
+  const tco = mo.woClosed.maint+mo.woClosed.hk+mo.woClosed.grnds;
+  const top = mo.openWO.maint+mo.openWO.hk+mo.openWO.grnds;
+
+  document.getElementById('kpiRow1').innerHTML =
+    kpi('Inspections',mo.insp,'',true)+
+    kpi('Avg APPA score',mo.appa.toFixed(2))+
+    kpi('Open positions',mo.openPos)+
+    kpi('PO requests',mo.poReq)+
+    kpi('PO request $',`<span style="font-size:18px;">${fmtK(mo.poDol)}</span>`)+
+    kpi('After-hrs calls',mo.afterHrs);
+
+  const row2 = document.getElementById('kpiRow2');
+  if(isCurrent){
+    row2.style.gridTemplateColumns='repeat(4,1fr)';
+    // Last week data — use last week entry
+    const lw = mo.weeks[mo.weeks.length-1];
+    const lwCreated = lw ? lw.woCreated || null : null;
+    const lwClosed  = lw ? lw.woClosed  || null : null;
+    row2.innerHTML=
+      kpi(`Open WOs as of ${UPDATED}`,top,`PM:${mo.pmRm.pm} · RM:${mo.pmRm.rm}`)+
+      kpi(`Maint WO type as of ${UPDATED}`,`<span style="font-size:14px;">PM: ${mo.pmRm.pm} &nbsp;·&nbsp; RM: ${mo.pmRm.rm}</span>`)+
+      kpi('WOs created',tc,`M:${mo.woCreated.maint} · HK:${mo.woCreated.hk} · G:${mo.woCreated.grnds}`)+
+      kpi('WOs closed',tco,`M:${mo.woClosed.maint} · HK:${mo.woClosed.hk} · G:${mo.woClosed.grnds}`);
+  } else {
+    row2.style.gridTemplateColumns='repeat(3,1fr)';
+    row2.innerHTML=
+      kpi('WOs created',tc,`M:${mo.woCreated.maint} · HK:${mo.woCreated.hk} · G:${mo.woCreated.grnds}`)+
+      kpi('WOs closed',tco,`M:${mo.woClosed.maint} · HK:${mo.woClosed.hk} · G:${mo.woClosed.grnds}`);
+  }
+
+  document.getElementById('weekBody').innerHTML = mo.weeks.map(w=>`
+    <tr><td class="mono">${w.w}</td><td>${w.insp}</td><td>${appaBadge(w.appa)}</td>
+    <td style="font-size:12px;">${w.pos}</td><td>${w.po}</td>
+    <td class="mono">${fmtDol(w.poDol)}</td><td>${w.ah}</td></tr>`).join('');
+
+  // WO by week chart — render into whichever canvas is visible
+  const woWeekData = {
+    labels: mo.weeks.map(w=>w.w),
+    datasets:[
+      {label:'Created',data:mo.weeks.map(w=>w.woCreated||0),backgroundColor:'#2a5298'},
+      {label:'Closed', data:mo.weeks.map(w=>w.woClosed||0), backgroundColor:'#888780'}
+    ]
+  };
+  const woWeekOpts = {
+    responsive:true,maintainAspectRatio:false,
+    interaction:{mode:'index',intersect:false},
+    plugins:{legend:{display:false}},
+    scales:{
+      y:{beginAtZero:true,ticks:{font:{size:10}},grid:{color:'rgba(0,0,0,0.05)'}},
+      x:{ticks:{font:{size:9},maxRotation:30,autoSkip:false}}
+    }
+  };
+  if(isCurrent){
+    document.getElementById('woWeekChartLabel').textContent = mo.label;
+    const woWeekEl = document.getElementById('woWeekChart');
+    const ex1 = Chart.getChart(woWeekEl); if(ex1) ex1.destroy();
+    new Chart(woWeekEl,{type:'bar',data:woWeekData,options:woWeekOpts});
+  } else {
+    document.getElementById('woWeekChartLabelHist').textContent = mo.label;
+    const woWeekElH = document.getElementById('woWeekChartHist');
+    const ex2 = Chart.getChart(woWeekElH); if(ex2) ex2.destroy();
+    new Chart(woWeekElH,{type:'bar',data:woWeekData,options:woWeekOpts});
+  }
+
+  if(isCurrent){
+    if(openWoInst) openWoInst.destroy();
+    openWoInst = new Chart(document.getElementById('openWoChart'),{
+      type:'doughnut',
+      data:{labels:['Maintenance','Housekeeping','Grounds'],datasets:[{data:[mo.openWO.maint,mo.openWO.hk,mo.openWO.grnds],backgroundColor:['#c0392b','#2a5298','#1a6b45'],borderWidth:2,borderColor:'#fff'}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${ctx.parsed}`}}},cutout:'60%'}
+    });
+  }
+
+  // PM vs RM doughnut for current month only
+  if(isCurrent){
+    if(pmRmInst) pmRmInst.destroy();
+    pmRmInst = new Chart(document.getElementById('pmRmChart'),{
+      type:'doughnut',
+      data:{labels:['PM (Preventive)','RM (Reactive)'],datasets:[{data:[mo.pmRm.pm,mo.pmRm.rm],backgroundColor:['#2a5298','#c0392b'],borderWidth:2,borderColor:'#fff'}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${ctx.parsed}`}}},cutout:'60%'}
+    });
+  }
+}
+
+// Month-level charts — improved tooltips
+const ml = months.map(m=>m.short);
+
+// Inspections + APPA: show both datasets in tooltip
+new Chart(document.getElementById('inspChart'),{
+  type:'bar',
+  data:{labels:ml,datasets:[
+    {label:'Inspections',data:months.map(m=>m.insp),backgroundColor:'#2a5298',yAxisID:'y'},
+    {label:'Avg APPA',data:months.map(m=>m.appa),type:'line',borderColor:'#c0392b',backgroundColor:'transparent',pointBackgroundColor:'#c0392b',yAxisID:'y2',tension:0.35,pointRadius:4}
+  ]},
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    interaction:{mode:'index',intersect:false},
+    plugins:{
+      legend:{display:false},
+      tooltip:{callbacks:{
+        label:ctx=>{
+          if(ctx.dataset.label==='Avg APPA') return `Avg APPA: ${ctx.parsed.y !== null ? ctx.parsed.y.toFixed(2) : 'N/A'}`;
+          return `Inspections: ${ctx.parsed.y}`;
+        }
+      }}
+    },
+    scales:{y:{beginAtZero:true,ticks:{font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}},y2:{position:'right',min:2.0,max:3.2,ticks:{font:{size:11}},grid:{drawOnChartArea:false}},x:{ticks:{font:{size:11},autoSkip:false}}}
+  }
+});
+
+// PO chart — clean dollar tooltip
+new Chart(document.getElementById('poChart'),{
+  type:'bar',
+  data:{labels:ml,datasets:[{label:'PO $',data:months.map(m=>m.poDol),backgroundColor:'#1a6b45'}]},
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      tooltip:{callbacks:{label:ctx=>`PO $: ${fmtDolShort(ctx.parsed.y)}`}}
+    },
+    scales:{y:{beginAtZero:true,ticks:{font:{size:11},callback:v=>fmtK(v)},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:11},autoSkip:false}}}
+  }
+});
+
+new Chart(document.getElementById('woChart'),{
+  type:'bar',
+  data:{labels:ml,datasets:[
+    {label:'Created',data:months.map(m=>m.woCreated.maint+m.woCreated.hk+m.woCreated.grnds),backgroundColor:'#2a5298'},
+    {label:'Closed', data:months.map(m=>m.woClosed.maint+m.woClosed.hk+m.woClosed.grnds), backgroundColor:'#888780'}
+  ]},
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    interaction:{mode:'index',intersect:false},
+    plugins:{legend:{display:false}},
+    scales:{y:{beginAtZero:true,ticks:{font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:11},autoSkip:false}}}
+  }
+});
+
+
+
+// OT charts
+const otL=otWeeks.map(w=>w.w);
+new Chart(document.getElementById('otHrsChart'),{type:'bar',data:{labels:otL,datasets:[{label:'Maintenance',data:otWeeks.map(w=>w.mHrs),backgroundColor:'#c0392b',stack:'a'},{label:'Housekeeping',data:otWeeks.map(w=>w.hHrs),backgroundColor:'#2a5298',stack:'a'},{label:'Grounds',data:otWeeks.map(w=>w.gHrs),backgroundColor:'#1a6b45',stack:'a'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{stacked:true,ticks:{font:{size:8.5},maxRotation:55,autoSkip:false}},y:{stacked:true,beginAtZero:true,ticks:{font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}}}}});
+new Chart(document.getElementById('otPayChart'),{type:'bar',data:{labels:otL,datasets:[{label:'OT Pay',data:otWeeks.map(w=>w.pay),backgroundColor:'#b84a00'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`OT Pay: ${fmtDolShort(ctx.parsed.y)}`}}},scales:{x:{ticks:{font:{size:8.5},maxRotation:55,autoSkip:false}},y:{beginAtZero:true,ticks:{font:{size:11},callback:v=>fmtK(v)},grid:{color:'rgba(0,0,0,0.05)'}}}}});
+
+// Rolling summary
+const validMonths=months.filter(m=>m.appa!==null&&m.insp>0);
+const weightedAppa=validMonths.reduce((s,m)=>s+m.appa*m.insp,0)/validMonths.reduce((s,m)=>s+m.insp,0);
+
+document.getElementById('summBody').innerHTML=
+  months.map(m=>{
+    const tc=m.woCreated.maint+m.woCreated.hk+m.woCreated.grnds;
+    const tco=m.woClosed.maint+m.woClosed.hk+m.woClosed.grnds;
+    const top=m.openWO.maint+m.openWO.hk+m.openWO.grnds;
+    return `<tr><td style="font-weight:600;">${m.label}</td><td>${m.insp}</td><td>${appaBadge(m.appa)}</td><td>${m.poReq}</td><td class="mono" style="font-size:12px;">${fmtDol(m.poDol)}</td><td>${m.afterHrs}</td><td>${tc}</td><td>${tco}</td></tr>`;
+  }).join('')
+  +(()=>{
+    const ti=months.reduce((s,m)=>s+m.insp,0),tpo=months.reduce((s,m)=>s+m.poReq,0),tpod=months.reduce((s,m)=>s+m.poDol,0),tah=months.reduce((s,m)=>s+m.afterHrs,0);
+    const twoc=months.reduce((s,m)=>s+m.woCreated.maint+m.woCreated.hk+m.woCreated.grnds,0);
+    const twocl=months.reduce((s,m)=>s+m.woClosed.maint+m.woClosed.hk+m.woClosed.grnds,0);
+    const two=months.reduce((s,m)=>s+m.openWO.maint+m.openWO.hk+m.openWO.grnds,0);
+    return `<tr class="total-row"><td>Total / Avg</td><td>${ti}</td><td>${appaBadge(parseFloat(weightedAppa.toFixed(2)))}</td><td>${tpo}</td><td class="mono" style="font-size:12px;">${fmtDol(tpod)}</td><td>${tah}</td><td>${twoc}</td><td>${twocl}</td></tr>`;
+  })();
+
+refresh();
+</script>
+
+<div id="printArea" style="display:none; padding:24px; font-family:'DM Sans',sans-serif; color:#1a1916;">
+  <div id="pHeader"></div>
+  <div id="pKpi1" style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:8px;"></div>
+  <div id="pKpi2" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+    <canvas id="pInspChart" width="400" height="180"></canvas>
+    <canvas id="pPoChart" width="400" height="180"></canvas>
+    <canvas id="pWoChart" width="400" height="180"></canvas>
+    <canvas id="pOpenWoChart" width="400" height="180"></canvas>
+  </div>
+  <div style="display:flex;justify-content:center;margin-bottom:10px;">
+    <canvas id="pPmRmChart" width="280" height="180"></canvas>
+  </div>
+  <div id="pWeekTable"></div>
+</div>
+
+<script>
+function printSummary(){
+  const mo = months[CURRENT_MONTH_IDX];
+  const tc  = mo.woCreated.maint+mo.woCreated.hk+mo.woCreated.grnds;
+  const tco = mo.woClosed.maint+mo.woClosed.hk+mo.woClosed.grnds;
+  const top = mo.openWO.maint+mo.openWO.hk+mo.openWO.grnds;
+
+  // Header
+  document.getElementById('pHeader').innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #2a5298;padding-bottom:10px;margin-bottom:14px;">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <img src="${document.querySelector('.header-logo').src}" style="height:48px;background:white;border-radius:4px;padding:3px 5px;" />
+        <div>
+          <div style="font-size:16px;font-weight:600;color:#2a5298;">Catawba College — Facilities</div>
+          <div style="font-size:11px;color:#6b6a63;">The Budd Group · Operations Dashboard · ${mo.label}</div>
+        </div>
+      </div>
+      <div style="font-size:11px;color:#6b6a63;font-family:monospace;">Updated ${UPDATED}</div>
+    </div>`;
+
+  // KPI cards helper
+  function pCard(label, val, sub){
+    return `<div style="background:#f0efe9;border-radius:8px;padding:10px 12px;">
+      <div style="font-size:10px;color:#9b9a93;font-weight:500;margin-bottom:4px;">${label}</div>
+      <div style="font-size:20px;font-weight:600;">${val}</div>
+      ${sub?`<div style="font-size:9px;color:#9b9a93;margin-top:3px;font-family:monospace;">${sub}</div>`:''}
+    </div>`;
+  }
+
+  document.getElementById('pKpi1').innerHTML =
+    pCard('Inspections', mo.insp) +
+    pCard('Avg APPA score', mo.appa.toFixed(2)) +
+    pCard('Open positions', mo.openPos) +
+    pCard('PO requests', mo.poReq) +
+    pCard('PO request $', fmtK(mo.poDol)) +
+    pCard('After-hrs calls', mo.afterHrs);
+
+  document.getElementById('pKpi2').innerHTML =
+    pCard(`Open WOs as of ${UPDATED}`, top, `PM:${mo.pmRm.pm} · RM:${mo.pmRm.rm}`) +
+    pCard('WOs created', tc, `M:${mo.woCreated.maint} · HK:${mo.woCreated.hk} · G:${mo.woCreated.grnds}`) +
+    pCard('WOs closed', tco, `M:${mo.woClosed.maint} · HK:${mo.woClosed.hk} · G:${mo.woClosed.grnds}`);
+
+  const ml = months.map(m=>m.short);
+
+  // Draw print charts
+  ['pInspChart','pPoChart','pWoChart','pOpenWoChart','pPmRmChart'].forEach(id=>{
+    const c = document.getElementById(id);
+    const existing = Chart.getChart(c);
+    if(existing) existing.destroy();
+  });
+
+  new Chart(document.getElementById('pInspChart'),{type:'bar',data:{labels:ml,datasets:[{label:'Inspections',data:months.map(m=>m.insp),backgroundColor:'#2a5298',yAxisID:'y'},{label:'Avg APPA',data:months.map(m=>m.appa),type:'line',borderColor:'#c0392b',backgroundColor:'transparent',pointBackgroundColor:'#c0392b',yAxisID:'y2',tension:0.35,pointRadius:3}]},options:{responsive:false,plugins:{legend:{display:false},title:{display:true,text:'Inspections & APPA Score',font:{size:11}}},scales:{y:{beginAtZero:true,ticks:{font:{size:9}}},y2:{position:'right',min:2.0,max:3.2,ticks:{font:{size:9}},grid:{drawOnChartArea:false}},x:{ticks:{font:{size:9},autoSkip:false}}}}});
+
+  new Chart(document.getElementById('pPoChart'),{type:'bar',data:{labels:ml,datasets:[{label:'PO $',data:months.map(m=>m.poDol),backgroundColor:'#1a6b45'}]},options:{responsive:false,plugins:{legend:{display:false},title:{display:true,text:'PO Request $ by Month',font:{size:11}}},scales:{y:{beginAtZero:true,ticks:{font:{size:9},callback:v=>fmtK(v)}},x:{ticks:{font:{size:9},autoSkip:false}}}}});
+
+  new Chart(document.getElementById('pWoChart'),{type:'bar',data:{labels:ml,datasets:[{label:'Created',data:months.map(m=>m.woCreated.maint+m.woCreated.hk+m.woCreated.grnds),backgroundColor:'#2a5298'},{label:'Closed',data:months.map(m=>m.woClosed.maint+m.woClosed.hk+m.woClosed.grnds),backgroundColor:'#888780'}]},options:{responsive:false,plugins:{legend:{display:false},title:{display:true,text:'WOs Created vs Closed',font:{size:11}}},scales:{y:{beginAtZero:true,ticks:{font:{size:9}}},x:{ticks:{font:{size:9},autoSkip:false}}}}});
+
+  new Chart(document.getElementById('pOpenWoChart'),{type:'doughnut',data:{labels:['Maintenance','Housekeeping','Grounds'],datasets:[{data:[mo.openWO.maint,mo.openWO.hk,mo.openWO.grnds],backgroundColor:['#c0392b','#2a5298','#1a6b45'],borderWidth:2,borderColor:'#fff'}]},options:{responsive:false,cutout:'60%',plugins:{legend:{display:true,position:'bottom',labels:{font:{size:9}}},title:{display:true,text:`Open WOs as of ${UPDATED}`,font:{size:11}}}}});
+
+  new Chart(document.getElementById('pPmRmChart'),{type:'doughnut',data:{labels:['PM (Preventive)','RM (Reactive)'],datasets:[{data:[mo.pmRm.pm,mo.pmRm.rm],backgroundColor:['#2a5298','#c0392b'],borderWidth:2,borderColor:'#fff'}]},options:{responsive:false,cutout:'60%',plugins:{legend:{display:true,position:'bottom',labels:{font:{size:9}}},title:{display:true,text:'Maintenance WO Type',font:{size:11}}}}});
+
+  // Weekly table
+  document.getElementById('pWeekTable').innerHTML = `
+    <div style="font-size:10px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:#9b9a93;margin-bottom:6px;">Weekly detail — ${mo.label}</div>
+    <table style="width:100%;border-collapse:collapse;font-size:11px;">
+      <thead><tr style="background:#f0efe9;">
+        <th style="padding:5px 8px;text-align:left;border-bottom:1px solid #e2e0d8;">Week</th>
+        <th style="padding:5px 8px;text-align:left;border-bottom:1px solid #e2e0d8;">Inspections</th>
+        <th style="padding:5px 8px;text-align:left;border-bottom:1px solid #e2e0d8;">Avg APPA</th>
+        <th style="padding:5px 8px;text-align:left;border-bottom:1px solid #e2e0d8;">Open Positions</th>
+        <th style="padding:5px 8px;text-align:left;border-bottom:1px solid #e2e0d8;">PO Requests</th>
+        <th style="padding:5px 8px;text-align:left;border-bottom:1px solid #e2e0d8;">PO $</th>
+        <th style="padding:5px 8px;text-align:left;border-bottom:1px solid #e2e0d8;">After-Hrs</th>
+      </tr></thead>
+      <tbody>${mo.weeks.map((w,i)=>`<tr style="background:${i%2===0?'white':'#fafaf8'};">
+        <td style="padding:5px 8px;border-bottom:1px solid #e2e0d8;font-family:monospace;">${w.w}</td>
+        <td style="padding:5px 8px;border-bottom:1px solid #e2e0d8;">${w.insp}</td>
+        <td style="padding:5px 8px;border-bottom:1px solid #e2e0d8;">${w.appa !== null ? w.appa.toFixed(2) : 'N/A'}</td>
+        <td style="padding:5px 8px;border-bottom:1px solid #e2e0d8;">${w.pos}</td>
+        <td style="padding:5px 8px;border-bottom:1px solid #e2e0d8;">${w.po}</td>
+        <td style="padding:5px 8px;border-bottom:1px solid #e2e0d8;font-family:monospace;">${fmtDol(w.poDol)}</td>
+        <td style="padding:5px 8px;border-bottom:1px solid #e2e0d8;">${w.ah}</td>
+      </tr>`).join('')}</tbody>
+    </table>`;
+
+  // Show print area, trigger print, then hide
+  const pa = document.getElementById('printArea');
+  pa.style.display = 'block';
+  setTimeout(()=>{
+    window.print();
+    pa.style.display = 'none';
+  }, 600);
+}
+</script>
+
+</body>
+</html>
