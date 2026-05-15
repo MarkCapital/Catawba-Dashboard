@@ -265,7 +265,26 @@ function checkPw(){
 <div class="footer">Catawba College Facilities &nbsp;·&nbsp; The Budd Group &nbsp;·&nbsp; Updated 5/12/26</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
 <script>
+Chart.register(ChartDataLabels);
+
+// Center total plugin for doughnut charts
+const centerTotalPlugin = { id:'centerTotal', afterDraw(chart){
+  if(!chart.options.centerTotal) return;
+  const {ctx,chartArea:{left,top,right,bottom}} = chart;
+  const cx=(left+right)/2, cy=(top+bottom)/2;
+  const total = chart.data.datasets[0].data.reduce((a,b)=>a+b,0);
+  ctx.save();
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.font='bold 20px DM Sans,sans-serif'; ctx.fillStyle='#1a1916';
+  ctx.fillText(total, cx, cy-8);
+  ctx.font='11px DM Sans,sans-serif'; ctx.fillStyle='#9b9a93';
+  ctx.fillText('total', cx, cy+10);
+  ctx.restore();
+}};
+Chart.register(centerTotalPlugin);
+
 const UPDATED = '5/12/26';
 const CURRENT_MONTH_IDX = 7;
 
@@ -416,7 +435,9 @@ function refresh(){
   const woWeekOpts = {
     responsive:true,maintainAspectRatio:false,
     interaction:{mode:'index',intersect:false},
-    plugins:{legend:{display:false}},
+    plugins:{legend:{display:false},
+      datalabels:{anchor:'center',align:'center',color:'#fff',font:{size:11,weight:'bold'},
+        formatter:v=>v>0?v:'',display:ctx=>ctx.dataset.data[ctx.dataIndex]>0}},
     scales:{
       y:{beginAtZero:true,ticks:{font:{size:10}},grid:{color:'rgba(0,0,0,0.05)'}},
       x:{ticks:{font:{size:9},maxRotation:30,autoSkip:false}}
@@ -439,7 +460,10 @@ function refresh(){
     openWoInst = new Chart(document.getElementById('openWoChart'),{
       type:'doughnut',
       data:{labels:['Maintenance','Housekeeping','Grounds'],datasets:[{data:[mo.openWO.maint,mo.openWO.hk,mo.openWO.grnds],backgroundColor:['#c0392b','#2a5298','#1a6b45'],borderWidth:2,borderColor:'#fff'}]},
-      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${ctx.parsed}`}}},cutout:'60%'}
+      options:{responsive:true,maintainAspectRatio:false,cutout:'60%',centerTotal:true,
+        plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${ctx.parsed}`}},
+          datalabels:{color:'#fff',font:{size:12,weight:'bold'},formatter:v=>v,
+            display:ctx=>ctx.dataset.data[ctx.dataIndex]>0}}}
     });
   }
 
@@ -449,7 +473,10 @@ function refresh(){
     pmRmInst = new Chart(document.getElementById('pmRmChart'),{
       type:'doughnut',
       data:{labels:['PM (Preventive)','RM (Reactive)'],datasets:[{data:[mo.pmRm.pm,mo.pmRm.rm],backgroundColor:['#2a5298','#c0392b'],borderWidth:2,borderColor:'#fff'}]},
-      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${ctx.parsed}`}}},cutout:'60%'}
+      options:{responsive:true,maintainAspectRatio:false,cutout:'60%',centerTotal:true,
+        plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${ctx.parsed}`}},
+          datalabels:{color:'#fff',font:{size:12,weight:'bold'},formatter:v=>v,
+            display:ctx=>ctx.dataset.data[ctx.dataIndex]>0}}}
     });
   }
 }
@@ -469,6 +496,7 @@ new Chart(document.getElementById('inspChart'),{
     interaction:{mode:'index',intersect:false},
     plugins:{
       legend:{display:false},
+      datalabels:{display:false},
       tooltip:{callbacks:{
         label:ctx=>{
           if(ctx.dataset.label==='Avg APPA') return `Avg APPA: ${ctx.parsed.y !== null ? ctx.parsed.y.toFixed(2) : 'N/A'}`;
@@ -488,6 +516,7 @@ new Chart(document.getElementById('poChart'),{
     responsive:true,maintainAspectRatio:false,
     plugins:{
       legend:{display:false},
+      datalabels:{display:false},
       tooltip:{callbacks:{label:ctx=>`PO $: ${fmtDolShort(ctx.parsed.y)}`}}
     },
     scales:{y:{beginAtZero:true,ticks:{font:{size:11},callback:v=>fmtK(v)},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:11},autoSkip:false}}}
@@ -503,7 +532,7 @@ new Chart(document.getElementById('woChart'),{
   options:{
     responsive:true,maintainAspectRatio:false,
     interaction:{mode:'index',intersect:false},
-    plugins:{legend:{display:false}},
+    plugins:{legend:{display:false},datalabels:{display:false}},
     scales:{y:{beginAtZero:true,ticks:{font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:11},autoSkip:false}}}
   }
 });
@@ -525,8 +554,8 @@ function buildOtCharts(otData){
   const otL = otData.map(w=>w.w);
   if(otHrsChartInst) otHrsChartInst.destroy();
   if(otPayChartInst) otPayChartInst.destroy();
-  otHrsChartInst = new Chart(document.getElementById('otHrsChart'),{type:'bar',data:{labels:otL,datasets:[{label:'Maintenance',data:otData.map(w=>w.mHrs),backgroundColor:'#c0392b',stack:'a'},{label:'Housekeeping',data:otData.map(w=>w.hHrs),backgroundColor:'#2a5298',stack:'a'},{label:'Grounds',data:otData.map(w=>w.gHrs),backgroundColor:'#1a6b45',stack:'a'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{stacked:true,ticks:{font:{size:8.5},maxRotation:55,autoSkip:false}},y:{stacked:true,beginAtZero:true,ticks:{font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}}}}});
-  otPayChartInst = new Chart(document.getElementById('otPayChart'),{type:'bar',data:{labels:otL,datasets:[{label:'OT Pay',data:otData.map(w=>w.pay),backgroundColor:'#b84a00'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`OT Pay: ${fmtDolShort(ctx.parsed.y)}`}}},scales:{x:{ticks:{font:{size:8.5},maxRotation:55,autoSkip:false}},y:{beginAtZero:true,ticks:{font:{size:11},callback:v=>fmtK(v)},grid:{color:'rgba(0,0,0,0.05)'}}}}});
+  otHrsChartInst = new Chart(document.getElementById('otHrsChart'),{type:'bar',data:{labels:otL,datasets:[{label:'Maintenance',data:otData.map(w=>w.mHrs),backgroundColor:'#c0392b',stack:'a'},{label:'Housekeeping',data:otData.map(w=>w.hHrs),backgroundColor:'#2a5298',stack:'a'},{label:'Grounds',data:otData.map(w=>w.gHrs),backgroundColor:'#1a6b45',stack:'a'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false}},scales:{x:{stacked:true,ticks:{font:{size:8.5},maxRotation:55,autoSkip:false}},y:{stacked:true,beginAtZero:true,ticks:{font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}}}}});
+  otPayChartInst = new Chart(document.getElementById('otPayChart'),{type:'bar',data:{labels:otL,datasets:[{label:'OT Pay',data:otData.map(w=>w.pay),backgroundColor:'#b84a00'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>`OT Pay: ${fmtDolShort(ctx.parsed.y)}`}}},scales:{x:{ticks:{font:{size:8.5},maxRotation:55,autoSkip:false}},y:{beginAtZero:true,ticks:{font:{size:11},callback:v=>fmtK(v)},grid:{color:'rgba(0,0,0,0.05)'}}}}});
 }
 
 // Rolling summary
