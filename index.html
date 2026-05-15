@@ -370,7 +370,7 @@ function refresh(){
     const lwCreated = lw ? lw.woCreated || null : null;
     const lwClosed  = lw ? lw.woClosed  || null : null;
     row2.innerHTML=
-      kpi(`Open WOs as of ${UPDATED}`,top,`PM:${mo.pmRm.pm} · RM:${mo.pmRm.rm}`)+
+      kpi(`Open WOs as of ${UPDATED}`,top,`M:${mo.openWO.maint} · HK:${mo.openWO.hk} · G:${mo.openWO.grnds}`)+
       kpi(`Maint WO type as of ${UPDATED}`,`<span style="font-size:14px;">PM: ${mo.pmRm.pm} &nbsp;·&nbsp; RM: ${mo.pmRm.rm}</span>`)+
       kpi('WOs created',tc,`M:${mo.woCreated.maint} · HK:${mo.woCreated.hk} · G:${mo.woCreated.grnds}`)+
       kpi('WOs closed',tco,`M:${mo.woClosed.maint} · HK:${mo.woClosed.hk} · G:${mo.woClosed.grnds}`);
@@ -580,7 +580,7 @@ function printSummary(){
     pCard('After-hrs calls', mo.afterHrs);
 
   document.getElementById('pKpi2').innerHTML =
-    pCard(`Open WOs as of ${UPDATED}`, top, `PM:${mo.pmRm.pm} · RM:${mo.pmRm.rm}`) +
+    pCard(`Open WOs as of ${UPDATED}`, top, `M:${mo.openWO.maint} · HK:${mo.openWO.hk} · G:${mo.openWO.grnds}`) +
     pCard('WOs created', tc, `M:${mo.woCreated.maint} · HK:${mo.woCreated.hk} · G:${mo.woCreated.grnds}`) +
     pCard('WOs closed', tco, `M:${mo.woClosed.maint} · HK:${mo.woClosed.hk} · G:${mo.woClosed.grnds}`);
 
