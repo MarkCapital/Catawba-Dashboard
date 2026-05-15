@@ -60,6 +60,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .badge-red{background:var(--red-bg);color:var(--red);}
 .mono{font-family:'DM Mono',monospace;font-size:12px;}
 .footer{text-align:center;padding:22px;font-size:11px;color:var(--text3);border-top:1px solid var(--border);margin-top:40px;}
+.stat-pill{background:#e6f1fb;border-radius:20px;padding:3px 11px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;}
+.stat-pill-label{font-size:10px;font-weight:600;color:#185fa5;letter-spacing:0.04em;text-transform:uppercase;}
+.stat-pill-val{font-size:12px;font-weight:600;color:#0c447c;}
+.chart-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}
 @media(max-width:700px){.main{padding:14px 14px 40px;}.charts-row{grid-template-columns:1fr;}.kpi-row-1{grid-template-columns:repeat(3,1fr);}.header{padding:12px 16px;}.quicklinks{padding:8px 14px;}}
 
 @media print {
@@ -228,7 +232,10 @@ function checkPw(){
   <div class="section-head"><h2>Overtime by week</h2><div class="divider"></div></div>
   <div class="charts-row">
     <div class="chart-card">
-      <div class="chart-title">OT hours by week — stacked by dept</div>
+      <div class="chart-header">
+        <div class="chart-title">OT hours by week — stacked by dept</div>
+        <div class="stat-pill"><span class="stat-pill-label" id="otHrsPillLabel">MTD total</span><span class="stat-pill-val" id="otHrsPill">—</span></div>
+      </div>
       <div class="chart-legend">
         <span class="leg"><span class="leg-sq" style="background:#c0392b;"></span>Maintenance</span>
         <span class="leg"><span class="leg-sq" style="background:#2a5298;"></span>Housekeeping</span>
@@ -237,7 +244,10 @@ function checkPw(){
       <div class="chart-wrap" style="height:240px;"><canvas id="otHrsChart" role="img" aria-label="OT hours stacked by department by week"></canvas></div>
     </div>
     <div class="chart-card">
-      <div class="chart-title">OT pay $ by week</div>
+      <div class="chart-header">
+        <div class="chart-title">OT pay $ by week</div>
+        <div class="stat-pill"><span class="stat-pill-label" id="otPayPillLabel">MTD total</span><span class="stat-pill-val" id="otPayPill">—</span></div>
+      </div>
       <div class="chart-legend"><span class="leg"><span class="leg-sq" style="background:#b84a00;"></span>Total OT pay</span></div>
       <div class="chart-wrap" style="height:240px;"><canvas id="otPayChart" role="img" aria-label="OT pay dollars by week"></canvas></div>
     </div>
@@ -292,34 +302,34 @@ const months=[
 
 // OT weeks split by year — Oct-Dec show 2025 only, Jan+ show 2026 only
 const otWeeks2025=[
-  {w:'9/22–9/28',  hrs:43.0,  pay:1331.25, mHrs:21.8,hHrs:20.2,gHrs:1.0},
-  {w:'9/29–10/5',  hrs:30.0,  pay:882.92,  mHrs:11.8,hHrs:18.2,gHrs:0.0},
-  {w:'10/6–10/12', hrs:11.75, pay:371.44,  mHrs:4.2, hHrs:7.5, gHrs:0.0},
-  {w:'10/13–10/19',hrs:5.25,  pay:173.62,  mHrs:2.5, hHrs:2.8, gHrs:0.0},
-  {w:'10/20–10/26',hrs:75.0,  pay:1884.58, mHrs:7.5, hHrs:67.0,gHrs:0.5},
-  {w:'10/27–11/2', hrs:8.5,   pay:305.06,  mHrs:5.5, hHrs:2.5, gHrs:0.5},
-  {w:'11/3–11/9',  hrs:20.0,  pay:614.72,  mHrs:9.2, hHrs:10.8,gHrs:0.0},
-  {w:'11/10–11/16',hrs:24.0,  pay:767.53,  mHrs:13.0,hHrs:10.5,gHrs:0.5},
-  {w:'11/17–11/23',hrs:13.5,  pay:437.91,  mHrs:7.0, hHrs:6.5, gHrs:0.0},
-  {w:'12/1–12/7',  hrs:6.5,   pay:234.84,  mHrs:4.0, hHrs:2.2, gHrs:0.2},
-  {w:'12/8–12/14', hrs:1.75,  pay:61.31,   mHrs:1.0, hHrs:0.8, gHrs:0.0},
+  {mo:0,w:'9/22–9/28',  hrs:43.0,  pay:1331.25, mHrs:21.8,hHrs:20.2,gHrs:1.0},
+  {mo:0,w:'9/29–10/5',  hrs:30.0,  pay:882.92,  mHrs:11.8,hHrs:18.2,gHrs:0.0},
+  {mo:0,w:'10/6–10/12', hrs:11.75, pay:371.44,  mHrs:4.2, hHrs:7.5, gHrs:0.0},
+  {mo:0,w:'10/13–10/19',hrs:5.25,  pay:173.62,  mHrs:2.5, hHrs:2.8, gHrs:0.0},
+  {mo:0,w:'10/20–10/26',hrs:75.0,  pay:1884.58, mHrs:7.5, hHrs:67.0,gHrs:0.5},
+  {mo:1,w:'10/27–11/2', hrs:8.5,   pay:305.06,  mHrs:5.5, hHrs:2.5, gHrs:0.5},
+  {mo:1,w:'11/3–11/9',  hrs:20.0,  pay:614.72,  mHrs:9.2, hHrs:10.8,gHrs:0.0},
+  {mo:1,w:'11/10–11/16',hrs:24.0,  pay:767.53,  mHrs:13.0,hHrs:10.5,gHrs:0.5},
+  {mo:1,w:'11/17–11/23',hrs:13.5,  pay:437.91,  mHrs:7.0, hHrs:6.5, gHrs:0.0},
+  {mo:2,w:'12/1–12/7',  hrs:6.5,   pay:234.84,  mHrs:4.0, hHrs:2.2, gHrs:0.2},
+  {mo:2,w:'12/8–12/14', hrs:1.75,  pay:61.31,   mHrs:1.0, hHrs:0.8, gHrs:0.0},
 ];
 const otWeeks2026=[
-  {w:'1/5–1/11',   hrs:12.0,  pay:427.22,  mHrs:7.2, hHrs:4.0, gHrs:0.8},
-  {w:'1/12–1/18',  hrs:17.75, pay:631.97,  mHrs:13.2,hHrs:3.2, gHrs:1.2},
-  {w:'1/19–1/25',  hrs:8.0,   pay:189.0,   mHrs:0.0, hHrs:8.0, gHrs:0.0},
-  {w:'2/2–2/8',    hrs:16.25, pay:526.88,  mHrs:6.2, hHrs:10.0,gHrs:0.0},
-  {w:'2/9–2/15',   hrs:25.0,  pay:630.66,  mHrs:1.8, hHrs:22.8,gHrs:0.5},
-  {w:'2/16–2/22',  hrs:25.75, pay:809.81,  mHrs:10.8,hHrs:15.0,gHrs:0.0},
-  {w:'2/23–3/1',   hrs:23.0,  pay:752.16,  mHrs:13.5,hHrs:9.0, gHrs:0.5},
-  {w:'3/2–3/8',    hrs:20.0,  pay:566.63,  mHrs:4.5, hHrs:15.0,gHrs:0.5},
-  {w:'3/23–3/29',  hrs:10.25, pay:342.62,  mHrs:5.2, hHrs:5.0, gHrs:0.0},
-  {w:'3/30–4/5',   hrs:0.5,   pay:18.75,   mHrs:0.5, hHrs:0.0, gHrs:0.0},
-  {w:'4/6–4/12',   hrs:14.5,  pay:508.69,  mHrs:8.8, hHrs:3.5, gHrs:2.2},
-  {w:'4/13–4/19',  hrs:20.0,  pay:537.47,  mHrs:2.5, hHrs:16.0,gHrs:1.5},
-  {w:'4/20–4/26',  hrs:11.5,  pay:306.10,  mHrs:0.5, hHrs:8.5, gHrs:2.5},
-  {w:'4/27–5/3',   hrs:31.5,  pay:1163.91, mHrs:23.5,hHrs:6.8, gHrs:1.2},
-  {w:'5/4–5/10',   hrs:123.5, pay:3663.55, mHrs:35.2,hHrs:72.8,gHrs:15.5},
+  {mo:3,w:'1/5–1/11',   hrs:12.0,  pay:427.22,  mHrs:7.2, hHrs:4.0, gHrs:0.8},
+  {mo:3,w:'1/12–1/18',  hrs:17.75, pay:631.97,  mHrs:13.2,hHrs:3.2, gHrs:1.2},
+  {mo:3,w:'1/19–1/25',  hrs:8.0,   pay:189.0,   mHrs:0.0, hHrs:8.0, gHrs:0.0},
+  {mo:4,w:'2/2–2/8',    hrs:16.25, pay:526.88,  mHrs:6.2, hHrs:10.0,gHrs:0.0},
+  {mo:4,w:'2/9–2/15',   hrs:25.0,  pay:630.66,  mHrs:1.8, hHrs:22.8,gHrs:0.5},
+  {mo:4,w:'2/16–2/22',  hrs:25.75, pay:809.81,  mHrs:10.8,hHrs:15.0,gHrs:0.0},
+  {mo:4,w:'2/23–3/1',   hrs:23.0,  pay:752.16,  mHrs:13.5,hHrs:9.0, gHrs:0.5},
+  {mo:5,w:'3/2–3/8',    hrs:20.0,  pay:566.63,  mHrs:4.5, hHrs:15.0,gHrs:0.5},
+  {mo:5,w:'3/23–3/29',  hrs:10.25, pay:342.62,  mHrs:5.2, hHrs:5.0, gHrs:0.0},
+  {mo:6,w:'3/30–4/5',   hrs:0.5,   pay:18.75,   mHrs:0.5, hHrs:0.0, gHrs:0.0},
+  {mo:6,w:'4/6–4/12',   hrs:14.5,  pay:508.69,  mHrs:8.8, hHrs:3.5, gHrs:2.2},
+  {mo:6,w:'4/13–4/19',  hrs:20.0,  pay:537.47,  mHrs:2.5, hHrs:16.0,gHrs:1.5},
+  {mo:6,w:'4/20–4/26',  hrs:11.5,  pay:306.10,  mHrs:0.5, hHrs:8.5, gHrs:2.5},
+  {mo:7,w:'4/27–5/3',   hrs:31.5,  pay:1163.91, mHrs:23.5,hHrs:6.8, gHrs:1.2},
+  {mo:7,w:'5/4–5/10',   hrs:123.5, pay:3663.55, mHrs:35.2,hHrs:72.8,gHrs:15.5},
 ];
 
 let sel = CURRENT_MONTH_IDX;
@@ -341,7 +351,10 @@ function refresh(){
 
   document.getElementById('weekLabel').textContent = mo.label;
   // Rebuild OT charts with year-appropriate data
-  buildOtCharts(sel <= 2 ? otWeeks2025 : otWeeks2026);
+  // Filter OT weeks to only those tagged with the selected month index
+  const otAll = sel <= 2 ? otWeeks2025 : otWeeks2026;
+  const otFiltered = otAll.filter(w => w.mo === sel);
+  buildOtCharts(otFiltered);
   // Update last week label with date range of most recent week
   const lastWkEl = document.getElementById('lastWeekLabel');
   if(lastWkEl && mo.weeks && mo.weeks.length > 0){
@@ -500,6 +513,15 @@ new Chart(document.getElementById('woChart'),{
 // OT charts — built dynamically in refresh() based on selected month year
 let otHrsChartInst = null, otPayChartInst = null;
 function buildOtCharts(otData){
+  // Calculate totals and update pills
+  const totalHrs = otData.reduce((s,w)=>s+w.hrs,0);
+  const totalPay = otData.reduce((s,w)=>s+w.pay,0);
+  const isCur = sel === CURRENT_MONTH_IDX;
+  const pillLabel = isCur ? 'MTD total' : 'Month total';
+  document.getElementById('otHrsPillLabel').textContent = pillLabel;
+  document.getElementById('otPayPillLabel').textContent = pillLabel;
+  document.getElementById('otHrsPill').textContent = totalHrs.toFixed(1) + ' hrs';
+  document.getElementById('otPayPill').textContent = fmtDolShort(totalPay);
   const otL = otData.map(w=>w.w);
   if(otHrsChartInst) otHrsChartInst.destroy();
   if(otPayChartInst) otPayChartInst.destroy();
