@@ -290,7 +290,8 @@ const months=[
   {key:'may',label:'May 2026',short:'May',insp:49,appa:2.2,openPos:1,poReq:5,poDol:147050.39,afterHrs:3,woCreated:{maint:57,hk:9,grnds:8},woClosed:{maint:33,hk:8,grnds:68},openWO:{maint:79,hk:5,grnds:24},pmRm:{pm:32,rm:47},weeks:[{w:'4/26–5/3',insp:6,appa:2.1,pos:'1',po:4,poDol:125947.39,ah:3,woCreated:58,woClosed:67},{w:'5/4–5/10',insp:43,appa:2.3,pos:'1',po:1,poDol:21103,ah:0,woCreated:74,woClosed:109}]}
 ];
 
-const otWeeks=[
+// OT weeks split by year — Oct-Dec show 2025 only, Jan+ show 2026 only
+const otWeeks2025=[
   {w:'9/22–9/28',  hrs:43.0,  pay:1331.25, mHrs:21.8,hHrs:20.2,gHrs:1.0},
   {w:'9/29–10/5',  hrs:30.0,  pay:882.92,  mHrs:11.8,hHrs:18.2,gHrs:0.0},
   {w:'10/6–10/12', hrs:11.75, pay:371.44,  mHrs:4.2, hHrs:7.5, gHrs:0.0},
@@ -302,6 +303,8 @@ const otWeeks=[
   {w:'11/17–11/23',hrs:13.5,  pay:437.91,  mHrs:7.0, hHrs:6.5, gHrs:0.0},
   {w:'12/1–12/7',  hrs:6.5,   pay:234.84,  mHrs:4.0, hHrs:2.2, gHrs:0.2},
   {w:'12/8–12/14', hrs:1.75,  pay:61.31,   mHrs:1.0, hHrs:0.8, gHrs:0.0},
+];
+const otWeeks2026=[
   {w:'1/5–1/11',   hrs:12.0,  pay:427.22,  mHrs:7.2, hHrs:4.0, gHrs:0.8},
   {w:'1/12–1/18',  hrs:17.75, pay:631.97,  mHrs:13.2,hHrs:3.2, gHrs:1.2},
   {w:'1/19–1/25',  hrs:8.0,   pay:189.0,   mHrs:0.0, hHrs:8.0, gHrs:0.0},
@@ -337,6 +340,8 @@ function refresh(){
   const isCurrent = sel === CURRENT_MONTH_IDX;
 
   document.getElementById('weekLabel').textContent = mo.label;
+  // Rebuild OT charts with year-appropriate data
+  buildOtCharts(sel <= 2 ? otWeeks2025 : otWeeks2026);
   // Update last week label with date range of most recent week
   const lastWkEl = document.getElementById('lastWeekLabel');
   if(lastWkEl && mo.weeks && mo.weeks.length > 0){
@@ -492,10 +497,15 @@ new Chart(document.getElementById('woChart'),{
 
 
 
-// OT charts
-const otL=otWeeks.map(w=>w.w);
-new Chart(document.getElementById('otHrsChart'),{type:'bar',data:{labels:otL,datasets:[{label:'Maintenance',data:otWeeks.map(w=>w.mHrs),backgroundColor:'#c0392b',stack:'a'},{label:'Housekeeping',data:otWeeks.map(w=>w.hHrs),backgroundColor:'#2a5298',stack:'a'},{label:'Grounds',data:otWeeks.map(w=>w.gHrs),backgroundColor:'#1a6b45',stack:'a'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{stacked:true,ticks:{font:{size:8.5},maxRotation:55,autoSkip:false}},y:{stacked:true,beginAtZero:true,ticks:{font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}}}}});
-new Chart(document.getElementById('otPayChart'),{type:'bar',data:{labels:otL,datasets:[{label:'OT Pay',data:otWeeks.map(w=>w.pay),backgroundColor:'#b84a00'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`OT Pay: ${fmtDolShort(ctx.parsed.y)}`}}},scales:{x:{ticks:{font:{size:8.5},maxRotation:55,autoSkip:false}},y:{beginAtZero:true,ticks:{font:{size:11},callback:v=>fmtK(v)},grid:{color:'rgba(0,0,0,0.05)'}}}}});
+// OT charts — built dynamically in refresh() based on selected month year
+let otHrsChartInst = null, otPayChartInst = null;
+function buildOtCharts(otData){
+  const otL = otData.map(w=>w.w);
+  if(otHrsChartInst) otHrsChartInst.destroy();
+  if(otPayChartInst) otPayChartInst.destroy();
+  otHrsChartInst = new Chart(document.getElementById('otHrsChart'),{type:'bar',data:{labels:otL,datasets:[{label:'Maintenance',data:otData.map(w=>w.mHrs),backgroundColor:'#c0392b',stack:'a'},{label:'Housekeeping',data:otData.map(w=>w.hHrs),backgroundColor:'#2a5298',stack:'a'},{label:'Grounds',data:otData.map(w=>w.gHrs),backgroundColor:'#1a6b45',stack:'a'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{stacked:true,ticks:{font:{size:8.5},maxRotation:55,autoSkip:false}},y:{stacked:true,beginAtZero:true,ticks:{font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}}}}});
+  otPayChartInst = new Chart(document.getElementById('otPayChart'),{type:'bar',data:{labels:otL,datasets:[{label:'OT Pay',data:otData.map(w=>w.pay),backgroundColor:'#b84a00'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`OT Pay: ${fmtDolShort(ctx.parsed.y)}`}}},scales:{x:{ticks:{font:{size:8.5},maxRotation:55,autoSkip:false}},y:{beginAtZero:true,ticks:{font:{size:11},callback:v=>fmtK(v)},grid:{color:'rgba(0,0,0,0.05)'}}}}});
+}
 
 // Rolling summary
 const validMonths=months.filter(m=>m.appa!==null&&m.insp>0);
