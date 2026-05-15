@@ -227,7 +227,17 @@ function fmtDolShort(v){
   return '$'+Math.round(v).toLocaleString();
 }
 function appaBadge(v){if(v===null)return '<span style="color:#aaa">N/A</span>';const cls=v<=2.5?'badge-green':v<=3.0?'badge-amber':'badge-red';return `<span class="badge ${cls}">${v.toFixed(2)}</span>`;}
-function kpi(label,val,sub,accent){return `<div class="kpi${accent?' accent':''}"><div class="kpi-label">${label}</div><div class="kpi-val">${val}</div>${sub?`<div class="kpi-sub">${sub}</div>`:''}</div>`;}
+function colorSub(sub){
+  if(!sub) return '';
+  // Match patterns like M:284, HK:69, G:25 and color them
+  return sub
+    .replace(/(?<![PR])(M:\d+)/g, '<span style="color:#c0392b;font-weight:600;">$1</span>')
+    .replace(/(HK:\d+)/g, '<span style="color:#2a5298;font-weight:600;">$1</span>')
+    .replace(/(G:\d+)/g, '<span style="color:#1a6b45;font-weight:600;">$1</span>')
+    ;
+}
+function kpi(label,val,sub,accent){return `<div class="kpi${accent?' accent':''}"><div class="kpi-label">${label}</div><div class="kpi-val">${val}</div>${sub?`<div class="kpi-sub">${colorSub(sub)}</div>`:''}</div>`;
+}
 
 const months=[
   {key:'oct',label:'Oct 2025',short:'Oct',insp:230,appa:2.42,openPos:3,poReq:21,poDol:2548552.81,afterHrs:1,woCreated:{maint:434,hk:49,grnds:23},woClosed:{maint:409,hk:49,grnds:25},openWO:{maint:94,hk:5,grnds:25},pmRm:{pm:1,rm:123},weeks:[{w:'10/20–10/26',insp:46,appa:2.6,pos:'5: 4 HK, 1 Grnds',po:9,poDol:393345.46,ah:0,woCreated:257,woClosed:241},{w:'10/27–11/2',insp:63,appa:2.5,pos:'3: 1 HK, 1 Grnds, 1 HVAC',po:6,poDol:190440.59,ah:0,woCreated:249,woClosed:242}]},
@@ -463,7 +473,7 @@ document.getElementById('summBody').innerHTML=
     const twoc=months.reduce((s,m)=>s+m.woCreated.maint+m.woCreated.hk+m.woCreated.grnds,0);
     const twocl=months.reduce((s,m)=>s+m.woClosed.maint+m.woClosed.hk+m.woClosed.grnds,0);
     const two=months.reduce((s,m)=>s+m.openWO.maint+m.openWO.hk+m.openWO.grnds,0);
-    return `<tr class="total-row"><td>Total / Avg</td><td>${ti}</td><td>${appaBadge(parseFloat(weightedAppa.toFixed(2)))}</td><td>${tpo}</td><td class="mono" style="font-size:12px;">${fmtDol(tpod)}</td><td>${tah}</td><td>${twoc}</td><td>${twocl}</td></tr>`;
+    return `<tr class="total-row"><td>Total / Avg</td><td>${ti}</td><td style="font-weight:600;">${weightedAppa.toFixed(2)}</td><td>${tpo}</td><td class="mono" style="font-size:12px;">${fmtDol(tpod)}</td><td>${tah}</td><td>${twoc}</td><td>${twocl}</td></tr>`;
   })();
 
 refresh();
@@ -506,11 +516,19 @@ function printSummary(){
     </div>`;
 
   // KPI cards helper
+  function pColorSub(sub){
+    if(!sub) return '';
+    return sub
+      .replace(/(?<![PR])(M:\d+)/g, '<span style="color:#c0392b;font-weight:600;">$1</span>')
+      .replace(/(HK:\d+)/g, '<span style="color:#2a5298;font-weight:600;">$1</span>')
+      .replace(/(G:\d+)/g, '<span style="color:#1a6b45;font-weight:600;">$1</span>')
+      ;
+  }
   function pCard(label, val, sub){
     return `<div style="background:#f0efe9;border-radius:8px;padding:10px 12px;">
       <div style="font-size:10px;color:#9b9a93;font-weight:500;margin-bottom:4px;">${label}</div>
       <div style="font-size:20px;font-weight:600;">${val}</div>
-      ${sub?`<div style="font-size:9px;color:#9b9a93;margin-top:3px;font-family:monospace;">${sub}</div>`:''}
+      ${sub?`<div style="font-size:9px;color:#9b9a93;margin-top:3px;font-family:monospace;">${pColorSub(sub)}</div>`:''}
     </div>`;
   }
 
