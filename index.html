@@ -702,28 +702,28 @@ function printSummary(){
   // ── Weekly table ─────────────────────────────────────────────────────────────
   document.getElementById('pWeekTable').innerHTML = `
     <div style="font-size:10px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:#9b9a93;margin-bottom:8px;margin-top:4px;">Weekly detail — ${mo.label}</div>
-    <table style="width:100%;border-collapse:collapse;font-size:12px;">
+    <table style="width:100%;border-collapse:collapse;font-size:15px;">
       <thead>
         <tr style="background:#2a5298;color:white;">
-          <th style="padding:8px 12px;text-align:left;font-weight:600;border-radius:0;">Week</th>
-          <th style="padding:8px 12px;text-align:left;font-weight:600;">Inspections</th>
-          <th style="padding:8px 12px;text-align:left;font-weight:600;">Avg APPA</th>
-          <th style="padding:8px 12px;text-align:left;font-weight:600;">Open Positions</th>
-          <th style="padding:8px 12px;text-align:left;font-weight:600;">PO Requests</th>
-          <th style="padding:8px 12px;text-align:left;font-weight:600;">PO $</th>
-          <th style="padding:8px 12px;text-align:left;font-weight:600;">After-Hrs</th>
+          <th style="padding:11px 14px;text-align:left;font-weight:600;">Week</th>
+          <th style="padding:11px 14px;text-align:left;font-weight:600;">Inspections</th>
+          <th style="padding:11px 14px;text-align:left;font-weight:600;">Avg APPA</th>
+          <th style="padding:11px 14px;text-align:left;font-weight:600;">Open Positions</th>
+          <th style="padding:11px 14px;text-align:left;font-weight:600;">PO Requests</th>
+          <th style="padding:11px 14px;text-align:left;font-weight:600;">PO $</th>
+          <th style="padding:11px 14px;text-align:left;font-weight:600;">After-Hrs</th>
         </tr>
       </thead>
       <tbody>
         ${mo.weeks.map((w,i)=>`
           <tr style="background:${i%2===0?'white':'#f4f3ef'};">
-            <td style="padding:9px 12px;border-bottom:1px solid #e2e0d8;font-weight:600;">${w.w}</td>
-            <td style="padding:9px 12px;border-bottom:1px solid #e2e0d8;">${w.insp}</td>
-            <td style="padding:9px 12px;border-bottom:1px solid #e2e0d8;">${w.appa !== null ? w.appa.toFixed(2) : 'N/A'}</td>
-            <td style="padding:9px 12px;border-bottom:1px solid #e2e0d8;">${w.pos}</td>
-            <td style="padding:9px 12px;border-bottom:1px solid #e2e0d8;">${w.po}</td>
-            <td style="padding:9px 12px;border-bottom:1px solid #e2e0d8;font-family:monospace;">${fmtDol(w.poDol)}</td>
-            <td style="padding:9px 12px;border-bottom:1px solid #e2e0d8;">${w.ah}</td>
+            <td style="padding:11px 14px;border-bottom:1px solid #e2e0d8;font-weight:600;">${w.w}</td>
+            <td style="padding:11px 14px;border-bottom:1px solid #e2e0d8;">${w.insp}</td>
+            <td style="padding:11px 14px;border-bottom:1px solid #e2e0d8;">${w.appa !== null ? w.appa.toFixed(2) : 'N/A'}</td>
+            <td style="padding:11px 14px;border-bottom:1px solid #e2e0d8;">${w.pos}</td>
+            <td style="padding:11px 14px;border-bottom:1px solid #e2e0d8;">${w.po}</td>
+            <td style="padding:11px 14px;border-bottom:1px solid #e2e0d8;font-family:monospace;">${fmtDol(w.poDol)}</td>
+            <td style="padding:11px 14px;border-bottom:1px solid #e2e0d8;">${w.ah}</td>
           </tr>`).join('')}
       </tbody>
     </table>`;
