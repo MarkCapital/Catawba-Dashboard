@@ -372,7 +372,7 @@ function refresh(){
     const lwClosed  = lw ? lw.woClosed  || null : null;
     row2.innerHTML=
       kpi(`Open WOs as of ${UPDATED}`,top,`M:${mo.openWO.maint} · HK:${mo.openWO.hk} · G:${mo.openWO.grnds}`)+
-      kpi(`Maint WO type as of ${UPDATED}`,`<span style="font-size:14px;">PM: ${mo.pmRm.pm} &nbsp;·&nbsp; RM: ${mo.pmRm.rm}</span>`)+
+      kpi(`Maint WO type as of ${UPDATED}`,`<span style="font-size:18px;font-weight:600;">PM: ${mo.pmRm.pm}</span><span style="font-size:14px;color:var(--text3);"> &nbsp;·&nbsp; </span><span style="font-size:18px;font-weight:600;">RM: ${mo.pmRm.rm}</span>`)+
       kpi('WOs created',tc,`M:${mo.woCreated.maint} · HK:${mo.woCreated.hk} · G:${mo.woCreated.grnds}`)+
       kpi('WOs closed',tco,`M:${mo.woClosed.maint} · HK:${mo.woClosed.hk} · G:${mo.woClosed.grnds}`);
   } else {
@@ -608,7 +608,7 @@ function printSummary(){
     </div>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;">
       ${pCard('Open WOs as of '+UPDATED, top, 'M:'+mo.openWO.maint+' · HK:'+mo.openWO.hk+' · G:'+mo.openWO.grnds)}
-      ${pCard('Maint WO type as of '+UPDATED, '', 'PM: '+mo.pmRm.pm+' &nbsp;·&nbsp; RM: '+mo.pmRm.rm)}
+      ${pCard('Maint WO type as of '+UPDATED, `<span style='font-size:20px;'>PM: <strong>${mo.pmRm.pm}</strong> &nbsp;·&nbsp; RM: <strong>${mo.pmRm.rm}</strong></span>`, '')}
       ${pCard('WOs created', tc, 'M:'+mo.woCreated.maint+' · HK:'+mo.woCreated.hk+' · G:'+mo.woCreated.grnds)}
       ${pCard('WOs closed', tco, 'M:'+mo.woClosed.maint+' · HK:'+mo.woClosed.hk+' · G:'+mo.woClosed.grnds)}
     </div>`;
