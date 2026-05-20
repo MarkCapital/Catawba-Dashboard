@@ -565,6 +565,9 @@ function printSummary(){
   const tco = mo.woClosed.maint+mo.woClosed.hk+mo.woClosed.grnds;
   const top = mo.openWO.maint+mo.openWO.hk+mo.openWO.grnds;
   const ml  = months.map(m=>m.short);
+  // Last COMPLETED week = second-to-last entry (last entry may be partial current week)
+  const lastCompleted = mo.weeks.length >= 2 ? mo.weeks[mo.weeks.length-2] : mo.weeks[mo.weeks.length-1];
+  const lastCompletedW = lastCompleted.w;
 
   // ── Header ──────────────────────────────────────────────────────────────────
   document.getElementById('pHeader').innerHTML = `
@@ -616,13 +619,13 @@ function printSummary(){
   // ── Row 2 KPIs ──────────────────────────────────────────────────────────────
   document.getElementById('pKpi2').innerHTML = `
     <div style="margin-bottom:6px;">
-      <span style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#9b9a93;">Last week (${mo.weeks[mo.weeks.length-1].w})</span>
+      <span style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#9b9a93;">Last week (${lastCompletedW})</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;">
       ${pCard('Open WOs', top, 'M:'+mo.openWO.maint+' · HK:'+mo.openWO.hk+' · G:'+mo.openWO.grnds, {cls:'snapshot',text:'As of '+UPDATED})}
       ${pCard('Maint WO type', 'PM: '+mo.pmRm.pm+' · RM: '+mo.pmRm.rm, '', {cls:'snapshot',text:'As of '+UPDATED})}
-      ${pCard('WOs created', tc, 'M:'+mo.woCreated.maint+' · HK:'+mo.woCreated.hk+' · G:'+mo.woCreated.grnds, {cls:'lastweek',text:'Last week · '+(mo.weeks[mo.weeks.length-2]||mo.weeks[mo.weeks.length-1]).w})}
-      ${pCard('WOs closed', tco, 'M:'+mo.woClosed.maint+' · HK:'+mo.woClosed.hk+' · G:'+mo.woClosed.grnds, {cls:'lastweek',text:'Last week · '+(mo.weeks[mo.weeks.length-2]||mo.weeks[mo.weeks.length-1]).w})}
+      ${pCard('WOs created', tc, 'M:'+mo.woCreated.maint+' · HK:'+mo.woCreated.hk+' · G:'+mo.woCreated.grnds, {cls:'lastweek',text:'Last week · '+lastCompletedW})}
+      ${pCard('WOs closed', tco, 'M:'+mo.woClosed.maint+' · HK:'+mo.woClosed.hk+' · G:'+mo.woClosed.grnds, {cls:'lastweek',text:'Last week · '+lastCompletedW})}
     </div>`;
 
   // ── Charts ───────────────────────────────────────────────────────────────────
