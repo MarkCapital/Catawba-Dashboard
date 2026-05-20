@@ -163,7 +163,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <div class="kpi-row kpi-row-2" id="kpiRow2" style="margin-bottom:20px;"></div>
 
   <!-- Row A: 3 charts always shown -->
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;">
+  <div id="chartsRowA" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;">
     <div class="chart-card">
       <div class="chart-title">Inspections &amp; APPA score</div>
       <div class="chart-legend">
@@ -365,15 +365,33 @@ let openWoInst = null, pmRmInst = null;
 
 function setChartGrids(){
   const mobile = window.innerWidth <= 700;
+  // Row A: 3 month charts
   const rowA = document.getElementById('chartsRowA');
-  const rowB = document.getElementById('chartRowB');
-  const rowBH = document.getElementById('chartRowBHistorical');
   if(rowA) rowA.style.gridTemplateColumns = mobile ? '1fr' : '1fr 1fr 1fr';
+  // Row B: Open WOs + PM/RM + WO by week (current month)
+  const rowB = document.getElementById('chartRowB');
   if(rowB) rowB.style.gridTemplateColumns = mobile ? '1fr' : '1fr 1fr 1fr';
-  if(rowBH) rowBH.style.display === 'flex' && (rowBH.style.flexDirection = mobile ? 'column' : 'row');
-  // Also fix the OT charts row and any inline grid rows
+  // Row B historical
+  const rowBH = document.getElementById('chartRowBHistorical');
+  if(rowBH && rowBH.style.display !== 'none'){
+    rowBH.style.flexDirection = mobile ? 'column' : 'row';
+    if(mobile){ rowBH.querySelector('.chart-card').style.width = '100%'; }
+  }
+  // All .charts-row divs (OT charts etc)
   document.querySelectorAll('.charts-row').forEach(el=>{
     el.style.gridTemplateColumns = mobile ? '1fr' : '';
+  });
+  // Make charts taller on mobile so data is legible
+  document.querySelectorAll('.chart-wrap').forEach(el=>{
+    const h = el.style.height;
+    if(h && h.includes('px')){
+      if(mobile){
+        el.dataset.desktopH = el.dataset.desktopH || h;
+        el.style.height = '240px';
+      } else if(el.dataset.desktopH){
+        el.style.height = el.dataset.desktopH;
+      }
+    }
   });
 }
 window.addEventListener('resize', ()=>{ setChartGrids(); });
