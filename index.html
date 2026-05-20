@@ -375,7 +375,8 @@ function refresh(){
   if(isCurrent){
     row2.style.gridTemplateColumns='repeat(4,1fr)';
     const snapshotBadge = {cls:'badge-snapshot', text:`As of ${UPDATED}`};
-    const lastWeekBadge = {cls:'badge-lastweek', text:`Last week · ${mo.weeks[mo.weeks.length-1].w}`};
+    const lastWeek = mo.weeks[mo.weeks.length-2] || mo.weeks[mo.weeks.length-1];
+    const lastWeekBadge = {cls:'badge-lastweek', text:`Last week · ${lastWeek.w}`};
     row2.innerHTML=
       kpi('Open WOs',top,`M:${mo.openWO.maint} · HK:${mo.openWO.hk} · G:${mo.openWO.grnds}`,false,snapshotBadge)+
       kpi('Maint WO type',`<span style="font-size:18px;font-weight:600;">PM: ${mo.pmRm.pm}</span><span style="font-size:14px;color:var(--text3);"> &nbsp;·&nbsp; </span><span style="font-size:18px;font-weight:600;">RM: ${mo.pmRm.rm}</span>`,'',false,snapshotBadge)+
@@ -620,8 +621,8 @@ function printSummary(){
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;">
       ${pCard('Open WOs', top, 'M:'+mo.openWO.maint+' · HK:'+mo.openWO.hk+' · G:'+mo.openWO.grnds, {cls:'snapshot',text:'As of '+UPDATED})}
       ${pCard('Maint WO type', 'PM: '+mo.pmRm.pm+' · RM: '+mo.pmRm.rm, '', {cls:'snapshot',text:'As of '+UPDATED})}
-      ${pCard('WOs created', tc, 'M:'+mo.woCreated.maint+' · HK:'+mo.woCreated.hk+' · G:'+mo.woCreated.grnds, {cls:'lastweek',text:'Last week · '+mo.weeks[mo.weeks.length-1].w})}
-      ${pCard('WOs closed', tco, 'M:'+mo.woClosed.maint+' · HK:'+mo.woClosed.hk+' · G:'+mo.woClosed.grnds, {cls:'lastweek',text:'Last week · '+mo.weeks[mo.weeks.length-1].w})}
+      ${pCard('WOs created', tc, 'M:'+mo.woCreated.maint+' · HK:'+mo.woCreated.hk+' · G:'+mo.woCreated.grnds, {cls:'lastweek',text:'Last week · '+(mo.weeks[mo.weeks.length-2]||mo.weeks[mo.weeks.length-1]).w})}
+      ${pCard('WOs closed', tco, 'M:'+mo.woClosed.maint+' · HK:'+mo.woClosed.hk+' · G:'+mo.woClosed.grnds, {cls:'lastweek',text:'Last week · '+(mo.weeks[mo.weeks.length-2]||mo.weeks[mo.weeks.length-1]).w})}
     </div>`;
 
   // ── Charts ───────────────────────────────────────────────────────────────────
