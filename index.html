@@ -270,7 +270,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 </div>
   <!-- TRAINING SECTION -->
   <div class="section-head"><h2>Private Education Training</h2><div class="divider"></div></div>
-  <div class="charts-row" id="trainingSection">
+  <div class="charts-row" id="trainingSection" style="max-width:1100px;">
     <div class="chart-card">
       <div class="chart-title">Completion by department — <span id="trainingMonthLabel" style="text-transform:none;letter-spacing:0;font-weight:400;color:var(--text2);">May 2026</span></div>
       <div class="chart-legend">
@@ -677,7 +677,8 @@ function buildTrainingSection(){
   const bars = document.getElementById('trainingBars');
   bars.innerHTML = training.departments.map(d=>{
     const completed = Math.round(d.total * d.pct / 100);
-    const cls = d.pct >= 90 ? '#1a6b45' : d.pct >= 75 ? '#7a4f00' : '#8b2020';
+    const deptColors = { 'Janitorial':'#2a5298', 'Maintenance':'#c0392b', 'Grounds':'#1a6b45' };
+    const cls = deptColors[d.name] || '#2a5298';
     return `<div style="display:flex;align-items:center;gap:10px;font-size:12px;">
       <div style="width:90px;flex-shrink:0;color:var(--text2);">${d.name}</div>
       <div style="flex:1;height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;">
@@ -695,8 +696,11 @@ function buildTrainingSection(){
     data:{
       labels: training.departments.map(d=>d.name),
       datasets:[
-        {label:'Completed', data:training.departments.map(d=>parseFloat(d.pct.toFixed(2))), backgroundColor:'#1a6b45'},
-        {label:'Not started', data:training.departments.map(d=>parseFloat((100-d.pct).toFixed(2))), backgroundColor:'#c0392b'}
+        {label:'Completed', data:training.departments.map(d=>parseFloat(d.pct.toFixed(2))),
+          backgroundColor:training.departments.map(d=>({'Janitorial':'#2a5298','Maintenance':'#c0392b','Grounds':'#1a6b45'}[d.name]||'#2a5298'))},
+        {label:'Not started', data:training.departments.map(d=>parseFloat((100-d.pct).toFixed(2))),
+          backgroundColor:training.departments.map(d=>({'Janitorial':'rgba(42,82,152,0.2)','Maintenance':'rgba(192,57,43,0.2)','Grounds':'rgba(26,107,69,0.2)'}[d.name]||'rgba(42,82,152,0.2)'))
+        }
       ]
     },
     options:{
