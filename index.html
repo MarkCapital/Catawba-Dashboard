@@ -879,9 +879,16 @@ function showYTD(){
   // ── KPI Row 2: WOs Created + Closed ──
   const totCreated = ytdMonths.reduce((s,m)=>s+(m.mtdCreated!==undefined?m.mtdCreated:m.woCreated.maint+m.woCreated.hk+m.woCreated.grnds),0);
   const totClosed  = ytdMonths.reduce((s,m)=>s+(m.mtdClosed!==undefined?m.mtdClosed:m.woClosed.maint+m.woClosed.hk+m.woClosed.grnds),0);
+  // YTD dept totals — sum full month dept breakdowns across 2026 months
+  const ytdCM = ytdMonths.reduce((s,m)=>s+m.woCreated.maint,0);
+  const ytdCHK = ytdMonths.reduce((s,m)=>s+m.woCreated.hk,0);
+  const ytdCG = ytdMonths.reduce((s,m)=>s+m.woCreated.grnds,0);
+  const ytdClM = ytdMonths.reduce((s,m)=>s+m.woClosed.maint,0);
+  const ytdClHK = ytdMonths.reduce((s,m)=>s+m.woClosed.hk,0);
+  const ytdClG = ytdMonths.reduce((s,m)=>s+m.woClosed.grnds,0);
   document.getElementById('ytdKpi2').innerHTML =
-    kpi('WOs created (2026 YTD)', totCreated)+
-    kpi('WOs closed (2026 YTD)', totClosed);
+    kpi('WOs created (2026 YTD)', totCreated, `M:${ytdCM} · HK:${ytdCHK} · G:${ytdCG}`)+
+    kpi('WOs closed (2026 YTD)', totClosed, `M:${ytdClM} · HK:${ytdClHK} · G:${ytdClG}`);
 
   // ── Charts ──
   const ml = ytdMonths.map(m=>m.short);
@@ -1023,9 +1030,23 @@ function printYTD(){
       ${pCard('PO requests',totPO)}${pCard('PO request $',fmtK(totPODol))}${pCard('After-hrs calls',totAH)}
     </div>`;
 
+  // YTD dept WO totals — sum full month dept breakdowns across 2026 months
+  const ytdCreatedM = ytdMonths.reduce((s,m)=>s+m.woCreated.maint,0);
+  const ytdCreatedHK = ytdMonths.reduce((s,m)=>s+m.woCreated.hk,0);
+  const ytdCreatedG = ytdMonths.reduce((s,m)=>s+m.woCreated.grnds,0);
+  const ytdClosedM = ytdMonths.reduce((s,m)=>s+m.woClosed.maint,0);
+  const ytdClosedHK = ytdMonths.reduce((s,m)=>s+m.woClosed.hk,0);
+  const ytdClosedG = ytdMonths.reduce((s,m)=>s+m.woClosed.grnds,0);
+  // OT totals for 2026
+  const otByMoPrint = getYtdOtByMonth();
+  const ytdOtHrs = parseFloat(Object.values(otByMoPrint).reduce((s,m)=>s+m.hrs,0).toFixed(1));
+  const ytdOtPay = Object.values(otByMoPrint).reduce((s,m)=>s+m.pay,0);
   document.getElementById('pKpi2').innerHTML = `
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;">
-      ${pCard('WOs created (YTD)',totCreated)}${pCard('WOs closed (YTD)',totClosed)}
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:20px;">
+      ${pCard('WOs created (YTD)',totCreated,'M:'+ytdCreatedM+' · HK:'+ytdCreatedHK+' · G:'+ytdCreatedG)}
+      ${pCard('WOs closed (YTD)',totClosed,'M:'+ytdClosedM+' · HK:'+ytdClosedHK+' · G:'+ytdClosedG)}
+      ${pCard('OT hours (YTD)',ytdOtHrs)}
+      ${pCard('OT pay $ (YTD)','$'+ytdOtPay.toLocaleString('en-US',{maximumFractionDigits:0}))}
     </div>`;
 
   document.getElementById('pCharts').innerHTML = `
