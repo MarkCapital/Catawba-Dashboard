@@ -128,7 +128,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <p>The Budd Group &nbsp;·&nbsp; Operations Dashboard</p>
     </div>
   </div>
-  <div class="header-right">Updated 5/20/26</div>
+  <div class="header-right">Updated 5/22/26</div>
 </div>
 
 <div class="quicklinks">
@@ -191,7 +191,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <!-- Row B: current month only — Open WOs + PM/RM + WO by Week -->
   <div style="display:none;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;" id="chartRowB">
     <div class="chart-card" id="openWoCard">
-      <div class="chart-title">Open WOs as of 5/20/26</div>
+      <div class="chart-title">Open WOs as of 5/22/26</div>
       <div class="chart-legend">
         <span class="leg"><span class="leg-sq" style="background:#c0392b;"></span>Maintenance</span>
         <span class="leg"><span class="leg-sq" style="background:#2a5298;"></span>Housekeeping</span>
@@ -200,7 +200,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <div class="chart-wrap" style="height:200px;"><canvas id="openWoChart" role="img" aria-label="Open work orders by department"></canvas></div>
     </div>
     <div class="chart-card" id="pmRmCard">
-      <div class="chart-title">Maintenance WO type as of 5/20/26 — <span id="pmRmLabel" style="text-transform:none;letter-spacing:0;font-weight:400;color:var(--text2);"></span></div>
+      <div class="chart-title">Maintenance WO type as of 5/22/26 — <span id="pmRmLabel" style="text-transform:none;letter-spacing:0;font-weight:400;color:var(--text2);"></span></div>
       <div class="chart-legend">
         <span class="leg"><span class="leg-sq" style="background:#2a5298;"></span>Preventive (PM)</span>
         <span class="leg"><span class="leg-sq" style="background:#c0392b;"></span>Reactive (RM)</span>
@@ -370,7 +370,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   </div>
 
 </div>
-<div class="footer">Catawba College Facilities &nbsp;·&nbsp; The Budd Group &nbsp;·&nbsp; Updated 5/20/26</div>
+<div class="footer">Catawba College Facilities &nbsp;·&nbsp; The Budd Group &nbsp;·&nbsp; Updated 5/22/26</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
@@ -393,7 +393,7 @@ const centerTotalPlugin = { id:'centerTotal', afterDraw(chart){
 }};
 Chart.register(centerTotalPlugin);
 
-const UPDATED = '5/20/26';
+const UPDATED = '5/22/26';
 const CURRENT_MONTH_IDX = 7;
 
 function fmtDol(v){return '$'+v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
@@ -425,7 +425,7 @@ const months=[
   {key:'feb',label:'Feb 2026',short:'Feb',insp:224,appa:2.45,openPos:2,poReq:8,poDol:94280.87,afterHrs:4,woCreated:{maint:240,hk:47,grnds:27},woClosed:{maint:225,hk:46,grnds:25},openWO:{maint:69,hk:8,grnds:18},pmRm:{pm:4,rm:91},weeks:[{w:'2/2–2/8',insp:49,appa:2.6,pos:'1',po:3,poDol:54607.39,ah:1,woCreated:57,woClosed:54},{w:'2/9–2/15',insp:31,appa:2.3,pos:'2',po:1,poDol:2173.71,ah:0,woCreated:98,woClosed:77},{w:'2/16–2/22',insp:95,appa:2.6,pos:'2',po:3,poDol:33999.77,ah:1,woCreated:83,woClosed:84},{w:'2/23–3/1',insp:49,appa:2.3,pos:'0',po:1,poDol:3500,ah:2,woCreated:76,woClosed:81}]},
   {key:'mar',label:'Mar 2026',short:'Mar',insp:203,appa:2.48,openPos:2,poReq:9,poDol:144352.25,afterHrs:1,woCreated:{maint:202,hk:37,grnds:26},woClosed:{maint:215,hk:35,grnds:18},openWO:{maint:59,hk:9,grnds:20},pmRm:{pm:1,rm:87},weeks:[{w:'3/2–3/8',insp:67,appa:2.6,pos:'0',po:3,poDol:24921.57,ah:1,woCreated:69,woClosed:72},{w:'3/9–3/15',insp:66,appa:2.4,pos:'2',po:2,poDol:41561.81,ah:0,woCreated:54,woClosed:50},{w:'3/16–3/22',insp:44,appa:2.4,pos:'4',po:3,poDol:71095,ah:0,woCreated:75,woClosed:54},{w:'3/23–3/29',insp:26,appa:2.5,pos:'2',po:1,poDol:6773.87,ah:0,woCreated:67,woClosed:92}]},
   {key:'apr',label:'Apr 2026',short:'Apr',insp:172,appa:2.4,openPos:1,poReq:5,poDol:470801.28,afterHrs:6,woCreated:{maint:284,hk:69,grnds:25},woClosed:{maint:279,hk:67,grnds:21},openWO:{maint:58,hk:7,grnds:24},pmRm:{pm:7,rm:51},weeks:[{w:'3/30–4/5',insp:25,appa:2.6,pos:'3',po:3,poDol:69383.88,ah:2,woCreated:94,woClosed:49},{w:'4/6–4/12',insp:41,appa:2.5,pos:'2',po:0,poDol:0,ah:3,woCreated:95,woClosed:116},{w:'4/13–4/19',insp:46,appa:2.3,pos:'2',po:2,poDol:401417.4,ah:0,woCreated:97,woClosed:107},{w:'4/20–4/26',insp:60,appa:2.2,pos:'1',po:0,poDol:0,ah:1,woCreated:92,woClosed:95}]},
-  {key:'may',label:'May 2026',short:'May',insp:95,appa:2.25,openPos:1,poReq:9,poDol:206826.65,afterHrs:4,woCreated:{maint:28,hk:6,grnds:4},woClosed:{maint:20,hk:8,grnds:2},mtdCreated:170,mtdClosed:206,openWO:{maint:104,hk:25,grnds:4},pmRm:{pm:54,rm:50},weeks:[{w:'4/26–5/3',insp:6,appa:2.1,pos:'1',po:4,poDol:125947.39,ah:3,woCreated:58,woClosed:67},{w:'5/4–5/10',insp:43,appa:2.3,pos:'1',po:1,poDol:21103,ah:0,woCreated:74,woClosed:109},{w:'5/11–5/17',insp:30,appa:2.3,pos:'1',po:1,poDol:8520.83,ah:1,woCreated:38,woClosed:30},{w:'5/18–5/24',insp:16,appa:2.3,pos:'1',po:3,poDol:51255.43,ah:0,woCreated:0,woClosed:0}]}
+  {key:'may',label:'May 2026',short:'May',insp:95,appa:2.25,openPos:1,poReq:12,poDol:273826.65,afterHrs:4,woCreated:{maint:28,hk:6,grnds:4},woClosed:{maint:20,hk:8,grnds:2},mtdCreated:222,mtdClosed:239,mtdCreatedM:165,mtdCreatedHK:36,mtdCreatedG:21,mtdClosedM:115,mtdClosedHK:42,mtdClosedG:82,openWO:{maint:105,hk:4,grnds:23},pmRm:{pm:53,rm:79},weeks:[{w:'4/26–5/3',insp:6,appa:2.1,pos:'1',po:4,poDol:125947.39,ah:3,woCreated:58,woClosed:67},{w:'5/4–5/10',insp:43,appa:2.3,pos:'1',po:1,poDol:21103,ah:0,woCreated:74,woClosed:109},{w:'5/11–5/17',insp:30,appa:2.3,pos:'1',po:1,poDol:8520.83,ah:1,woCreated:38,woClosed:30},{w:'5/18–5/24',insp:16,appa:2.3,pos:'1',po:6,poDol:118255.43,ah:0,woCreated:52,woClosed:33}]}
 ];
 
 // OT weeks split by year — Oct-Dec show 2025 only, Jan+ show 2026 only
@@ -884,12 +884,12 @@ function showYTD(){
   const totCreated = ytdMonths.reduce((s,m)=>s+(m.mtdCreated!==undefined?m.mtdCreated:m.woCreated.maint+m.woCreated.hk+m.woCreated.grnds),0);
   const totClosed  = ytdMonths.reduce((s,m)=>s+(m.mtdClosed!==undefined?m.mtdClosed:m.woClosed.maint+m.woClosed.hk+m.woClosed.grnds),0);
   // YTD dept totals — sum full month dept breakdowns across 2026 months
-  const ytdCM = ytdMonths.reduce((s,m)=>s+m.woCreated.maint,0);
-  const ytdCHK = ytdMonths.reduce((s,m)=>s+m.woCreated.hk,0);
-  const ytdCG = ytdMonths.reduce((s,m)=>s+m.woCreated.grnds,0);
-  const ytdClM = ytdMonths.reduce((s,m)=>s+m.woClosed.maint,0);
-  const ytdClHK = ytdMonths.reduce((s,m)=>s+m.woClosed.hk,0);
-  const ytdClG = ytdMonths.reduce((s,m)=>s+m.woClosed.grnds,0);
+  const ytdCM  = ytdMonths.reduce((s,m)=>s+(m.mtdCreatedM!==undefined?m.mtdCreatedM:m.woCreated.maint),0);
+  const ytdCHK = ytdMonths.reduce((s,m)=>s+(m.mtdCreatedHK!==undefined?m.mtdCreatedHK:m.woCreated.hk),0);
+  const ytdCG  = ytdMonths.reduce((s,m)=>s+(m.mtdCreatedG!==undefined?m.mtdCreatedG:m.woCreated.grnds),0);
+  const ytdClM  = ytdMonths.reduce((s,m)=>s+(m.mtdClosedM!==undefined?m.mtdClosedM:m.woClosed.maint),0);
+  const ytdClHK = ytdMonths.reduce((s,m)=>s+(m.mtdClosedHK!==undefined?m.mtdClosedHK:m.woClosed.hk),0);
+  const ytdClG  = ytdMonths.reduce((s,m)=>s+(m.mtdClosedG!==undefined?m.mtdClosedG:m.woClosed.grnds),0);
   document.getElementById('ytdKpi2').innerHTML =
     kpi('WOs created (2026 YTD)', totCreated, `M:${ytdCM} · HK:${ytdCHK} · G:${ytdCG}`)+
     kpi('WOs closed (2026 YTD)', totClosed, `M:${ytdClM} · HK:${ytdClHK} · G:${ytdClG}`);
@@ -1034,13 +1034,13 @@ function printYTD(){
       ${pCard('PO requests',totPO)}${pCard('PO request $',fmtK(totPODol))}${pCard('After-hrs calls',totAH)}
     </div>`;
 
-  // YTD dept WO totals — sum full month dept breakdowns across 2026 months
-  const ytdCreatedM = ytdMonths.reduce((s,m)=>s+m.woCreated.maint,0);
-  const ytdCreatedHK = ytdMonths.reduce((s,m)=>s+m.woCreated.hk,0);
-  const ytdCreatedG = ytdMonths.reduce((s,m)=>s+m.woCreated.grnds,0);
-  const ytdClosedM = ytdMonths.reduce((s,m)=>s+m.woClosed.maint,0);
-  const ytdClosedHK = ytdMonths.reduce((s,m)=>s+m.woClosed.hk,0);
-  const ytdClosedG = ytdMonths.reduce((s,m)=>s+m.woClosed.grnds,0);
+  // YTD dept WO totals — use mtd dept fields when available (current month), else full month breakdown
+  const ytdCreatedM  = ytdMonths.reduce((s,m)=>s+(m.mtdCreatedM!==undefined?m.mtdCreatedM:m.woCreated.maint),0);
+  const ytdCreatedHK = ytdMonths.reduce((s,m)=>s+(m.mtdCreatedHK!==undefined?m.mtdCreatedHK:m.woCreated.hk),0);
+  const ytdCreatedG  = ytdMonths.reduce((s,m)=>s+(m.mtdCreatedG!==undefined?m.mtdCreatedG:m.woCreated.grnds),0);
+  const ytdClosedM  = ytdMonths.reduce((s,m)=>s+(m.mtdClosedM!==undefined?m.mtdClosedM:m.woClosed.maint),0);
+  const ytdClosedHK = ytdMonths.reduce((s,m)=>s+(m.mtdClosedHK!==undefined?m.mtdClosedHK:m.woClosed.hk),0);
+  const ytdClosedG  = ytdMonths.reduce((s,m)=>s+(m.mtdClosedG!==undefined?m.mtdClosedG:m.woClosed.grnds),0);
   // OT totals for 2026
   const otByMoPrint = getYtdOtByMonth();
   const ytdOtHrs = parseFloat(Object.values(otByMoPrint).reduce((s,m)=>s+m.hrs,0).toFixed(1));
