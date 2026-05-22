@@ -351,10 +351,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <div class="charts-row" id="trainingSection">
     <div class="chart-card">
       <div class="chart-title">Completion by department — <span id="trainingMonthLabel" style="text-transform:none;letter-spacing:0;font-weight:400;color:var(--text2);">May 2026</span></div>
-      <div class="chart-legend">
-        <span class="leg"><span class="leg-sq" style="background:#1a6b45;"></span>Completed</span>
-        <span class="leg"><span class="leg-sq" style="background:#c0392b;"></span>Not started</span>
-      </div>
+
       <div class="chart-wrap" style="height:200px;"><canvas id="trainingChart" role="img" aria-label="Training completion by department"></canvas></div>
     </div>
     <div class="chart-card">
@@ -470,9 +467,12 @@ let openWoInst = null, pmRmInst = null;
 
 function setChartGrids(){
   const mobile = window.innerWidth <= 700;
-  // Row A: 3 month charts
+  // Row A: 3 month charts (main dashboard)
   const rowA = document.getElementById('chartsRowA');
   if(rowA) rowA.style.gridTemplateColumns = mobile ? '1fr' : '1fr 1fr 1fr';
+  // YTD charts row
+  const ytdRow = document.getElementById('ytdChartsRow');
+  if(ytdRow) ytdRow.style.gridTemplateColumns = mobile ? '1fr' : '1fr 1fr 1fr';
   // Row B: Open WOs + PM/RM + WO by week (current month)
   const rowB = document.getElementById('chartRowB');
   if(rowB) rowB.style.gridTemplateColumns = mobile ? '1fr' : '1fr 1fr 1fr';
@@ -803,18 +803,22 @@ function buildTrainingSection(){
     data:{
       labels: training.departments.map(d=>d.name),
       datasets:[
-        {label:'Completed', data:training.departments.map(d=>parseFloat(d.pct.toFixed(2))),
-          backgroundColor:training.departments.map(d=>({'Janitorial':'#2a5298','Maintenance':'#c0392b','Grounds':'#1a6b45'}[d.name]||'#2a5298'))},
-        {label:'Not started', data:training.departments.map(d=>parseFloat((100-d.pct).toFixed(2))),
-          backgroundColor:training.departments.map(d=>({'Janitorial':'rgba(42,82,152,0.2)','Maintenance':'rgba(192,57,43,0.2)','Grounds':'rgba(26,107,69,0.2)'}[d.name]||'rgba(42,82,152,0.2)'))
-        }
+        {label:'Completed',
+          data:training.departments.map(d=>parseFloat(d.pct.toFixed(2))),
+          backgroundColor:training.departments.map(d=>({'Janitorial':'#2a5298','Maintenance':'#c0392b','Grounds':'#1a6b45'}[d.name]||'#2a5298')),
+          datalabels:{anchor:'center',align:'center',color:'#fff',font:{size:14,weight:'bold'},formatter:v=>v.toFixed(0)+'%'}},
+        {label:'Not started',
+          data:training.departments.map(d=>parseFloat((100-d.pct).toFixed(2))),
+          backgroundColor:'#e2e0d8',
+          datalabels:{anchor:'center',align:'center',color:'#888780',font:{size:10},
+            formatter:(v,ctx)=>v>0?v.toFixed(0)+'% not started':'',display:ctx=>ctx.dataset.data[ctx.dataIndex]>4}}
       ]
     },
     options:{
       responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},datalabels:{display:false}},
+      plugins:{legend:{display:false},datalabels:{}},
       scales:{
-        x:{stacked:true,ticks:{font:{size:12}}},
+        x:{stacked:true,ticks:{font:{size:12,weight:'500'}}},
         y:{stacked:true,beginAtZero:true,max:100,ticks:{font:{size:11},callback:v=>v+'%'},grid:{color:'rgba(0,0,0,0.05)'}}
       }
     }
