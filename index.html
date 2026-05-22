@@ -410,9 +410,9 @@ function appaBadge(v){if(v===null)return '<span style="color:#aaa">N/A</span>';c
 function colorSub(sub){
   if(!sub) return '';
   return sub
-    .replace(/(?<![PR])(M:\d+)/g, '<span style="color:#c0392b;font-weight:600;">$1</span>')
-    .replace(/(HK:\d+)/g, '<span style="color:#2a5298;font-weight:600;">$1</span>')
-    .replace(/(G:\d+)/g, '<span style="color:#1a6b45;font-weight:600;">$1</span>')
+    .replace(/(?<![PR])(M:[\d,]+)/g, '<span style="color:#c0392b;font-weight:600;">$1</span>')
+    .replace(/(HK:[\d,]+)/g, '<span style="color:#2a5298;font-weight:600;">$1</span>')
+    .replace(/(G:[\d,]+)/g, '<span style="color:#1a6b45;font-weight:600;">$1</span>')
     ;
 }
 function kpi(label,val,sub,accent,badge){
@@ -894,8 +894,8 @@ function showYTD(){
   const ytdClHK = ytdMonths.reduce((s,m)=>s+(m.mtdClosedHK!==undefined?m.mtdClosedHK:m.woClosed.hk),0);
   const ytdClG  = ytdMonths.reduce((s,m)=>s+(m.mtdClosedG!==undefined?m.mtdClosedG:m.woClosed.grnds),0);
   document.getElementById('ytdKpi2').innerHTML =
-    kpi('WOs created (2026 YTD)', fmtNum(totCreated), `M:${ytdCM} · HK:${ytdCHK} · G:${ytdCG}`)+
-    kpi('WOs closed (2026 YTD)', fmtNum(totClosed), `M:${ytdClM} · HK:${ytdClHK} · G:${ytdClG}`);
+    kpi('WOs created (2026 YTD)', fmtNum(totCreated), `M:${fmtNum(ytdCM)} · HK:${fmtNum(ytdCHK)} · G:${fmtNum(ytdCG)}`)+
+    kpi('WOs closed (2026 YTD)', fmtNum(totClosed), `M:${fmtNum(ytdClM)} · HK:${fmtNum(ytdClHK)} · G:${fmtNum(ytdClG)}`);
 
   // ── Charts ──
   const ml = ytdMonths.map(m=>m.short);
@@ -1050,8 +1050,8 @@ function printYTD(){
   const ytdOtPay = Object.values(otByMoPrint).reduce((s,m)=>s+m.pay,0);
   document.getElementById('pKpi2').innerHTML = `
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:20px;">
-      ${pCard('WOs created (YTD)',totCreated,'M:'+ytdCreatedM+' · HK:'+ytdCreatedHK+' · G:'+ytdCreatedG)}
-      ${pCard('WOs closed (YTD)',totClosed,'M:'+ytdClosedM+' · HK:'+ytdClosedHK+' · G:'+ytdClosedG)}
+      ${pCard('WOs created (YTD)',totCreated,'M:'+fmtNum(ytdCreatedM)+' · HK:'+fmtNum(ytdCreatedHK)+' · G:'+fmtNum(ytdCreatedG))}
+      ${pCard('WOs closed (YTD)',totClosed,'M:'+fmtNum(ytdClosedM)+' · HK:'+fmtNum(ytdClosedHK)+' · G:'+fmtNum(ytdClosedG))}
       ${pCard('OT hours (YTD)',ytdOtHrs)}
       ${pCard('OT pay $ (YTD)','$'+ytdOtPay.toLocaleString('en-US',{maximumFractionDigits:0}))}
     </div>`;
@@ -1200,9 +1200,9 @@ function printSummary(){
   // ── KPI card helper ──────────────────────────────────────────────────────────
   function pCard(label, val, sub, badge){
     const coloredSub = sub ? sub
-      .replace(/(?<![PR])(M:\d+)/g, '<span style="color:#c0392b;font-weight:700;">$1</span>')
-      .replace(/(HK:\d+)/g, '<span style="color:#2a5298;font-weight:700;">$1</span>')
-      .replace(/(G:\d+)/g, '<span style="color:#1a6b45;font-weight:700;">$1</span>') : '';
+      .replace(/(?<![PR])(M:[\d,]+)/g, '<span style="color:#c0392b;font-weight:700;">$1</span>')
+      .replace(/(HK:[\d,]+)/g, '<span style="color:#2a5298;font-weight:700;">$1</span>')
+      .replace(/(G:[\d,]+)/g, '<span style="color:#1a6b45;font-weight:700;">$1</span>') : '';
     const badgeColors = badge && badge.cls === 'snapshot'
       ? 'background:rgba(42,82,152,0.12);color:#1a3d78;'
       : 'background:rgba(100,100,96,0.12);color:#4a4a44;';
