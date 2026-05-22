@@ -399,6 +399,7 @@ const UPDATED = '5/22/26';
 const CURRENT_MONTH_IDX = 7;
 
 function fmtDol(v){return '$'+v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function fmtNum(v){return v==null?'':Number(v).toLocaleString('en-US');}
 function fmtK(v){if(v>=1000000)return '$'+(v/1000000).toFixed(2)+'M';if(v>=1000)return '$'+(v/1000).toFixed(1)+'K';return '$'+Math.round(v);}
 function fmtDolShort(v){
   if(v>=1000000)return '$'+(v/1000000).toFixed(2)+'M';
@@ -583,15 +584,15 @@ function refresh(){
     const lastWeek = mo.weeks[mo.weeks.length-2] || mo.weeks[mo.weeks.length-1];
     const lastWeekBadge = {cls:'badge-lastweek', text:`Last week · ${lastWeek.w}`};
     row2.innerHTML=
-      kpi('Open WOs',top,`M:${mo.openWO.maint} · HK:${mo.openWO.hk} · G:${mo.openWO.grnds}`,false,snapshotBadge)+
+      kpi('Open WOs',fmtNum(top),`M:${mo.openWO.maint} · HK:${mo.openWO.hk} · G:${mo.openWO.grnds}`,false,snapshotBadge)+
       kpi('Maint WO type',`<span style="font-size:18px;font-weight:600;">PM: ${mo.pmRm.pm}</span><span style="font-size:14px;color:var(--text3);"> &nbsp;·&nbsp; </span><span style="font-size:18px;font-weight:600;">RM: ${mo.pmRm.rm}</span>`,'',false,snapshotBadge)+
-      kpi('WOs created',tc,`M:${mo.woCreated.maint} · HK:${mo.woCreated.hk} · G:${mo.woCreated.grnds}`,false,lastWeekBadge)+
-      kpi('WOs closed',tco,`M:${mo.woClosed.maint} · HK:${mo.woClosed.hk} · G:${mo.woClosed.grnds}`,false,lastWeekBadge);
+      kpi('WOs created',fmtNum(tc),`M:${mo.woCreated.maint} · HK:${mo.woCreated.hk} · G:${mo.woCreated.grnds}`,false,lastWeekBadge)+
+      kpi('WOs closed',fmtNum(tco),`M:${mo.woClosed.maint} · HK:${mo.woClosed.hk} · G:${mo.woClosed.grnds}`,false,lastWeekBadge);
   } else {
     row2.style.gridTemplateColumns='repeat(3,1fr)';
     row2.innerHTML=
-      kpi('WOs created',tc,`M:${mo.woCreated.maint} · HK:${mo.woCreated.hk} · G:${mo.woCreated.grnds}`)+
-      kpi('WOs closed',tco,`M:${mo.woClosed.maint} · HK:${mo.woClosed.hk} · G:${mo.woClosed.grnds}`);
+      kpi('WOs created',fmtNum(tc),`M:${mo.woCreated.maint} · HK:${mo.woCreated.hk} · G:${mo.woCreated.grnds}`)+
+      kpi('WOs closed',fmtNum(tco),`M:${mo.woClosed.maint} · HK:${mo.woClosed.hk} · G:${mo.woClosed.grnds}`);
   }
 
   document.getElementById('weekBody').innerHTML = mo.weeks.map(w=>`
@@ -742,14 +743,14 @@ document.getElementById('summBody').innerHTML=
     const tc=m.mtdCreated!==undefined?m.mtdCreated:m.woCreated.maint+m.woCreated.hk+m.woCreated.grnds;
     const tco=m.mtdClosed!==undefined?m.mtdClosed:m.woClosed.maint+m.woClosed.hk+m.woClosed.grnds;
     const top=m.openWO.maint+m.openWO.hk+m.openWO.grnds;
-    return `<tr><td style="font-weight:600;">${m.label}</td><td>${m.insp}</td><td>${appaBadge(m.appa)}</td><td>${m.poReq}</td><td class="mono" style="font-size:12px;">${fmtDol(m.poDol)}</td><td>${m.afterHrs}</td><td>${tc}</td><td>${tco}</td></tr>`;
+    return `<tr><td style="font-weight:600;">${m.label}</td><td>${fmtNum(m.insp)}</td><td>${appaBadge(m.appa)}</td><td>${m.poReq}</td><td class="mono" style="font-size:12px;">${fmtDol(m.poDol)}</td><td>${m.afterHrs}</td><td>${fmtNum(tc)}</td><td>${fmtNum(tco)}</td></tr>`;
   }).join('')
   +(()=>{
     const ti=months.reduce((s,m)=>s+m.insp,0),tpo=months.reduce((s,m)=>s+m.poReq,0),tpod=months.reduce((s,m)=>s+m.poDol,0),tah=months.reduce((s,m)=>s+m.afterHrs,0);
     const twoc=months.reduce((s,m)=>s+(m.mtdCreated!==undefined?m.mtdCreated:m.woCreated.maint+m.woCreated.hk+m.woCreated.grnds),0);
     const twocl=months.reduce((s,m)=>s+(m.mtdClosed!==undefined?m.mtdClosed:m.woClosed.maint+m.woClosed.hk+m.woClosed.grnds),0);
     const two=months.reduce((s,m)=>s+m.openWO.maint+m.openWO.hk+m.openWO.grnds,0);
-    return `<tr class="total-row"><td>Total / Avg</td><td>${ti}</td><td style="font-weight:600;">${weightedAppa.toFixed(2)}</td><td>${tpo}</td><td class="mono" style="font-size:12px;">${fmtDol(tpod)}</td><td>${tah}</td><td>${twoc}</td><td>${twocl}</td></tr>`;
+    return `<tr class="total-row"><td>Total / Avg</td><td>${fmtNum(ti)}</td><td style="font-weight:600;">${weightedAppa.toFixed(2)}</td><td>${tpo}</td><td class="mono" style="font-size:12px;">${fmtDol(tpod)}</td><td>${tah}</td><td>${fmtNum(twoc)}</td><td>${fmtNum(twocl)}</td></tr>`;
   })();
 
 // ── TRAINING DATA ─────────────────────────────────────────────────────────────
@@ -875,7 +876,7 @@ function showYTD(){
   const totPODol  = ytdMonths.reduce((s,m)=>s+m.poDol,0);
   const totAH     = ytdMonths.reduce((s,m)=>s+m.afterHrs,0);
   document.getElementById('ytdKpi1').innerHTML =
-    kpi('Inspections', totInsp,'',true)+
+    kpi('Inspections', fmtNum(totInsp),'',true)+
     kpi('Avg APPA score', avgAppa)+
     kpi('Peak open positions', maxPos)+
     kpi('PO requests', totPO)+
@@ -893,8 +894,8 @@ function showYTD(){
   const ytdClHK = ytdMonths.reduce((s,m)=>s+(m.mtdClosedHK!==undefined?m.mtdClosedHK:m.woClosed.hk),0);
   const ytdClG  = ytdMonths.reduce((s,m)=>s+(m.mtdClosedG!==undefined?m.mtdClosedG:m.woClosed.grnds),0);
   document.getElementById('ytdKpi2').innerHTML =
-    kpi('WOs created (2026 YTD)', totCreated, `M:${ytdCM} · HK:${ytdCHK} · G:${ytdCG}`)+
-    kpi('WOs closed (2026 YTD)', totClosed, `M:${ytdClM} · HK:${ytdClHK} · G:${ytdClG}`);
+    kpi('WOs created (2026 YTD)', fmtNum(totCreated), `M:${ytdCM} · HK:${ytdCHK} · G:${ytdCG}`)+
+    kpi('WOs closed (2026 YTD)', fmtNum(totClosed), `M:${ytdClM} · HK:${ytdClHK} · G:${ytdClG}`);
 
   // ── Charts ──
   const ml = ytdMonths.map(m=>m.short);
@@ -972,11 +973,11 @@ function showYTD(){
     ytdMonths.map(m=>{
       const tc  = m.mtdCreated!==undefined?m.mtdCreated:m.woCreated.maint+m.woCreated.hk+m.woCreated.grnds;
       const tco = m.mtdClosed!==undefined?m.mtdClosed:m.woClosed.maint+m.woClosed.hk+m.woClosed.grnds;
-      return `<tr><td style="font-weight:600;">${m.label}</td><td>${m.insp}</td><td>${appaBadge(m.appa)}</td><td>${m.poReq}</td>
-        <td class="mono" style="font-size:12px;">${fmtDol(m.poDol)}</td><td>${m.afterHrs}</td><td>${tc}</td><td>${tco}</td></tr>`;
+      return `<tr><td style="font-weight:600;">${m.label}</td><td>${fmtNum(m.insp)}</td><td>${appaBadge(m.appa)}</td><td>${m.poReq}</td>
+        <td class="mono" style="font-size:12px;">${fmtDol(m.poDol)}</td><td>${m.afterHrs}</td><td>${fmtNum(tc)}</td><td>${fmtNum(tco)}</td></tr>`;
     }).join('')+
     `<tr class="total-row"><td>Total / Avg</td><td>${totInsp}</td><td>${appaBadge(parseFloat(avgAppa))}</td>
-      <td>${totPO}</td><td class="mono" style="font-size:12px;">${fmtDol(totPODol)}</td><td>${totAH}</td><td>${totCreated}</td><td>${totClosed}</td></tr>`;
+      <td>${totPO}</td><td class="mono" style="font-size:12px;">${fmtDol(totPODol)}</td><td>${totAH}</td><td>${fmtNum(totCreated)}</td><td>${fmtNum(totClosed)}</td></tr>`;
 
   setChartGrids();
 }
@@ -1132,18 +1133,18 @@ function printYTD(){
           const tco=m.mtdClosed!==undefined?m.mtdClosed:m.woClosed.maint+m.woClosed.hk+m.woClosed.grnds;
           return `<tr style="background:${i%2===0?'white':'#f4f3ef'};">
             <td style="padding:9px 12px;border-bottom:1px solid #e2e0d8;font-weight:600;">${m.label}</td>
-            <td style="padding:9px 12px;border-bottom:1px solid #e2e0d8;">${m.insp}</td>
+            <td style="padding:9px 12px;border-bottom:1px solid #e2e0d8;">${fmtNum(m.insp)}</td>
             <td style="padding:9px 12px;border-bottom:1px solid #e2e0d8;">${m.appa.toFixed(2)}</td>
             <td style="padding:9px 12px;border-bottom:1px solid #e2e0d8;">${m.poReq}</td>
             <td style="padding:9px 12px;border-bottom:1px solid #e2e0d8;font-family:monospace;">${fmtDol(m.poDol)}</td>
             <td style="padding:9px 12px;border-bottom:1px solid #e2e0d8;">${m.afterHrs}</td>
-            <td style="padding:9px 12px;border-bottom:1px solid #e2e0d8;">${tc}</td>
-            <td style="padding:9px 12px;border-bottom:1px solid #e2e0d8;">${tco}</td>
+            <td style="padding:9px 12px;border-bottom:1px solid #e2e0d8;">${fmtNum(tc)}</td>
+            <td style="padding:9px 12px;border-bottom:1px solid #e2e0d8;">${fmtNum(tco)}</td>
           </tr>`;
         }).join('')}
         <tr style="background:#f4f3ef;font-weight:700;">
           <td style="padding:9px 12px;">Total / Avg</td>
-          <td style="padding:9px 12px;">${totInsp}</td>
+          <td style="padding:9px 12px;">${fmtNum(totInsp)}</td>
           <td style="padding:9px 12px;">${avgAppa}</td>
           <td style="padding:9px 12px;">${totPO}</td>
           <td style="padding:9px 12px;font-family:monospace;">${fmtDol(totPODol)}</td>
