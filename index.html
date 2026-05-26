@@ -893,9 +893,39 @@ function showYTD(){
   const ytdClM  = ytdMonths.reduce((s,m)=>s+(m.mtdClosedM!==undefined?m.mtdClosedM:m.woClosed.maint),0);
   const ytdClHK = ytdMonths.reduce((s,m)=>s+(m.mtdClosedHK!==undefined?m.mtdClosedHK:m.woClosed.hk),0);
   const ytdClG  = ytdMonths.reduce((s,m)=>s+(m.mtdClosedG!==undefined?m.mtdClosedG:m.woClosed.grnds),0);
-  document.getElementById('ytdKpi2').innerHTML =
-    kpi('WOs created (2026 YTD)', fmtNum(totCreated), `M:${fmtNum(ytdCM)} · HK:${fmtNum(ytdCHK)} · G:${fmtNum(ytdCG)}`)+
-    kpi('WOs closed (2026 YTD)', fmtNum(totClosed), `M:${fmtNum(ytdClM)} · HK:${fmtNum(ytdClHK)} · G:${fmtNum(ytdClG)}`);
+  document.getElementById('ytdKpi2').innerHTML = `
+    <div class="kpi" style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+      <div>
+        <div class="kpi-label">WOs created (2026 YTD)</div>
+        <div class="kpi-val">${fmtNum(totCreated)}</div>
+        <div class="kpi-sub">${colorSub('M:'+fmtNum(ytdCM)+' · HK:'+fmtNum(ytdCHK)+' · G:'+fmtNum(ytdCG))}</div>
+      </div>
+      <div style="flex-shrink:0;width:70px;height:70px;position:relative;"><canvas id="ytdCreatedDonut" role="img" aria-label="WOs created dept breakdown" width="70" height="70"></canvas></div>
+    </div>
+    <div class="kpi" style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+      <div>
+        <div class="kpi-label">WOs closed (2026 YTD)</div>
+        <div class="kpi-val">${fmtNum(totClosed)}</div>
+        <div class="kpi-sub">${colorSub('M:'+fmtNum(ytdClM)+' · HK:'+fmtNum(ytdClHK)+' · G:'+fmtNum(ytdClG))}</div>
+      </div>
+      <div style="flex-shrink:0;width:70px;height:70px;position:relative;"><canvas id="ytdClosedDonut" role="img" aria-label="WOs closed dept breakdown" width="70" height="70"></canvas></div>
+    </div>`;
+
+  // Mini doughnuts for WO cards
+  const miniDonutOpts = {responsive:false,maintainAspectRatio:false,cutout:'60%',
+    plugins:{legend:{display:false},datalabels:{display:false}},
+    animation:{duration:400}};
+  ['ytdCreatedDonut','ytdClosedDonut'].forEach(id=>{
+    const ex=Chart.getChart(document.getElementById(id)); if(ex) ex.destroy();
+  });
+  new Chart(document.getElementById('ytdCreatedDonut'),{type:'doughnut',
+    data:{labels:['M','HK','G'],datasets:[{data:[ytdCM,ytdCHK,ytdCG],
+      backgroundColor:['#c0392b','#2a5298','#1a6b45'],borderWidth:2,borderColor:'#fff'}]},
+    options:miniDonutOpts});
+  new Chart(document.getElementById('ytdClosedDonut'),{type:'doughnut',
+    data:{labels:['M','HK','G'],datasets:[{data:[ytdClM,ytdClHK,ytdClG],
+      backgroundColor:['#c0392b','#2a5298','#1a6b45'],borderWidth:2,borderColor:'#fff'}]},
+    options:miniDonutOpts});
 
   // ── Charts ──
   const ml = ytdMonths.map(m=>m.short);
@@ -1068,7 +1098,7 @@ function printYTD(){
       </div>
       <div style="background:#f4f3ef;border-radius:10px;padding:14px;">
         <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">Work Orders — 2026</div>
-        <canvas id="pYtdWoChart" width="360" height="180" role="img"></canvas>
+        <canvas id="pYtdWoChart" width="420" height="200" role="img"></canvas>
       </div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
@@ -1100,8 +1130,8 @@ function printYTD(){
   new Chart(document.getElementById('pYtdWoChart'),{type:'bar',data:{labels:ml,datasets:[
     {label:'Created',data:ytdMonths.map(m=>m.mtdCreated!==undefined?m.mtdCreated:m.woCreated.maint+m.woCreated.hk+m.woCreated.grnds),backgroundColor:'#2a5298'},
     {label:'Closed', data:ytdMonths.map(m=>m.mtdClosed!==undefined?m.mtdClosed:m.woClosed.maint+m.woClosed.hk+m.woClosed.grnds), backgroundColor:'#888780'}
-  ]},options:{responsive:false,plugins:{legend:{display:false},datalabels:{display:false}},
-    scales:{y:{beginAtZero:true,ticks:{font:{size:9}}},x:{ticks:{font:{size:9},autoSkip:false}}}}});
+  ]},options:{responsive:false,layout:{padding:{right:10}},plugins:{legend:{display:false},datalabels:{display:false}},
+    scales:{y:{beginAtZero:true,ticks:{font:{size:9}}},x:{ticks:{font:{size:9},autoSkip:false,maxRotation:0}}}}});
 
   new Chart(document.getElementById('pYtdOtHrsChart'),{type:'bar',data:{labels:otLabels,datasets:[
     {label:'Maintenance',data:otLabels.map(l=>otByMo[l].mHrs),backgroundColor:'#c0392b',stack:'a'},
