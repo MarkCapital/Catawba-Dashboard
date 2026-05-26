@@ -894,25 +894,21 @@ function showYTD(){
   const ytdClHK = ytdMonths.reduce((s,m)=>s+(m.mtdClosedHK!==undefined?m.mtdClosedHK:m.woClosed.hk),0);
   const ytdClG  = ytdMonths.reduce((s,m)=>s+(m.mtdClosedG!==undefined?m.mtdClosedG:m.woClosed.grnds),0);
   document.getElementById('ytdKpi2').innerHTML = `
-    <div class="kpi" style="display:flex;align-items:center;gap:0;">
-      <div style="flex:1;">
+    <div class="kpi" style="display:flex;align-items:center;justify-content:center;gap:24px;">
+      <div>
         <div class="kpi-label">WOs created (2026 YTD)</div>
         <div class="kpi-val">${fmtNum(totCreated)}</div>
         <div class="kpi-sub">${colorSub('M:'+fmtNum(ytdCM)+' · HK:'+fmtNum(ytdCHK)+' · G:'+fmtNum(ytdCG))}</div>
       </div>
-      <div style="flex:1;display:flex;justify-content:center;align-items:center;">
-        <div style="width:70px;height:70px;"><canvas id="ytdCreatedDonut" role="img" aria-label="WOs created dept breakdown" width="70" height="70"></canvas></div>
-      </div>
+      <div style="width:70px;height:70px;flex-shrink:0;"><canvas id="ytdCreatedDonut" role="img" aria-label="WOs created dept breakdown" width="70" height="70"></canvas></div>
     </div>
-    <div class="kpi" style="display:flex;align-items:center;gap:0;">
-      <div style="flex:1;">
+    <div class="kpi" style="display:flex;align-items:center;justify-content:center;gap:24px;">
+      <div>
         <div class="kpi-label">WOs closed (2026 YTD)</div>
         <div class="kpi-val">${fmtNum(totClosed)}</div>
         <div class="kpi-sub">${colorSub('M:'+fmtNum(ytdClM)+' · HK:'+fmtNum(ytdClHK)+' · G:'+fmtNum(ytdClG))}</div>
       </div>
-      <div style="flex:1;display:flex;justify-content:center;align-items:center;">
-        <div style="width:70px;height:70px;"><canvas id="ytdClosedDonut" role="img" aria-label="WOs closed dept breakdown" width="70" height="70"></canvas></div>
-      </div>
+      <div style="width:70px;height:70px;flex-shrink:0;"><canvas id="ytdClosedDonut" role="img" aria-label="WOs closed dept breakdown" width="70" height="70"></canvas></div>
     </div>`;
 
   // Mini doughnuts for WO cards
