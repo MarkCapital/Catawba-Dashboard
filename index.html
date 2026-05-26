@@ -584,10 +584,23 @@ function refresh(){
     const lastWeek = mo.weeks[mo.weeks.length-2] || mo.weeks[mo.weeks.length-1];
     const lastWeekBadge = {cls:'badge-lastweek', text:`Last week · ${lastWeek.w}`};
     row2.innerHTML=
-      kpi('Open WOs',fmtNum(top),`M:${mo.openWO.maint} · HK:${mo.openWO.hk} · G:${mo.openWO.grnds}`,false,snapshotBadge)+
-      kpi('Maint WO type',`<span style="font-size:18px;font-weight:600;">PM: ${mo.pmRm.pm}</span><span style="font-size:14px;color:var(--text3);"> &nbsp;·&nbsp; </span><span style="font-size:18px;font-weight:600;">RM: ${mo.pmRm.rm}</span>`,'',false,snapshotBadge)+
-      kpi('WOs created',fmtNum(tc),`M:${mo.woCreated.maint} · HK:${mo.woCreated.hk} · G:${mo.woCreated.grnds}`,false,lastWeekBadge)+
-      kpi('WOs closed',fmtNum(tco),`M:${mo.woClosed.maint} · HK:${mo.woClosed.hk} · G:${mo.woClosed.grnds}`,false,lastWeekBadge);
+      `<div class="kpi"><div class="kpi-label">Open WOs</div><div class="card-badge badge-snapshot">${snapshotBadge.text}</div><div style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><div><div class="kpi-val">${fmtNum(top)}</div><div class="kpi-sub">${colorSub('M:'+mo.openWO.maint+' · HK:'+mo.openWO.hk+' · G:'+mo.openWO.grnds)}</div></div><canvas id="r2OpenWoDonut" width="70" height="70" style="flex-shrink:0;"></canvas></div></div>` +
+      `<div class="kpi"><div class="kpi-label">Maint WO type</div><div class="card-badge badge-snapshot">${snapshotBadge.text}</div><div style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><div><div class="kpi-val" style="font-size:18px;font-weight:700;margin-top:4px;"><span style="color:#2a5298;">PM: ${mo.pmRm.pm}</span><span style="font-size:14px;color:var(--text3);font-weight:400;"> &nbsp;·&nbsp; </span><span style="color:#c0392b;">RM: ${mo.pmRm.rm}</span></div></div><canvas id="r2PmRmDonut" width="70" height="70" style="flex-shrink:0;"></canvas></div></div>` +
+      `<div class="kpi"><div class="kpi-label">WOs created</div><div class="card-badge badge-lastweek">${lastWeekBadge.text}</div><div style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><div><div class="kpi-val">${fmtNum(tc)}</div><div class="kpi-sub">${colorSub('M:'+mo.woCreated.maint+' · HK:'+mo.woCreated.hk+' · G:'+mo.woCreated.grnds)}</div></div><canvas id="r2CreatedDonut" width="70" height="70" style="flex-shrink:0;"></canvas></div></div>` +
+      `<div class="kpi"><div class="kpi-label">WOs closed</div><div class="card-badge badge-lastweek">${lastWeekBadge.text}</div><div style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><div><div class="kpi-val">${fmtNum(tco)}</div><div class="kpi-sub">${colorSub('M:'+mo.woClosed.maint+' · HK:'+mo.woClosed.hk+' · G:'+mo.woClosed.grnds)}</div></div><canvas id="r2ClosedDonut" width="70" height="70" style="flex-shrink:0;"></canvas></div></div>`;
+
+  // Row 2 mini doughnuts
+  const r2DonutOpts = {responsive:false,maintainAspectRatio:false,cutout:'55%',plugins:{legend:{display:false},datalabels:{display:false}},animation:{duration:300}};
+  [{id:'r2OpenWoDonut',  data:[mo.openWO.maint,  mo.openWO.hk,    mo.openWO.grnds], colors:['#c0392b','#2a5298','#1a6b45']},
+   {id:'r2PmRmDonut',   data:[mo.pmRm.pm,        mo.pmRm.rm],                        colors:['#2a5298','#c0392b']},
+   {id:'r2CreatedDonut',data:[mo.woCreated.maint, mo.woCreated.hk, mo.woCreated.grnds],colors:['#c0392b','#2a5298','#1a6b45']},
+   {id:'r2ClosedDonut', data:[mo.woClosed.maint,  mo.woClosed.hk,  mo.woClosed.grnds], colors:['#c0392b','#2a5298','#1a6b45']}
+  ].forEach(({id,data,colors})=>{
+    const el=document.getElementById(id);
+    if(!el) return;
+    const ex=Chart.getChart(el); if(ex) ex.destroy();
+    new Chart(el,{type:'doughnut',data:{datasets:[{data,backgroundColor:colors,borderWidth:2,borderColor:'#fff'}]},options:r2DonutOpts});
+  });
   } else {
     row2.style.gridTemplateColumns='repeat(3,1fr)';
     row2.innerHTML=
@@ -1266,7 +1279,7 @@ function printSummary(){
     </div>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;">
       ${pCard('Open WOs', top, 'M:'+mo.openWO.maint+' · HK:'+mo.openWO.hk+' · G:'+mo.openWO.grnds, {cls:'snapshot',text:'As of '+UPDATED})}
-      ${pCard('Maint WO type', 'PM: '+mo.pmRm.pm+' · RM: '+mo.pmRm.rm, '', {cls:'snapshot',text:'As of '+UPDATED})}
+      ${pCard('Maint WO type', '<span style="color:#2a5298;font-weight:700;">PM: '+mo.pmRm.pm+'</span> &nbsp;·&nbsp; <span style="color:#c0392b;font-weight:700;">RM: '+mo.pmRm.rm+'</span>', '', {cls:'snapshot',text:'As of '+UPDATED})}
       ${pCard('WOs created', tc, 'M:'+mo.woCreated.maint+' · HK:'+mo.woCreated.hk+' · G:'+mo.woCreated.grnds, {cls:'lastweek',text:'Last week · '+lastCompletedW})}
       ${pCard('WOs closed', tco, 'M:'+mo.woClosed.maint+' · HK:'+mo.woClosed.hk+' · G:'+mo.woClosed.grnds, {cls:'lastweek',text:'Last week · '+lastCompletedW})}
     </div>`;
