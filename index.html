@@ -149,10 +149,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 
   <div class="tabs" id="tabRow"></div>
   <div id="mainDash">
-  <div class="section-head">
-    <h2>Monthly snapshot</h2>
-    <div class="divider"></div>
-    <button id="printBtn" onclick="printSummary()" style="display:none;background:var(--accent);color:white;border:none;border-radius:6px;padding:6px 14px;font-size:12px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;margin-left:8px;">🖨 Print Summary</button>
+  <div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
+    <button id="printBtn" onclick="printSummary()" style="display:none;background:var(--accent);color:white;border:none;border-radius:6px;padding:6px 14px;font-size:12px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;">🖨 Print Summary</button>
   </div>
   <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
     <span style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);">Month to date</span>
@@ -552,7 +550,7 @@ function refresh(){
   const lastWkEl = document.getElementById('lastWeekLabel');
   if(lastWkEl && mo.weeks && mo.weeks.length > 0){
     const lastWk = mo.weeks[mo.weeks.length-1];
-    lastWkEl.textContent = 'Current Status & Last Week';
+    lastWkEl.textContent = 'Recent Activity';
   }
   if(isCurrent) document.getElementById('pmRmLabel').textContent = mo.label;
   const rowB = document.getElementById('chartRowB');
