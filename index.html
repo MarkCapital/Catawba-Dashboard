@@ -33,7 +33,8 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
 .tab:hover{border-color:var(--accent);color:var(--accent);}
 .tab.active{background:var(--accent);border-color:var(--accent);color:white;}
 .kpi-row{display:grid;gap:10px;margin-bottom:10px;}
-.kpi-row-1{grid-template-columns:repeat(4,1fr);}
+.kpi-row-1{grid-template-columns:repeat(6,1fr);}
+.kpi-row-1.current-month{grid-template-columns:repeat(4,1fr);}
 .kpi-row-2{grid-template-columns:repeat(4,1fr);}
 .kpi{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;}
 .kpi.accent{border-left:3px solid var(--accent);}
@@ -85,7 +86,7 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
   .ql-btn{font-size:10px;padding:4px 8px;}
   /* KPI cards */
   .main{padding:12px 12px 40px;padding-top:120px;}
-  .kpi-row-1{grid-template-columns:repeat(2,1fr);}
+  .kpi-row-1,.kpi-row-1.current-month{grid-template-columns:repeat(2,1fr);}
   .kpi-row-2{grid-template-columns:repeat(2,1fr)!important;}
   .kpi{padding:11px 12px;}
   .kpi-val{font-size:20px;}
@@ -625,15 +626,16 @@ function refresh(){
   const mtcoSub = `M:${mo.mtdClosedM!==undefined?mo.mtdClosedM:mo.woClosed.maint} · HK:${mo.mtdClosedHK!==undefined?mo.mtdClosedHK:mo.woClosed.hk} · G:${mo.mtdClosedG!==undefined?mo.mtdClosedG:mo.woClosed.grnds}`;
   const top = mo.openWO.maint+mo.openWO.hk+mo.openWO.grnds;
 
-  document.getElementById('kpiRow1').innerHTML =
+  const row1 = document.getElementById('kpiRow1');
+  row1.classList.toggle('current-month', isCurrent);
+  row1.innerHTML =
     kpi('Inspections',mo.insp,'',true)+
     kpi('Avg APPA score',mo.appa.toFixed(2))+
     kpi('Open positions',mo.openPos)+
     kpi('PO requests',mo.poReq)+
     kpi('PO request $',`<span style="font-size:18px;">${fmtK(mo.poDol)}</span>`)+
     kpi('After-hrs calls',mo.afterHrs)+
-    kpi('WOs created',fmtNum(mtc),mtcSub)+
-    kpi('WOs closed',fmtNum(mtco),mtcoSub);
+    (isCurrent ? kpi('WOs created',fmtNum(mtc),mtcSub)+kpi('WOs closed',fmtNum(mtco),mtcoSub) : '');
   setTimeout(()=>animateKpiRow('kpiRow1'), 50);
 
   const row2 = document.getElementById('kpiRow2');
