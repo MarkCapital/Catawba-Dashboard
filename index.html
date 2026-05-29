@@ -33,7 +33,7 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
 .tab:hover{border-color:var(--accent);color:var(--accent);}
 .tab.active{background:var(--accent);border-color:var(--accent);color:white;}
 .kpi-row{display:grid;gap:10px;margin-bottom:10px;}
-.kpi-row-1{grid-template-columns:repeat(6,1fr);}
+.kpi-row-1{grid-template-columns:repeat(4,1fr);}
 .kpi-row-2{grid-template-columns:repeat(4,1fr);}
 .kpi{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;}
 .kpi.accent{border-left:3px solid var(--accent);}
@@ -619,6 +619,10 @@ function refresh(){
 
   const tc  = mo.woCreated.maint+mo.woCreated.hk+mo.woCreated.grnds;
   const tco = mo.woClosed.maint+mo.woClosed.hk+mo.woClosed.grnds;
+  const mtc = mo.mtdCreated!==undefined ? mo.mtdCreated : tc;
+  const mtco = mo.mtdClosed!==undefined ? mo.mtdClosed : tco;
+  const mtcSub = `M:${mo.mtdCreatedM!==undefined?mo.mtdCreatedM:mo.woCreated.maint} · HK:${mo.mtdCreatedHK!==undefined?mo.mtdCreatedHK:mo.woCreated.hk} · G:${mo.mtdCreatedG!==undefined?mo.mtdCreatedG:mo.woCreated.grnds}`;
+  const mtcoSub = `M:${mo.mtdClosedM!==undefined?mo.mtdClosedM:mo.woClosed.maint} · HK:${mo.mtdClosedHK!==undefined?mo.mtdClosedHK:mo.woClosed.hk} · G:${mo.mtdClosedG!==undefined?mo.mtdClosedG:mo.woClosed.grnds}`;
   const top = mo.openWO.maint+mo.openWO.hk+mo.openWO.grnds;
 
   document.getElementById('kpiRow1').innerHTML =
@@ -627,7 +631,9 @@ function refresh(){
     kpi('Open positions',mo.openPos)+
     kpi('PO requests',mo.poReq)+
     kpi('PO request $',`<span style="font-size:18px;">${fmtK(mo.poDol)}</span>`)+
-    kpi('After-hrs calls',mo.afterHrs);
+    kpi('After-hrs calls',mo.afterHrs)+
+    kpi('WOs created',fmtNum(mtc),mtcSub)+
+    kpi('WOs closed',fmtNum(mtco),mtcoSub);
   setTimeout(()=>animateKpiRow('kpiRow1'), 50);
 
   const row2 = document.getElementById('kpiRow2');
