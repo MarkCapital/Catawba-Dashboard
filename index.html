@@ -364,7 +364,7 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
     <div class="chart-card">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
         <div class="chart-title" style="margin:0;">Not started</div>
-        <div class="stat-pill"><span class="stat-pill-label">Overall</span><span class="stat-pill-val" id="trainingOverall">87.5%</span></div>
+        <div class="stat-pill"><span class="stat-pill-label">Overall</span><span class="stat-pill-val" id="trainingOverall">96.9%</span></div>
       </div>
       <div id="trainingNotStarted" style="display:flex;flex-direction:column;gap:6px;"></div>
       <div style="margin-top:14px;padding-top:12px;border-top:0.5px solid var(--border);">
@@ -400,7 +400,7 @@ const centerTotalPlugin = { id:'centerTotal', afterDraw(chart){
 }};
 Chart.register(centerTotalPlugin);
 
-const UPDATED = '5/26/26';
+const UPDATED = '5/29/26';
 const CURRENT_MONTH_IDX = 7;
 
 function fmtDol(v){return '$'+v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
@@ -822,15 +822,12 @@ document.getElementById('summBody').innerHTML=
 // ── TRAINING DATA ─────────────────────────────────────────────────────────────
 const training = {
   month: 'May 2026',
-  overall: 87.5,
+  overall: 96.88,
   departments: [
-    { name: 'Janitorial', total: 22, pct: 86.36, course: 'Private Ed - Janitorial | Safety & Skills' },
+    { name: 'Janitorial', total: 22, pct: 100.0, course: 'Private Ed - Janitorial | Safety & Skills' },
     { name: 'Maintenance', total: 10, pct: 90.0, course: 'Private Ed - Maintenance | Safety & Skills' },
   ],
   notStarted: [
-    { name: 'Bryson Boyd',      dept: 'Janitorial' },
-    { name: 'Michele Byers',    dept: 'Janitorial' },
-    { name: 'Jesquanna Scott',  dept: 'Janitorial' },
     { name: 'Jennifer Thomas',  dept: 'Maintenance' },
   ]
 };
