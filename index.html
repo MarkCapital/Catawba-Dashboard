@@ -564,7 +564,7 @@ function invoiceMonthEligible(label){
   const m=label.match(/^(\w+) (\d{4})$/); if(!m) return false;
   const order={Jan:1,Feb:2,Mar:3,Apr:4,May:5,Jun:6,Jul:7,Aug:8,Sep:9,Oct:10,Nov:11,Dec:12};
   const mon=order[m[1]], yr=Number(m[2]);
-  return yr>2026 || (yr===2026 && mon>=3);
+  return yr>2026 || (yr===2026 && mon>=2);
 }
 let invoiceMonthInst=null, ytdInvoiceInst=null;
 function renderInvoiceSection(mo){
