@@ -102,10 +102,11 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
   /* Section heads */
   .section-head h2{font-size:10px;}
   /* Pills */
-  .stat-pill{padding:2px 7px;}
+  .stat-pill{padding:2px 7px;max-width:100%;white-space:normal;flex-wrap:wrap;}
   .stat-pill-val{font-size:11px;}
-  /* OT chart header */
-  .chart-header{flex-wrap:wrap;gap:4px;}
+  /* OT/chart card headers */
+  .chart-header{flex-wrap:wrap;gap:4px;align-items:flex-start;}
+  .chart-header .chart-title{min-width:0;}
 }
 @media(max-width:400px){
   .kpi-val{font-size:18px;}
@@ -269,6 +270,29 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
     </div>
   </div>
 
+
+
+  <div id="invoiceSection" style="display:none;">
+    <div class="section-head"><h2>Processed invoices — <span id="invoiceMonthLabel" style="text-transform:none;letter-spacing:0;font-size:12px;font-weight:600;color:var(--text2);"></span></h2><div class="divider"></div></div>
+    <div class="charts-row" style="margin-bottom:14px;">
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-title">Invoice payments by month</div>
+          <div class="stat-pill"><span class="stat-pill-label">Selected month</span><span class="stat-pill-val" id="invoiceMonthPill">—</span></div>
+        </div>
+        <div class="chart-legend"><span class="leg"><span class="leg-sq" style="background:#8e44ad;"></span>Paid invoices</span></div>
+        <div class="chart-wrap" style="height:220px;"><canvas id="invoiceMonthChart" role="img" aria-label="Processed invoice payments by month"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-title">Top vendors this month</div>
+          <a href="https://docs.google.com/spreadsheets/d/1H5tpj1VXhorWHuuO0jVQluNYrU1UNDFiwXDDbLekGpM/edit?usp=sharing" target="_blank" style="font-size:11px;color:#2a5298;font-weight:600;text-decoration:none;">Open report ↗</a>
+        </div>
+        <div id="invoiceVendorList" style="display:flex;flex-direction:column;gap:8px;"></div>
+      </div>
+    </div>
+  </div>
+
   <div class="section-head"><h2>Rolling 12-month summary</h2><div class="divider"></div></div>
   <div class="table-card">
     <table>
@@ -340,6 +364,28 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
         </div>
         <div class="chart-legend"><span class="leg"><span class="leg-sq" style="background:#e6a817;"></span>Total OT pay</span></div>
         <div class="chart-wrap" style="height:240px;"><canvas id="ytdOtPayChart" role="img" aria-label="YTD OT pay by month"></canvas></div>
+      </div>
+    </div>
+
+
+
+    <!-- YTD Invoice Summary -->
+    <div class="section-head"><h2>Processed invoices — 2026 YTD</h2><div class="divider"></div></div>
+    <div class="charts-row" style="margin-bottom:14px;">
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-title">Paid invoices by processed month</div>
+          <div class="stat-pill"><span class="stat-pill-label">Mar–May total</span><span class="stat-pill-val" id="ytdInvoicePill">—</span></div>
+        </div>
+        <div class="chart-legend"><span class="leg"><span class="leg-sq" style="background:#8e44ad;"></span>Paid invoices</span></div>
+        <div class="chart-wrap" style="height:240px;"><canvas id="ytdInvoiceChart" role="img" aria-label="YTD processed invoice payments"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-title">Top vendors YTD</div>
+          <a href="https://docs.google.com/spreadsheets/d/1H5tpj1VXhorWHuuO0jVQluNYrU1UNDFiwXDDbLekGpM/edit?usp=sharing" target="_blank" style="font-size:11px;color:#2a5298;font-weight:600;text-decoration:none;">Open report ↗</a>
+        </div>
+        <div id="ytdInvoiceVendorList" style="display:flex;flex-direction:column;gap:8px;"></div>
       </div>
     </div>
 
@@ -470,6 +516,42 @@ function animateKpiRow(rowId){
   });
 }
 
+
+function invoiceVendorRows(vendors){
+  return vendors.map((v,i)=>`
+    <div style="display:grid;grid-template-columns:22px 1fr auto;gap:8px;align-items:center;font-size:12px;padding:7px 9px;background:var(--surface2);border-radius:8px;">
+      <div style="font-weight:700;color:var(--text3);">${i+1}</div>
+      <div style="min-width:0;"><div style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${v.vendor}</div><div style="font-size:10px;color:var(--text3);">${v.count} invoice${v.count===1?'':'s'}${v.needsReview?` · ${v.needsReview} OCR review`:''}</div></div>
+      <div class="mono" style="font-size:12px;font-weight:700;">${fmtDolShort(v.total)}</div>
+    </div>`).join('');
+}
+let invoiceMonthInst=null, ytdInvoiceInst=null;
+function renderInvoiceSection(mo){
+  const section=document.getElementById('invoiceSection');
+  if(!section) return;
+  const info=invoiceData[mo.label];
+  section.style.display = info ? '' : 'none';
+  if(!info) return;
+  document.getElementById('invoiceMonthLabel').textContent = mo.label;
+  document.getElementById('invoiceMonthPill').textContent = fmtDolShort(info.total);
+  document.getElementById('invoiceVendorList').innerHTML = invoiceVendorRows(info.vendors);
+  const labels=Object.keys(invoiceData).map(m=>m.replace(' 2026',''));
+  const totals=Object.values(invoiceData).map(m=>m.total);
+  const el=document.getElementById('invoiceMonthChart');
+  const ex=Chart.getChart(el); if(ex) ex.destroy();
+  invoiceMonthInst = new Chart(el,{type:'bar',data:{labels,datasets:[{label:'Paid invoices',data:totals,backgroundColor:'#8e44ad'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>'Paid invoices: '+fmtDolShort(ctx.parsed.y)}}},scales:{y:{beginAtZero:true,ticks:{font:{size:11},callback:v=>fmtK(v)},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:11},autoSkip:false}}}}});
+}
+function renderYtdInvoiceSection(){
+  const labels=Object.keys(invoiceData).map(m=>m.replace(' 2026',''));
+  const totals=Object.values(invoiceData).map(m=>m.total);
+  const ytdTotal=totals.reduce((s,v)=>s+v,0);
+  const pill=document.getElementById('ytdInvoicePill'); if(pill) pill.textContent=fmtDolShort(ytdTotal);
+  const list=document.getElementById('ytdInvoiceVendorList'); if(list) list.innerHTML=invoiceVendorRows(invoiceYtdVendors);
+  const el=document.getElementById('ytdInvoiceChart'); if(!el) return;
+  const ex=Chart.getChart(el); if(ex) ex.destroy();
+  ytdInvoiceInst = new Chart(el,{type:'bar',data:{labels,datasets:[{label:'Paid invoices',data:totals,backgroundColor:'#8e44ad'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>'Paid invoices: '+fmtDolShort(ctx.parsed.y)}}},scales:{y:{beginAtZero:true,ticks:{font:{size:11},callback:v=>fmtK(v)},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:11},autoSkip:false}}}}});
+}
+
 function colorSub(sub){
   if(!sub) return '';
   return sub
@@ -495,6 +577,12 @@ const months=[
 ];
 
 // OT weeks split by year — Oct-Dec show 2025 only, Jan+ show 2026 only
+
+// ── Processed Invoice Data (Google Sheet report; processed month from Drive upload date) ──
+const invoiceData = {"Mar 2026":{"total":714000.73,"count":116,"needsReview":18,"vendors":[{"vendor":"Vertex","total":271925.0,"count":3,"needsReview":0},{"vendor":"Modern Systems(MSI)","total":242705.14,"count":3,"needsReview":1},{"vendor":"Angler Electric","total":81095.5,"count":5,"needsReview":1},{"vendor":"Eagle Plumbing","total":19527.5,"count":1,"needsReview":0},{"vendor":"Greenlawn","total":16000.0,"count":2,"needsReview":0},{"vendor":"Prestige Pressure Wash","total":15657.0,"count":2,"needsReview":0}]},"Apr 2026":{"total":1475125.53,"count":127,"needsReview":13,"vendors":[{"vendor":"Vertex","total":428850.0,"count":1,"needsReview":0},{"vendor":"Budd Group","total":425468.01,"count":1,"needsReview":0},{"vendor":"Statesville Roofing","total":372735.0,"count":3,"needsReview":0},{"vendor":"Modern Systems(MSI)","total":70480.65,"count":4,"needsReview":1},{"vendor":"Graham's Piping","total":39707.53,"count":4,"needsReview":0},{"vendor":"Trulls","total":34000.0,"count":1,"needsReview":0}]},"May 2026":{"total":960352.44,"count":90,"needsReview":17,"vendors":[{"vendor":"GMC","total":356175.0,"count":1,"needsReview":0},{"vendor":"Modern Systems(MSI)","total":241612.58,"count":1,"needsReview":1},{"vendor":"Statesville Roofing","total":210559.15,"count":4,"needsReview":0},{"vendor":"TD Riggs","total":41737.43,"count":1,"needsReview":0},{"vendor":"Angler Electric","total":38523.0,"count":2,"needsReview":1},{"vendor":"Republic Services","total":11287.3,"count":2,"needsReview":0}]}};
+const invoiceYtdVendors = [{"vendor":"Vertex","total":700775.0,"count":4,"needsReview":0},{"vendor":"Statesville Roofing","total":584085.36,"count":8,"needsReview":1},{"vendor":"Modern Systems(MSI)","total":554798.37,"count":8,"needsReview":3},{"vendor":"Budd Group","total":425561.07,"count":2,"needsReview":0},{"vendor":"GMC","total":356425.0,"count":2,"needsReview":0},{"vendor":"Angler Electric","total":125546.3,"count":9,"needsReview":2},{"vendor":"TD Riggs","total":47012.43,"count":2,"needsReview":0},{"vendor":"Graham's Piping","total":44998.88,"count":6,"needsReview":0},{"vendor":"Trulls","total":34000.0,"count":1,"needsReview":0},{"vendor":"Republic Services","total":27923.44,"count":7,"needsReview":0}];
+const invoiceReportUrl = 'https://docs.google.com/spreadsheets/d/1H5tpj1VXhorWHuuO0jVQluNYrU1UNDFiwXDDbLekGpM/edit?usp=sharing';
+
 const otWeeks2025=[
   {mo:0,w:'9/22–9/28',  hrs:43.0,  pay:1331.25, mHrs:21.8,hHrs:20.2,gHrs:1.0},
   {mo:0,w:'9/29–10/5',  hrs:30.0,  pay:882.92,  mHrs:11.8,hHrs:18.2,gHrs:0.0},
@@ -611,6 +699,7 @@ function refresh(){
   const otFiltered = otAll.filter(w => w.mo === sel);
   buildOtCharts(otFiltered);
   setChartGrids();
+  renderInvoiceSection(mo);
   // Update last week label with date range of most recent week
   const lastWkEl = document.getElementById('lastWeekLabel');
   if(lastWkEl && mo.weeks && mo.weeks.length > 0){
@@ -1114,6 +1203,7 @@ function showYTD(){
     `<tr class="total-row"><td>Total / Avg</td><td>${totInsp}</td><td>${appaBadge(parseFloat(avgAppa))}</td>
       <td>${totPO}</td><td class="mono" style="font-size:12px;">${fmtDol(totPODol)}</td><td>${totAH}</td><td>${fmtNum(totCreated)}</td><td>${fmtNum(totClosed)}</td></tr>`;
 
+  renderYtdInvoiceSection();
   setChartGrids();
 }
 
