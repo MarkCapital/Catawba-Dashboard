@@ -672,10 +672,33 @@ function refresh(){
     new Chart(el,{type:'doughnut',data:{datasets:[{data,backgroundColor:colors,borderWidth:2,borderColor:'#fff'}]},options:r2DonutOpts});
   });
   } else {
-    row2.style.gridTemplateColumns='repeat(3,1fr)';
+    row2.style.gridTemplateColumns='repeat(2,1fr)';
     row2.innerHTML=
-      kpi('WOs created',fmtNum(tc),`M:${mo.woCreated.maint} · HK:${mo.woCreated.hk} · G:${mo.woCreated.grnds}`)+
-      kpi('WOs closed',fmtNum(tco),`M:${mo.woClosed.maint} · HK:${mo.woClosed.hk} · G:${mo.woClosed.grnds}`);
+      `<div class="kpi" style="display:flex;align-items:center;justify-content:center;gap:24px;">
+        <div>
+          <div class="kpi-label">WOs created</div>
+          <div class="kpi-val">${fmtNum(tc)}</div>
+          <div class="kpi-sub">${colorSub('M:'+mo.woCreated.maint+' · HK:'+mo.woCreated.hk+' · G:'+mo.woCreated.grnds)}</div>
+        </div>
+        <div style="width:70px;height:70px;flex-shrink:0;"><canvas id="histCreatedDonut" role="img" aria-label="WOs created department breakdown" width="70" height="70"></canvas></div>
+      </div>`+
+      `<div class="kpi" style="display:flex;align-items:center;justify-content:center;gap:24px;">
+        <div>
+          <div class="kpi-label">WOs closed</div>
+          <div class="kpi-val">${fmtNum(tco)}</div>
+          <div class="kpi-sub">${colorSub('M:'+mo.woClosed.maint+' · HK:'+mo.woClosed.hk+' · G:'+mo.woClosed.grnds)}</div>
+        </div>
+        <div style="width:70px;height:70px;flex-shrink:0;"><canvas id="histClosedDonut" role="img" aria-label="WOs closed department breakdown" width="70" height="70"></canvas></div>
+      </div>`;
+    const histDonutOpts = {responsive:false,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{display:false},datalabels:{display:false}},animation:{duration:300}};
+    [{id:'histCreatedDonut',data:[mo.woCreated.maint,mo.woCreated.hk,mo.woCreated.grnds]},
+     {id:'histClosedDonut',data:[mo.woClosed.maint,mo.woClosed.hk,mo.woClosed.grnds]}
+    ].forEach(({id,data})=>{
+      const el=document.getElementById(id);
+      if(!el) return;
+      const ex=Chart.getChart(el); if(ex) ex.destroy();
+      new Chart(el,{type:'doughnut',data:{labels:['M','HK','G'],datasets:[{data,backgroundColor:['#c0392b','#2a5298','#1a6b45'],borderWidth:2,borderColor:'#fff'}]},options:histDonutOpts});
+    });
   }
 
   document.getElementById('weekBody').innerHTML = mo.weeks.map(w=>`
