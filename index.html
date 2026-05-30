@@ -73,6 +73,17 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
 .stat-pill-label{font-size:10px;font-weight:600;color:#185fa5;letter-spacing:0.04em;text-transform:uppercase;}
 .stat-pill-val{font-size:12px;font-weight:600;color:#0c447c;}
 .chart-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}
+
+.invoice-kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;}
+.invoice-kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:13px 14px;min-width:0;}
+.invoice-kpi-card.invoice{border-color:#e0c8ea;box-shadow:inset 3px 0 0 #8e44ad;background:linear-gradient(180deg,#fff,#fbf6ff);}
+.invoice-kpi-card.good{box-shadow:inset 3px 0 0 var(--green);}
+.invoice-kpi-card.warn{box-shadow:inset 3px 0 0 #d48a00;}
+.invoice-kpi-top{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:10px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text3);}
+.invoice-kpi-val{font-size:22px;font-weight:700;color:var(--text);line-height:1.05;margin-top:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.invoice-kpi-card.invoice .invoice-kpi-val{color:#8e44ad;}
+.invoice-kpi-sub{font-size:10px;color:var(--text3);margin-top:4px;font-family:'DM Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.invoice-kpi-tag{display:inline-block;border:1px solid #e0c8ea;background:#fbf6ff;color:#7a4b93;border-radius:99px;padding:2px 7px;font-size:9px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-left:6px;vertical-align:middle;}
 @media(max-width:700px){
   /* Header — hide TBG center logo on mobile to prevent overlap */
   .header{padding:10px 14px;flex-wrap:nowrap;}
@@ -107,6 +118,10 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
   /* OT/chart card headers */
   .chart-header{flex-wrap:wrap;gap:4px;align-items:flex-start;}
   .chart-header .chart-title{min-width:0;}
+  .invoice-kpi-strip{grid-template-columns:repeat(2,1fr);gap:8px;}
+  .invoice-kpi-card{padding:11px 12px;}
+  .invoice-kpi-val{font-size:19px;white-space:normal;}
+  .invoice-kpi-sub{white-space:normal;}
 }
 @media(max-width:400px){
   .kpi-val{font-size:18px;}
@@ -273,7 +288,8 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
 
 
   <div id="invoiceSection" style="display:none;">
-    <div class="section-head"><h2>Processed invoices — <span id="invoiceMonthLabel" style="text-transform:none;letter-spacing:0;font-size:12px;font-weight:600;color:var(--text2);"></span></h2><div class="divider"></div></div>
+    <div class="section-head"><h2>Processed invoices — <span id="invoiceMonthLabel" style="text-transform:none;letter-spacing:0;font-size:12px;font-weight:600;color:var(--text2);"></span><span class="invoice-kpi-tag">MTD</span></h2><div class="divider"></div></div>
+    <div class="invoice-kpi-strip" id="invoiceMonthKpis"></div>
     <div class="charts-row" style="margin-bottom:14px;">
       <div class="chart-card">
         <div class="chart-header">
@@ -285,7 +301,7 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
       </div>
       <div class="chart-card">
         <div class="chart-header">
-          <div class="chart-title">Top vendors this month</div>
+          <div class="chart-title" id="invoiceVendorTitle">Top vendors this month</div>
           <a href="https://docs.google.com/spreadsheets/d/1H5tpj1VXhorWHuuO0jVQluNYrU1UNDFiwXDDbLekGpM/edit?usp=sharing" target="_blank" style="font-size:11px;color:#2a5298;font-weight:600;text-decoration:none;">Open report ↗</a>
         </div>
         <div id="invoiceVendorList" style="display:flex;flex-direction:column;gap:8px;"></div>
@@ -370,7 +386,8 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
 
 
     <!-- YTD Invoice Summary -->
-    <div class="section-head"><h2>Processed invoices — 2026 YTD</h2><div class="divider"></div></div>
+    <div class="section-head"><h2>Processed invoices — 2026 YTD <span class="invoice-kpi-tag">YTD</span></h2><div class="divider"></div></div>
+    <div class="invoice-kpi-strip" id="ytdInvoiceKpis"></div>
     <div class="charts-row" style="margin-bottom:14px;">
       <div class="chart-card">
         <div class="chart-header">
@@ -518,6 +535,7 @@ function animateKpiRow(rowId){
 
 
 function invoiceVendorRows(vendors){
+  if(!vendors || !vendors.length) return `<div style="font-size:12px;color:var(--text3);padding:10px 2px;">No processed invoice vendors yet for this period.</div>`;
   return vendors.map((v,i)=>`
     <div style="display:grid;grid-template-columns:22px 1fr auto;gap:8px;align-items:center;font-size:12px;padding:7px 9px;background:var(--surface2);border-radius:8px;">
       <div style="font-weight:700;color:var(--text3);">${i+1}</div>
@@ -525,15 +543,41 @@ function invoiceVendorRows(vendors){
       <div class="mono" style="font-size:12px;font-weight:700;">${fmtDolShort(v.total)}</div>
     </div>`).join('');
 }
+function invoiceTopVendor(vendors){ return vendors && vendors.length ? vendors[0] : null; }
+function invoiceKpiCard(label,val,sub,cls='',scope=''){
+  return `<div class="invoice-kpi-card ${cls}"><div class="invoice-kpi-top"><span>${label}</span>${scope?`<span>${scope}</span>`:''}</div><div class="invoice-kpi-val">${val}</div><div class="invoice-kpi-sub">${sub}</div></div>`;
+}
+function invoiceKpiStrip(info,scopeLabel,periodLabel){
+  const safe=info || {total:0,count:0,needsReview:0,vendors:[]};
+  const top=invoiceTopVendor(safe.vendors);
+  const reviewCls=safe.needsReview ? 'warn' : 'good';
+  const reviewText=safe.needsReview ? `${safe.needsReview}` : '0';
+  const reviewSub=safe.needsReview ? 'Invoices needing review' : 'Invoices needing review';
+  return [
+    invoiceKpiCard(`${scopeLabel} invoice $`, fmtDolShort(safe.total), 'Total paid/processed', 'invoice', periodLabel),
+    invoiceKpiCard(`${scopeLabel} invoices`, fmtNum(safe.count), 'Invoices processed', 'invoice', 'Count'),
+    invoiceKpiCard('Top vendor', top ? top.vendor : '—', top ? `${fmtDolShort(top.total)} · ${top.count} invoice${top.count===1?'':'s'}` : 'No processed invoices yet', '', scopeLabel),
+    invoiceKpiCard('Review status', reviewText, reviewSub, reviewCls, scopeLabel)
+  ].join('');
+}
+function invoiceMonthEligible(label){
+  const m=label.match(/^(\w+) (\d{4})$/); if(!m) return false;
+  const order={Jan:1,Feb:2,Mar:3,Apr:4,May:5,Jun:6,Jul:7,Aug:8,Sep:9,Oct:10,Nov:11,Dec:12};
+  const mon=order[m[1]], yr=Number(m[2]);
+  return yr>2026 || (yr===2026 && mon>=3);
+}
 let invoiceMonthInst=null, ytdInvoiceInst=null;
 function renderInvoiceSection(mo){
   const section=document.getElementById('invoiceSection');
   if(!section) return;
-  const info=invoiceData[mo.label];
-  section.style.display = info ? '' : 'none';
-  if(!info) return;
+  const eligible=invoiceMonthEligible(mo.label);
+  const info=invoiceData[mo.label] || {total:0,count:0,needsReview:0,vendors:[]};
+  section.style.display = eligible ? '' : 'none';
+  if(!eligible) return;
   document.getElementById('invoiceMonthLabel').textContent = mo.label;
   document.getElementById('invoiceMonthPill').textContent = fmtDolShort(info.total);
+  const kpis=document.getElementById('invoiceMonthKpis'); if(kpis) kpis.innerHTML=invoiceKpiStrip(info,'MTD',mo.short || mo.label.replace(' 2026',''));
+  const vendorTitle=document.getElementById('invoiceVendorTitle'); if(vendorTitle) vendorTitle.textContent = info.vendors.length ? 'Top vendors this month' : 'Top vendors this month';
   document.getElementById('invoiceVendorList').innerHTML = invoiceVendorRows(info.vendors);
   const labels=Object.keys(invoiceData).map(m=>m.replace(' 2026',''));
   const totals=Object.values(invoiceData).map(m=>m.total);
@@ -545,7 +589,11 @@ function renderYtdInvoiceSection(){
   const labels=Object.keys(invoiceData).map(m=>m.replace(' 2026',''));
   const totals=Object.values(invoiceData).map(m=>m.total);
   const ytdTotal=totals.reduce((s,v)=>s+v,0);
+  const ytdCount=Object.values(invoiceData).reduce((s,v)=>s+(v.count||0),0);
+  const ytdReview=Object.values(invoiceData).reduce((s,v)=>s+(v.needsReview||0),0);
+  const ytdInfo={total:ytdTotal,count:ytdCount,needsReview:ytdReview,vendors:invoiceYtdVendors};
   const pill=document.getElementById('ytdInvoicePill'); if(pill) pill.textContent=fmtDolShort(ytdTotal);
+  const ytdKpis=document.getElementById('ytdInvoiceKpis'); if(ytdKpis) ytdKpis.innerHTML=invoiceKpiStrip(ytdInfo,'YTD','2026');
   const list=document.getElementById('ytdInvoiceVendorList'); if(list) list.innerHTML=invoiceVendorRows(invoiceYtdVendors);
   const el=document.getElementById('ytdInvoiceChart'); if(!el) return;
   const ex=Chart.getChart(el); if(ex) ex.destroy();
