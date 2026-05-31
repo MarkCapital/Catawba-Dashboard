@@ -28,7 +28,13 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
 .section-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;margin-top:32px;}
 .section-head h2{font-size:11px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:var(--text3);white-space:nowrap;}
 .section-head .divider{flex:1;height:1px;background:var(--border);}
-.tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px;}
+.tabs{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
+.year-tab-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+.year-label{font-size:10px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--text3);margin-right:4px;}
+.archive-toggle{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;font-family:'DM Sans',sans-serif;}
+.archive-toggle:hover{border-color:var(--accent);color:var(--accent);}
+.archive-months{display:none;flex-wrap:wrap;gap:6px;margin-left:18px;margin-top:6px;}
+.archive-year.open .archive-months{display:flex;}
 .tab{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 14px;font-size:12px;font-weight:500;color:var(--text2);cursor:pointer;transition:all 0.15s;font-family:'DM Sans',sans-serif;}
 .tab:hover{border-color:var(--accent);color:var(--accent);}
 .tab.active{background:var(--accent);border-color:var(--accent);color:white;}
@@ -102,7 +108,11 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
   .kpi{padding:11px 12px;}
   .kpi-val{font-size:20px;}
   /* Tabs */
-  .tabs{gap:4px;flex-wrap:wrap;}
+  .tabs{gap:6px;}
+  .year-tab-row{gap:4px;}
+  .archive-months{margin-left:10px;gap:4px;}
+  .archive-toggle{font-size:10px;padding:5px 9px;}
+  .year-label{width:100%;margin-bottom:1px;}
   .tab{font-size:10px;padding:5px 9px;}
   /* Charts — all single column, prevent horizontal scroll */
   .chart-card{padding:12px 12px 10px;min-width:0;}
@@ -307,14 +317,6 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
         <div id="invoiceVendorList" style="display:flex;flex-direction:column;gap:8px;"></div>
       </div>
     </div>
-  </div>
-
-  <div class="section-head"><h2>Rolling 12-month summary</h2><div class="divider"></div></div>
-  <div class="table-card">
-    <table>
-      <thead><tr><th>Month</th><th>Inspections</th><th>Avg APPA</th><th>PO Req</th><th>PO $</th><th>After-Hrs</th><th>WO Created</th><th>WO Closed</th></tr></thead>
-      <tbody id="summBody"></tbody>
-    </table>
   </div>
 
   </div><!-- /mainDash -->
@@ -704,27 +706,71 @@ function setChartGrids(){
 window.addEventListener('resize', ()=>{ setChartGrids(); });
 
 const tabRow = document.getElementById('tabRow');
-months.forEach((m,i) => {
+const currentYear = (months[CURRENT_MONTH_IDX].label.match(/\b\d{4}\b/) || ['2026'])[0];
+const monthYear = m => (m.label.match(/\b\d{4}\b/) || [currentYear])[0];
+
+function selectMonth(i){
+  sel=i;
+  const ytdD=document.getElementById('ytdDash');
+  const mainD=document.getElementById('mainDash');
+  if(ytdD) ytdD.style.display='none';
+  if(mainD) mainD.style.display='block';
+  refresh();
+}
+
+function makeMonthButton(m,i){
   const b = document.createElement('button');
   b.className = 'tab'+(i===sel?' active':'');
+  b.dataset.monthIndex = i;
   b.textContent = m.label;
-  b.onclick = ()=>{
-    sel=i;
-    const ytdD=document.getElementById('ytdDash');
-    const mainD=document.getElementById('mainDash');
-    if(ytdD) ytdD.style.display='none';
-    if(mainD) mainD.style.display='block';
-    refresh();
-  };
-  tabRow.appendChild(b);
-});
-// YTD tab
-const ytdBtn = document.createElement('button');
-ytdBtn.id = 'ytdTab';
-ytdBtn.className = 'tab';
-ytdBtn.textContent = 'YTD 2026';
-ytdBtn.onclick = ()=>{ sel=-1; showYTD(); };
-tabRow.appendChild(ytdBtn);
+  b.onclick = ()=>selectMonth(i);
+  return b;
+}
+
+function buildMonthTabs(){
+  tabRow.innerHTML = '';
+  const currentLine = document.createElement('div');
+  currentLine.className = 'year-tab-row current-year-row';
+  const currentLabel = document.createElement('span');
+  currentLabel.className = 'year-label';
+  currentLabel.textContent = currentYear;
+  currentLine.appendChild(currentLabel);
+  months.forEach((m,i)=>{ if(monthYear(m)===currentYear) currentLine.appendChild(makeMonthButton(m,i)); });
+
+  const ytdBtn = document.createElement('button');
+  ytdBtn.id = 'ytdTab';
+  ytdBtn.className = 'tab';
+  ytdBtn.textContent = `YTD ${currentYear}`;
+  ytdBtn.onclick = ()=>{ sel=-1; showYTD(); };
+  currentLine.appendChild(ytdBtn);
+  tabRow.appendChild(currentLine);
+
+  const years = [...new Set(months.map(monthYear))]
+    .filter(y=>y!==currentYear)
+    .sort((a,b)=>Number(b)-Number(a));
+  years.forEach(year=>{
+    const wrap = document.createElement('div');
+    wrap.className = 'archive-year';
+    const toggle = document.createElement('button');
+    toggle.className = 'archive-toggle';
+    toggle.type = 'button';
+    toggle.setAttribute('aria-expanded','false');
+    toggle.textContent = `▸ ${year} Archive`;
+    const panel = document.createElement('div');
+    panel.className = 'archive-months';
+    months.forEach((m,i)=>{ if(monthYear(m)===year) panel.appendChild(makeMonthButton(m,i)); });
+    toggle.onclick = ()=>{
+      const open = wrap.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.textContent = `${open ? '▾' : '▸'} ${year} Archive`;
+    };
+    wrap.appendChild(toggle);
+    wrap.appendChild(panel);
+    tabRow.appendChild(wrap);
+  });
+}
+
+buildMonthTabs();
 
 function refresh(){
   // Guard: if sel is invalid (e.g. -1 from YTD), reset to current month
@@ -734,7 +780,7 @@ function refresh(){
   const _mainD = document.getElementById('mainDash');
   if(_ytdD) _ytdD.style.display = 'none';
   if(_mainD) _mainD.style.display = 'block';
-  document.querySelectorAll('.tab').forEach((b,i)=>b.classList.toggle('active',i===sel));
+  document.querySelectorAll('.tab[data-month-index]').forEach(b=>b.classList.toggle('active',Number(b.dataset.monthIndex)===sel));
   const ytdT = document.getElementById('ytdTab');
   if(ytdT) ytdT.classList.remove('active');
   const mo = months[sel];
@@ -977,25 +1023,6 @@ function buildOtCharts(otData){
   otHrsChartInst = new Chart(document.getElementById('otHrsChart'),{type:'bar',data:{labels:otL,datasets:[{label:'Maintenance',data:otData.map(w=>w.mHrs),backgroundColor:'#c0392b',stack:'a'},{label:'Housekeeping',data:otData.map(w=>w.hHrs),backgroundColor:'#2a5298',stack:'a'},{label:'Grounds',data:otData.map(w=>w.gHrs),backgroundColor:'#1a6b45',stack:'a'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false}},scales:{x:{stacked:true,ticks:{font:{size:8.5},maxRotation:55,autoSkip:false}},y:{stacked:true,beginAtZero:true,ticks:{font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}}}}});
   otPayChartInst = new Chart(document.getElementById('otPayChart'),{type:'bar',data:{labels:otL,datasets:[{label:'OT Pay',data:otData.map(w=>w.pay),backgroundColor:'#e6a817'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>`OT Pay: ${fmtDolShort(ctx.parsed.y)}`}}},scales:{x:{ticks:{font:{size:8.5},maxRotation:55,autoSkip:false}},y:{beginAtZero:true,ticks:{font:{size:11},callback:v=>fmtK(v)},grid:{color:'rgba(0,0,0,0.05)'}}}}});
 }
-
-// Rolling summary
-const validMonths=months.filter(m=>m.appa!==null&&m.insp>0);
-const weightedAppa=validMonths.reduce((s,m)=>s+m.appa*m.insp,0)/validMonths.reduce((s,m)=>s+m.insp,0);
-
-document.getElementById('summBody').innerHTML=
-  months.map(m=>{
-    const tc=m.mtdCreated!==undefined?m.mtdCreated:m.woCreated.maint+m.woCreated.hk+m.woCreated.grnds;
-    const tco=m.mtdClosed!==undefined?m.mtdClosed:m.woClosed.maint+m.woClosed.hk+m.woClosed.grnds;
-    const top=m.openWO.maint+m.openWO.hk+m.openWO.grnds;
-    return `<tr><td style="font-weight:600;">${m.label}</td><td>${fmtNum(m.insp)}</td><td>${appaBadge(m.appa)}</td><td>${m.poReq}</td><td class="mono" style="font-size:12px;">${fmtDol(m.poDol)}</td><td>${m.afterHrs}</td><td>${fmtNum(tc)}</td><td>${fmtNum(tco)}</td></tr>`;
-  }).join('')
-  +(()=>{
-    const ti=months.reduce((s,m)=>s+m.insp,0),tpo=months.reduce((s,m)=>s+m.poReq,0),tpod=months.reduce((s,m)=>s+m.poDol,0),tah=months.reduce((s,m)=>s+m.afterHrs,0);
-    const twoc=months.reduce((s,m)=>s+(m.mtdCreated!==undefined?m.mtdCreated:m.woCreated.maint+m.woCreated.hk+m.woCreated.grnds),0);
-    const twocl=months.reduce((s,m)=>s+(m.mtdClosed!==undefined?m.mtdClosed:m.woClosed.maint+m.woClosed.hk+m.woClosed.grnds),0);
-    const two=months.reduce((s,m)=>s+m.openWO.maint+m.openWO.hk+m.openWO.grnds,0);
-    return `<tr class="total-row"><td>Total / Avg</td><td>${fmtNum(ti)}</td><td style="font-weight:600;">${weightedAppa.toFixed(2)}</td><td>${tpo}</td><td class="mono" style="font-size:12px;">${fmtDol(tpod)}</td><td>${tah}</td><td>${fmtNum(twoc)}</td><td>${fmtNum(twocl)}</td></tr>`;
-  })();
 
 // ── TRAINING DATA ─────────────────────────────────────────────────────────────
 const training = {
