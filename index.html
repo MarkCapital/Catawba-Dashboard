@@ -614,6 +614,10 @@ function kpi(label,val,sub,accent,badge){
   const badgeHtml = badge ? `<div class="card-badge ${badge.cls}">${badge.text}</div>` : '';
   return `<div class="kpi${accent?' accent':''}"><div class="kpi-label">${label}</div>${badgeHtml}<div class="kpi-val">${val}</div>${sub?`<div class="kpi-sub">${colorSub(sub)}</div>`:''}</div>`;
 }
+function kpiDonut(label,val,sub,canvasId,badge){
+  const badgeHtml = badge ? `<div class="card-badge ${badge.cls}">${badge.text}</div>` : '';
+  return `<div class="kpi"><div class="kpi-label">${label}</div>${badgeHtml}<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><div><div class="kpi-val">${val}</div>${sub?`<div class="kpi-sub">${colorSub(sub)}</div>`:''}</div><canvas id="${canvasId}" width="70" height="70" style="flex-shrink:0;"></canvas></div></div>`;
+}
 
 const months=[
   {key:'oct',label:'Oct 2025',short:'Oct',insp:230,appa:2.42,openPos:3,poReq:21,poDol:2548552.81,afterHrs:1,woCreated:{maint:434,hk:49,grnds:23},woClosed:{maint:409,hk:49,grnds:25},openWO:{maint:94,hk:5,grnds:25},pmRm:{pm:1,rm:123},weeks:[{w:'10/20–10/26',insp:46,appa:2.6,pos:'5: 4 HK, 1 Grnds',po:9,poDol:393345.46,ah:0,woCreated:257,woClosed:241},{w:'10/27–11/2',insp:63,appa:2.5,pos:'3: 1 HK, 1 Grnds, 1 HVAC',po:6,poDol:190440.59,ah:0,woCreated:249,woClosed:242}]},
@@ -829,8 +833,20 @@ function refresh(){
     kpi('PO requests',mo.poReq)+
     kpi('PO request $',`<span style="font-size:18px;">${fmtK(mo.poDol)}</span>`)+
     kpi('After-hrs calls',mo.afterHrs)+
-    (isCurrent ? kpi('WOs created',fmtNum(mtc),mtcSub)+kpi('WOs closed',fmtNum(mtco),mtcoSub) : '');
+    (isCurrent ? kpiDonut('WOs created',fmtNum(mtc),mtcSub,'mtdCreatedDonut')+kpiDonut('WOs closed',fmtNum(mtco),mtcoSub,'mtdClosedDonut') : '');
   setTimeout(()=>animateKpiRow('kpiRow1'), 50);
+  if(isCurrent){
+    const mtdDonutOpts = {responsive:false,maintainAspectRatio:false,cutout:'55%',plugins:{legend:{display:false},datalabels:{display:false}},animation:{duration:300}};
+    [
+      {id:'mtdCreatedDonut',data:[mo.mtdCreatedM!==undefined?mo.mtdCreatedM:mo.woCreated.maint, mo.mtdCreatedHK!==undefined?mo.mtdCreatedHK:mo.woCreated.hk, mo.mtdCreatedG!==undefined?mo.mtdCreatedG:mo.woCreated.grnds]},
+      {id:'mtdClosedDonut', data:[mo.mtdClosedM!==undefined?mo.mtdClosedM:mo.woClosed.maint, mo.mtdClosedHK!==undefined?mo.mtdClosedHK:mo.woClosed.hk, mo.mtdClosedG!==undefined?mo.mtdClosedG:mo.woClosed.grnds]}
+    ].forEach(({id,data})=>{
+      const el=document.getElementById(id);
+      if(!el) return;
+      const ex=Chart.getChart(el); if(ex) ex.destroy();
+      new Chart(el,{type:'doughnut',data:{labels:['M','HK','G'],datasets:[{data,backgroundColor:['#c0392b','#2a5298','#1a6b45'],borderWidth:2,borderColor:'#fff'}]},options:mtdDonutOpts});
+    });
+  }
 
   const row2 = document.getElementById('kpiRow2');
   if(isCurrent){
