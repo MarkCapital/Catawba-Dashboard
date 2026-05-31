@@ -36,8 +36,8 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
 .kpi-row-1{grid-template-columns:repeat(6,1fr);}
 .kpi-row-1.current-month{grid-template-columns:repeat(4,1fr);}
 .kpi-row-2{grid-template-columns:repeat(4,1fr);}
-.kpi{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;}
-.kpi.accent{border-left:3px solid var(--accent);}
+.kpi{background:linear-gradient(180deg,#fff,#f8fbff);border:1px solid #d7e2f3;border-left:3px solid var(--accent);border-radius:10px;padding:14px 16px;box-shadow:0 8px 18px rgba(42,82,152,0.08);}
+.kpi.accent{border-left-color:var(--accent);}
 .kpi-label{font-size:11px;color:var(--text3);font-weight:500;letter-spacing:0.02em;margin-bottom:5px;}
 .kpi-val{font-size:23px;font-weight:600;color:var(--text);line-height:1;}
 .kpi-sub{font-size:10px;color:var(--text3);margin-top:4px;font-family:'DM Mono',monospace;}
@@ -556,7 +556,7 @@ function invoiceKpiStrip(info,scopeLabel,periodLabel){
   return [
     invoiceKpiCard(`${scopeLabel} invoice $`, fmtDolShort(safe.total), 'Total paid/processed', 'invoice', periodLabel),
     invoiceKpiCard(`${scopeLabel} invoices`, fmtNum(safe.count), 'Invoices processed', 'invoice', 'Count'),
-    invoiceKpiCard('Top vendor', top ? top.vendor : '—', top ? `${fmtDolShort(top.total)} · ${top.count} invoice${top.count===1?'':'s'}` : 'No processed invoices yet', '', scopeLabel),
+    invoiceKpiCard('Top vendor', top ? top.vendor : '—', top ? `${fmtDolShort(top.total)} · ${top.count} invoice${top.count===1?'':'s'}` : 'No processed invoices yet', 'invoice', scopeLabel),
     invoiceKpiCard('Review status', reviewText, reviewSub, reviewCls, scopeLabel)
   ].join('');
 }
