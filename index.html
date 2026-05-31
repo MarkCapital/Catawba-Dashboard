@@ -708,6 +708,7 @@ window.addEventListener('resize', ()=>{ setChartGrids(); });
 const tabRow = document.getElementById('tabRow');
 const currentYear = (months[CURRENT_MONTH_IDX].label.match(/\b\d{4}\b/) || ['2026'])[0];
 const monthYear = m => (m.label.match(/\b\d{4}\b/) || [currentYear])[0];
+const monthTabLabel = m => m.short || m.label.replace(/\s+\d{4}\b/, '');
 
 function selectMonth(i){
   sel=i;
@@ -722,7 +723,7 @@ function makeMonthButton(m,i){
   const b = document.createElement('button');
   b.className = 'tab'+(i===sel?' active':'');
   b.dataset.monthIndex = i;
-  b.textContent = m.label;
+  b.textContent = monthTabLabel(m);
   b.onclick = ()=>selectMonth(i);
   return b;
 }
@@ -740,7 +741,7 @@ function buildMonthTabs(){
   const ytdBtn = document.createElement('button');
   ytdBtn.id = 'ytdTab';
   ytdBtn.className = 'tab';
-  ytdBtn.textContent = `YTD ${currentYear}`;
+  ytdBtn.textContent = 'YTD';
   ytdBtn.onclick = ()=>{ sel=-1; showYTD(); };
   currentLine.appendChild(ytdBtn);
   tabRow.appendChild(currentLine);
