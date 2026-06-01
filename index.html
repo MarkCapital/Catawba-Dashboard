@@ -90,6 +90,17 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
 .invoice-kpi-card.invoice .invoice-kpi-val{color:#8e44ad;}
 .invoice-kpi-sub{font-size:10px;color:var(--text3);margin-top:4px;font-family:'DM Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .invoice-kpi-tag{display:inline-block;border:1px solid #e0c8ea;background:#fbf6ff;color:#7a4b93;border-radius:99px;padding:2px 7px;font-size:9px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-left:6px;vertical-align:middle;}
+/* Compact sticky month selector: stays visible while scrolling and uses one horizontal row. */
+.sticky-tab-shell{position:sticky;top:calc(var(--fixed-header-height,116px) - 1px);z-index:160;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border:1px solid #d8dce7;box-shadow:0 9px 24px rgba(26,61,120,.13);border-radius:12px;margin:0 0 18px;padding:8px 10px;display:flex;align-items:center;gap:10px;}
+.sticky-tab-shell::before{content:'Switch view';font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#6b6a63;white-space:nowrap;padding-left:2px;}
+.sticky-tab-shell .tabs{margin-bottom:0;min-width:0;flex:1;display:flex;flex-direction:row;align-items:center;gap:5px;overflow-x:auto;scrollbar-width:thin;}
+.sticky-tab-shell .year-tab-row{flex-wrap:nowrap;overflow:visible;gap:5px;padding-bottom:1px;flex:0 0 auto;}
+.sticky-tab-shell .archive-year{display:flex;align-items:center;gap:5px;flex:0 0 auto;}
+.sticky-tab-shell .archive-year .archive-months{margin:0;flex-wrap:nowrap;gap:5px;}
+.sticky-tab-shell .archive-toggle{border-radius:999px;padding:6px 12px;font-size:11px;font-weight:700;white-space:nowrap;background:#eef1f7;}
+.sticky-tab-shell .year-label{display:none;}
+.sticky-tab-shell .tab{border-radius:999px;padding:6px 12px;font-size:11px;font-weight:700;white-space:nowrap;background:#f5f6fa;}
+.sticky-tab-shell .tab.active{background:#1a3d78;border-color:#1a3d78;color:white;box-shadow:0 3px 8px rgba(26,61,120,.22);}
 @media(max-width:700px){
   /* Header — hide TBG center logo on mobile to prevent overlap */
   .header{padding:10px 14px;flex-wrap:nowrap;}
@@ -132,6 +143,9 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
   .invoice-kpi-card{padding:11px 12px;}
   .invoice-kpi-val{font-size:19px;white-space:normal;}
   .invoice-kpi-sub{white-space:normal;}
+  .sticky-tab-shell{top:calc(var(--fixed-header-height,180px) - 1px);margin:0 -2px 14px;padding:7px 8px;gap:7px;}
+  .sticky-tab-shell::before{content:'View';font-size:9px;}
+  .sticky-tab-shell .tab{font-size:10px;padding:6px 10px;}
 }
 @media(max-width:400px){
   .kpi-val{font-size:18px;}
@@ -182,7 +196,9 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
 
 <div class="main">
 
-  <div class="tabs" id="tabRow"></div>
+  <div class="sticky-tab-shell" aria-label="Month selector">
+    <div class="tabs" id="tabRow"></div>
+  </div>
   <div id="mainDash">
   <div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
     <button id="printBtn" onclick="printSummary()" style="display:none;background:var(--accent);color:white;border:none;border-radius:6px;padding:6px 14px;font-size:12px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;">🖨 Print Summary</button>
@@ -786,6 +802,8 @@ function refresh(){
   if(_ytdD) _ytdD.style.display = 'none';
   if(_mainD) _mainD.style.display = 'block';
   document.querySelectorAll('.tab[data-month-index]').forEach(b=>b.classList.toggle('active',Number(b.dataset.monthIndex)===sel));
+  const activeTab = document.querySelector('.tab[data-month-index].active');
+  if(activeTab && activeTab.scrollIntoView) activeTab.scrollIntoView({block:'nearest', inline:'nearest'});
   const ytdT = document.getElementById('ytdTab');
   if(ytdT) ytdT.classList.remove('active');
   const mo = months[sel];
