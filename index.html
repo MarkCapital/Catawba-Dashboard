@@ -101,6 +101,23 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
 .sticky-tab-shell .year-label{display:none;}
 .sticky-tab-shell .tab{border-radius:999px;padding:6px 12px;font-size:11px;font-weight:700;white-space:nowrap;background:#f5f6fa;}
 .sticky-tab-shell .tab.active{background:#1a3d78;border-color:#1a3d78;color:white;box-shadow:0 3px 8px rgba(26,61,120,.22);}
+
+.date-range-panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:16px;box-shadow:0 8px 18px rgba(42,82,152,0.06);}
+.date-range-grid{display:grid;grid-template-columns:repeat(2,minmax(160px,220px)) auto;gap:10px;align-items:end;margin-bottom:10px;}
+.date-field{display:flex;flex-direction:column;gap:5px;}
+.date-field label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);}
+.date-field input{border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:#fff;}
+.range-btn{background:var(--accent);border:1px solid var(--accent);border-radius:8px;color:white;padding:8px 14px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;}
+.range-btn.secondary{background:var(--surface2);border-color:var(--border);color:var(--text2);}
+.range-btn:hover{filter:brightness(.96);}
+.range-quick-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px;}
+.range-status{font-size:11px;color:var(--text2);font-family:'DM Mono',monospace;margin-top:9px;}
+.range-note{font-size:11px;color:var(--text3);margin-top:5px;line-height:1.35;}
+@media(max-width:700px){
+  .date-range-grid{grid-template-columns:1fr;}
+  .range-btn{width:100%;}
+  .range-quick-row .range-btn{width:auto;flex:1 1 calc(50% - 7px);padding-left:8px;padding-right:8px;}
+}
 @media(max-width:700px){
   /* Header — hide TBG center logo on mobile to prevent overlap */
   .header{padding:10px 14px;flex-wrap:nowrap;}
@@ -436,6 +453,91 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
 
   </div><!-- /ytdDash -->
 
+
+  <!-- CUSTOM RANGE PAGE -->
+  <div id="customDash" style="display:none;">
+    <div class="date-range-panel">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+        <span style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);">Custom date range</span>
+        <div style="flex:1;height:1px;background:var(--border);"></div>
+      </div>
+      <div class="date-range-grid">
+        <div class="date-field"><label for="customStart">Start date</label><input id="customStart" type="date" min="2025-10-20"></div>
+        <div class="date-field"><label for="customEnd">End date</label><input id="customEnd" type="date" min="2025-10-20"></div>
+        <button class="range-btn" type="button" onclick="applyCustomRange()">Apply Range</button>
+      </div>
+      <div class="range-quick-row">
+        <button class="range-btn secondary" type="button" onclick="setQuickRange(7)">Last 7 Days</button>
+        <button class="range-btn secondary" type="button" onclick="setQuickRange(30)">Last 30 Days</button>
+        <button class="range-btn secondary" type="button" onclick="setQuickRange(90)">Last 90 Days</button>
+        <button class="range-btn secondary" type="button" onclick="setQuickRange('full')">Full Available Range</button>
+      </div>
+      <div class="range-status" id="customRangeStatus">Showing data for the selected range.</div>
+      <div class="range-note">Note: operational dashboard rows are recorded weekly, so weekly charts/tables include full source weeks that overlap the selected dates. Invoice data is currently available by processed month on the dashboard, so invoice totals include processed-month buckets that overlap the selected range.</div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+      <span style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);">Range summary</span>
+      <div style="flex:1;height:1px;background:var(--border);"></div>
+    </div>
+    <div class="kpi-row kpi-row-1" id="customKpi1" style="margin-bottom:10px;"></div>
+    <div class="kpi-row" style="grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:20px;" id="customKpi2"></div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;" id="customChartsRow">
+      <div class="chart-card">
+        <div class="chart-title">Inspections &amp; APPA — selected range</div>
+        <div class="chart-legend"><span class="leg"><span class="leg-sq" style="background:#2a5298;"></span>Inspections</span><span class="leg"><span class="leg-sq" style="background:#c0392b;"></span>Avg APPA (right)</span></div>
+        <div class="chart-wrap" style="height:200px;"><canvas id="customInspChart" role="img" aria-label="Custom range inspections and APPA"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">PO Request $ — selected range</div>
+        <div class="chart-legend"><span class="leg"><span class="leg-sq" style="background:#1a6b45;"></span>PO $</span></div>
+        <div class="chart-wrap" style="height:200px;"><canvas id="customPoChart" role="img" aria-label="Custom range PO request dollars"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Work orders by week — selected range</div>
+        <div class="chart-legend"><span class="leg"><span class="leg-sq" style="background:#2a5298;"></span>Created</span><span class="leg"><span class="leg-sq" style="background:#888780;"></span>Closed</span></div>
+        <div class="chart-wrap" style="height:200px;"><canvas id="customWoChart" role="img" aria-label="Custom range work orders"></canvas></div>
+      </div>
+    </div>
+
+    <div class="section-head"><h2>Overtime by week — selected range</h2><div class="divider"></div></div>
+    <div class="charts-row" style="margin-bottom:14px;">
+      <div class="chart-card">
+        <div class="chart-header"><div class="chart-title">OT hours by week — stacked by dept</div><div class="stat-pill"><span class="stat-pill-label">Range total</span><span class="stat-pill-val" id="customOtHrsPill">—</span></div></div>
+        <div class="chart-legend"><span class="leg"><span class="leg-sq" style="background:#c0392b;"></span>Maintenance</span><span class="leg"><span class="leg-sq" style="background:#2a5298;"></span>Housekeeping</span><span class="leg"><span class="leg-sq" style="background:#1a6b45;"></span>Grounds</span></div>
+        <div class="chart-wrap" style="height:240px;"><canvas id="customOtHrsChart" role="img" aria-label="Custom range OT hours"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header"><div class="chart-title">OT pay $ by week</div><div class="stat-pill"><span class="stat-pill-label">Range total</span><span class="stat-pill-val" id="customOtPayPill">—</span></div></div>
+        <div class="chart-legend"><span class="leg"><span class="leg-sq" style="background:#e6a817;"></span>Total OT pay</span></div>
+        <div class="chart-wrap" style="height:240px;"><canvas id="customOtPayChart" role="img" aria-label="Custom range OT pay"></canvas></div>
+      </div>
+    </div>
+
+    <div class="section-head"><h2>Processed invoices — selected dates <span class="invoice-kpi-tag">Range</span></h2><div class="divider"></div></div>
+    <div class="invoice-kpi-strip" id="customInvoiceKpis"></div>
+    <div class="charts-row" style="margin-bottom:14px;">
+      <div class="chart-card">
+        <div class="chart-header"><div class="chart-title">Paid invoices by processed month</div><div class="stat-pill"><span class="stat-pill-label">Range total</span><span class="stat-pill-val" id="customInvoicePill">—</span></div></div>
+        <div class="chart-legend"><span class="leg"><span class="leg-sq" style="background:#8e44ad;"></span>Paid invoices</span></div>
+        <div class="chart-wrap" style="height:240px;"><canvas id="customInvoiceChart" role="img" aria-label="Custom range processed invoice payments"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header"><div class="chart-title">Top vendors in range</div><a href="https://docs.google.com/spreadsheets/d/1H5tpj1VXhorWHuuO0jVQluNYrU1UNDFiwXDDbLekGpM/edit?usp=sharing" target="_blank" style="font-size:11px;color:#2a5298;font-weight:600;text-decoration:none;">Open report ↗</a></div>
+        <div id="customInvoiceVendorList" style="display:flex;flex-direction:column;gap:8px;"></div>
+      </div>
+    </div>
+
+    <div class="section-head"><h2>Weekly detail — selected range</h2><div class="divider"></div></div>
+    <div class="table-card">
+      <table>
+        <thead><tr><th>Week</th><th>Inspections</th><th>Avg APPA</th><th>Open Positions</th><th>PO Requests</th><th>PO $</th><th>After-Hrs</th><th>WO Created</th><th>WO Closed</th></tr></thead>
+        <tbody id="customWeekBody"></tbody>
+      </table>
+    </div>
+  </div><!-- /customDash -->
+
   <!-- TRAINING SECTION -->
   <div id="trainingWrapper" style="max-width:1100px;margin-left:auto;margin-right:auto;">
   <div class="section-head"><h2>Private Education Training</h2><div class="divider"></div></div>
@@ -535,6 +637,7 @@ function animateKpiRow(rowId){
   const row = document.getElementById(rowId);
   if(!row) return;
   row.querySelectorAll('.kpi-val').forEach(el=>{
+    if(el.dataset.noAnimate === 'true') return;
     const text = el.textContent.trim();
     // Parse numeric value
     const isDollar = text.startsWith('$') && (text.endsWith('K') || text.endsWith('M'));
@@ -699,6 +802,11 @@ function setChartGrids(){
   // YTD charts row
   const ytdRow = document.getElementById('ytdChartsRow');
   if(ytdRow) ytdRow.style.gridTemplateColumns = mobile ? '1fr' : '1fr 1fr 1fr';
+  // Custom range charts row
+  const customRow = document.getElementById('customChartsRow');
+  if(customRow) customRow.style.gridTemplateColumns = mobile ? '1fr' : '1fr 1fr 1fr';
+  const customKpi2 = document.getElementById('customKpi2');
+  if(customKpi2) customKpi2.style.gridTemplateColumns = mobile ? 'repeat(2,1fr)' : 'repeat(6,1fr)';
   // Row B: Open WOs + PM/RM + WO by week (current month)
   const rowB = document.getElementById('chartRowB');
   if(rowB) rowB.style.gridTemplateColumns = mobile ? '1fr' : '1fr 1fr 1fr';
@@ -736,7 +844,9 @@ function selectMonth(i){
   sel=i;
   const ytdD=document.getElementById('ytdDash');
   const mainD=document.getElementById('mainDash');
+  const customD=document.getElementById('customDash');
   if(ytdD) ytdD.style.display='none';
+  if(customD) customD.style.display='none';
   if(mainD) mainD.style.display='block';
   refresh();
 }
@@ -766,6 +876,14 @@ function buildMonthTabs(){
   ytdBtn.textContent = 'YTD';
   ytdBtn.onclick = ()=>{ sel=-1; showYTD(); };
   currentLine.appendChild(ytdBtn);
+
+  const customBtn = document.createElement('button');
+  customBtn.id = 'customRangeTab';
+  customBtn.className = 'tab';
+  customBtn.textContent = 'Custom Range';
+  customBtn.onclick = ()=>showCustomRange();
+  currentLine.appendChild(customBtn);
+
   tabRow.appendChild(currentLine);
 
   const years = [...new Set(months.map(monthYear))]
@@ -801,13 +919,17 @@ function refresh(){
   // Always ensure correct page visibility
   const _ytdD = document.getElementById('ytdDash');
   const _mainD = document.getElementById('mainDash');
+  const _customD = document.getElementById('customDash');
   if(_ytdD) _ytdD.style.display = 'none';
+  if(_customD) _customD.style.display = 'none';
   if(_mainD) _mainD.style.display = 'block';
   document.querySelectorAll('.tab[data-month-index]').forEach(b=>b.classList.toggle('active',Number(b.dataset.monthIndex)===sel));
   const activeTab = document.querySelector('.tab[data-month-index].active');
   if(activeTab && activeTab.scrollIntoView) activeTab.scrollIntoView({block:'nearest', inline:'nearest'});
   const ytdT = document.getElementById('ytdTab');
   if(ytdT) ytdT.classList.remove('active');
+  const customT = document.getElementById('customRangeTab');
+  if(customT) customT.classList.remove('active');
   const mo = months[sel];
   const isCurrent = sel === CURRENT_MONTH_IDX;
 
@@ -1167,6 +1289,7 @@ function showYTD(){
   const ytdT = document.getElementById('ytdTab');
   if(ytdT) ytdT.classList.add('active');
   document.getElementById('mainDash').style.display = 'none';
+  const customD=document.getElementById('customDash'); if(customD) customD.style.display='none';
   document.getElementById('ytdDash').style.display = 'block';
   const trainingW2 = document.getElementById('trainingWrapper');
   if(trainingW2) trainingW2.style.display = 'none';
@@ -1319,9 +1442,160 @@ function showYTD(){
   setChartGrids();
 }
 
+
+// ── CUSTOM DATE RANGE ─────────────────────────────────────────────────────────
+const RANGE_MIN_DATE = '2025-10-20';
+let customInspInst=null, customPoInst=null, customWoInst=null, customOtHrsInst=null, customOtPayInst=null, customInvoiceInst=null;
+
+function dateOnly(d){ return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+function parseIsoDate(s){ const [y,m,d]=String(s).split('-').map(Number); return new Date(y,m-1,d); }
+function isoDate(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+function displayDate(d){ return `${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}/${String(d.getFullYear()).slice(-2)}`; }
+function clampDate(d){ const min=parseIsoDate(RANGE_MIN_DATE); const max=dateOnly(new Date()); return new Date(Math.max(min.getTime(), Math.min(max.getTime(), d.getTime()))); }
+function overlap(aStart,aEnd,bStart,bEnd){ return aStart <= bEnd && aEnd >= bStart; }
+function monthBoundsFromLabel(label){
+  const aliases={Jan:0,January:0,Feb:1,February:1,Mar:2,March:2,Apr:3,April:3,May:4,Jun:5,June:5,Jul:6,July:6,Aug:7,August:7,Sep:8,September:8,Oct:9,October:9,Nov:10,November:10,Dec:11,December:11};
+  const m=String(label).match(/^(\w+)\s+(\d{4})$/); if(!m) return null;
+  const mo=aliases[m[1]], yr=Number(m[2]); if(mo==null) return null;
+  return {start:new Date(yr,mo,1), end:new Date(yr,mo+1,0), short:Object.keys(aliases).find(k=>aliases[k]===mo && k.length===3) || m[1].slice(0,3)};
+}
+function weekBounds(label, monthIndex){
+  const mo=months[monthIndex];
+  const baseYear=Number((mo.label.match(/\b\d{4}\b/)||['2026'])[0]);
+  const parts=String(label).split(/[–-]/).map(x=>x.trim());
+  if(parts.length<2) return null;
+  const parsePart=(part, fallbackMonth, fallbackYear)=>{
+    const nums=part.split('/').map(Number);
+    let month, day;
+    if(nums.length>=2){ month=nums[0]; day=nums[1]; } else { month=fallbackMonth; day=nums[0]; }
+    let year=fallbackYear;
+    return {month, day, year, date:new Date(year, month-1, day)};
+  };
+  const start=parsePart(parts[0], null, baseYear);
+  let end=parsePart(parts[1], start.month, baseYear);
+  if(end.date < start.date){ end.year += 1; end.date = new Date(end.year, end.month-1, end.day); }
+  return {start:start.date, end:end.date};
+}
+function allWeekRows(){
+  const rows=[];
+  months.forEach((mo,mi)=>{
+    (mo.weeks||[]).forEach(w=>{
+      const bounds=weekBounds(w.w, mi);
+      if(bounds) rows.push({...w, month:mo, monthIndex:mi, start:bounds.start, end:bounds.end});
+    });
+  });
+  return rows;
+}
+function allOtRows(){
+  const rows=[];
+  [...otWeeks2025, ...otWeeks2026].forEach(w=>{
+    const bounds=weekBounds(w.w, w.mo);
+    if(bounds) rows.push({...w, start:bounds.start, end:bounds.end});
+  });
+  return rows;
+}
+function posNum(v){ const m=String(v??'').match(/\d+/); return m ? Number(m[0]) : 0; }
+function sum(arr, fn){ return arr.reduce((s,x)=>s+(Number(fn(x))||0),0); }
+function customInvoiceInfo(start,end){
+  const monthsInRange=Object.entries(invoiceData).filter(([label])=>{ const b=monthBoundsFromLabel(label); return b && overlap(b.start,b.end,start,end); });
+  const total=monthsInRange.reduce((s,[,v])=>s+(v.total||0),0);
+  const count=monthsInRange.reduce((s,[,v])=>s+(v.count||0),0);
+  const needsReview=monthsInRange.reduce((s,[,v])=>s+(v.needsReview||0),0);
+  const vendorMap={};
+  monthsInRange.forEach(([,info])=>(info.vendors||[]).forEach(v=>{
+    if(!vendorMap[v.vendor]) vendorMap[v.vendor]={vendor:v.vendor,total:0,count:0,needsReview:0};
+    vendorMap[v.vendor].total += v.total||0;
+    vendorMap[v.vendor].count += v.count||0;
+    vendorMap[v.vendor].needsReview += v.needsReview||0;
+  }));
+  const vendors=Object.values(vendorMap).sort((a,b)=>b.total-a.total).slice(0,10);
+  return {total,count,needsReview,vendors,labels:monthsInRange.map(([label])=>label.replace(' 2026','').replace('June','Jun')), totals:monthsInRange.map(([,v])=>v.total||0)};
+}
+function setDefaultCustomRange(){
+  const s=document.getElementById('customStart'), e=document.getElementById('customEnd'); if(!s||!e) return;
+  const today=dateOnly(new Date());
+  const first=new Date(today.getFullYear(), today.getMonth(), 1);
+  s.min=RANGE_MIN_DATE; e.min=RANGE_MIN_DATE; s.max=isoDate(today); e.max=isoDate(today);
+  if(!s.value) s.value=isoDate(clampDate(first));
+  if(!e.value) e.value=isoDate(today);
+}
+function setQuickRange(days){
+  const today=dateOnly(new Date()); let start;
+  if(days==='full') start=parseIsoDate(RANGE_MIN_DATE);
+  else { start=new Date(today); start.setDate(start.getDate()-Number(days)+1); start=clampDate(start); }
+  document.getElementById('customStart').value=isoDate(start);
+  document.getElementById('customEnd').value=isoDate(today);
+  applyCustomRange();
+}
+function showCustomRange(){
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  const ctab=document.getElementById('customRangeTab'); if(ctab) ctab.classList.add('active');
+  document.getElementById('mainDash').style.display='none';
+  document.getElementById('ytdDash').style.display='none';
+  const cd=document.getElementById('customDash'); if(cd) cd.style.display='block';
+  const trainingW=document.getElementById('trainingWrapper'); if(trainingW) trainingW.style.display='none';
+  sel=-2;
+  setDefaultCustomRange();
+  applyCustomRange();
+  setChartGrids();
+}
+function applyCustomRange(){
+  setDefaultCustomRange();
+  const startInput=document.getElementById('customStart'), endInput=document.getElementById('customEnd'); if(!startInput||!endInput) return;
+  let start=clampDate(parseIsoDate(startInput.value));
+  let end=clampDate(parseIsoDate(endInput.value));
+  if(end < start){ const tmp=start; start=end; end=tmp; }
+  startInput.value=isoDate(start); endInput.value=isoDate(end);
+  const weekRows=allWeekRows().filter(w=>overlap(w.start,w.end,start,end));
+  const otRows=allOtRows().filter(w=>overlap(w.start,w.end,start,end));
+  const insp=sum(weekRows,w=>w.insp);
+  const appaWeight=sum(weekRows,w=>(w.appa==null?0:w.appa*(Number(w.insp)||0)));
+  const appaDen=sum(weekRows,w=>(w.appa==null?0:Number(w.insp)||0));
+  const avgAppa=appaDen ? (appaWeight/appaDen) : null;
+  const peakPos=weekRows.length ? Math.max(...weekRows.map(w=>posNum(w.pos))) : 0;
+  const poReq=sum(weekRows,w=>w.po), poDol=sum(weekRows,w=>w.poDol), ah=sum(weekRows,w=>w.ah);
+  const woCreated=sum(weekRows,w=>w.woCreated), woClosed=sum(weekRows,w=>w.woClosed);
+  const otHrs=sum(otRows,w=>w.hrs), otPay=sum(otRows,w=>w.pay);
+  const inv=customInvoiceInfo(start,end);
+  document.getElementById('customRangeStatus').textContent = `Showing ${displayDate(start)} through ${displayDate(end)} · ${weekRows.length} weekly record${weekRows.length===1?'':'s'} included`;
+  document.getElementById('customKpi1').innerHTML =
+    kpi('Inspections',fmtNum(insp),'',true)+
+    kpi('Avg APPA score',avgAppa==null?'N/A':avgAppa.toFixed(2))+
+    kpi('Peak open positions',fmtNum(peakPos))+
+    kpi('PO requests',fmtNum(poReq))+
+    kpi('PO request $',`<span style="font-size:18px;">${fmtK(poDol)}</span>`)+
+    kpi('After-hrs calls',fmtNum(ah));
+  document.getElementById('customKpi2').innerHTML =
+    kpi('WOs created',fmtNum(woCreated),'')+
+    kpi('WOs closed',fmtNum(woClosed),'')+
+    `<div class="kpi"><div class="kpi-label">OT hours</div><div class="kpi-val" data-no-animate="true">${otHrs.toFixed(1)} hrs</div></div>`+
+    kpi('OT pay $',`<span style="font-size:18px;">${fmtK(otPay)}</span>`,'')+
+    kpi('Invoice $',`<span style="font-size:18px;">${fmtDolShort(inv.total)}</span>`,'Processed invoices')+
+    kpi('Invoices',fmtNum(inv.count),'Processed invoices');
+  setTimeout(()=>{animateKpiRow('customKpi1');animateKpiRow('customKpi2');},50);
+  document.getElementById('customWeekBody').innerHTML = weekRows.length ? weekRows.map(w=>`<tr><td class="mono">${w.w}</td><td>${fmtNum(w.insp)}</td><td>${appaBadge(w.appa)}</td><td style="font-size:12px;">${w.pos}</td><td>${fmtNum(w.po)}</td><td class="mono">${fmtDol(w.poDol)}</td><td>${fmtNum(w.ah)}</td><td>${fmtNum(w.woCreated||0)}</td><td>${fmtNum(w.woClosed||0)}</td></tr>`).join('') : '<tr><td colspan="9" style="color:var(--text3);">No weekly records overlap this range.</td></tr>';
+  const labels=weekRows.map(w=>w.w);
+  [['customInspChart','insp'],['customPoChart','po'],['customWoChart','wo']].forEach(([id])=>{const el=document.getElementById(id); const ex=Chart.getChart(el); if(ex) ex.destroy();});
+  customInspInst=new Chart(document.getElementById('customInspChart'),{type:'bar',data:{labels,datasets:[{label:'Inspections',data:weekRows.map(w=>w.insp),backgroundColor:'#2a5298',yAxisID:'y'},{label:'Avg APPA',data:weekRows.map(w=>w.appa),type:'line',borderColor:'#c0392b',backgroundColor:'transparent',pointBackgroundColor:'#c0392b',yAxisID:'y2',tension:.35,pointRadius:4}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},datalabels:{display:false}},scales:{y:{beginAtZero:true,ticks:{font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}},y2:{position:'right',min:2.0,max:3.2,ticks:{font:{size:11}},grid:{drawOnChartArea:false}},x:{ticks:{font:{size:9},maxRotation:45,autoSkip:labels.length>8}}}}});
+  customPoInst=new Chart(document.getElementById('customPoChart'),{type:'bar',data:{labels,datasets:[{label:'PO $',data:weekRows.map(w=>w.poDol),backgroundColor:'#1a6b45'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>'PO $: '+fmtDolShort(ctx.parsed.y)}}},scales:{y:{beginAtZero:true,ticks:{font:{size:11},callback:v=>fmtK(v)},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:9},maxRotation:45,autoSkip:labels.length>8}}}}});
+  customWoInst=new Chart(document.getElementById('customWoChart'),{type:'bar',data:{labels,datasets:[{label:'Created',data:weekRows.map(w=>w.woCreated||0),backgroundColor:'#2a5298'},{label:'Closed',data:weekRows.map(w=>w.woClosed||0),backgroundColor:'#888780'}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},datalabels:{display:false}},scales:{y:{beginAtZero:true,ticks:{font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:9},maxRotation:45,autoSkip:labels.length>8}}}}});
+  const otLabels=otRows.map(w=>w.w);
+  document.getElementById('customOtHrsPill').textContent=otHrs.toFixed(1)+' hrs';
+  document.getElementById('customOtPayPill').textContent=fmtDolShort(otPay);
+  ['customOtHrsChart','customOtPayChart','customInvoiceChart'].forEach(id=>{const el=document.getElementById(id); const ex=Chart.getChart(el); if(ex) ex.destroy();});
+  customOtHrsInst=new Chart(document.getElementById('customOtHrsChart'),{type:'bar',data:{labels:otLabels,datasets:[{label:'Maintenance',data:otRows.map(w=>w.mHrs),backgroundColor:'#c0392b',stack:'a'},{label:'Housekeeping',data:otRows.map(w=>w.hHrs),backgroundColor:'#2a5298',stack:'a'},{label:'Grounds',data:otRows.map(w=>w.gHrs),backgroundColor:'#1a6b45',stack:'a'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false}},scales:{x:{stacked:true,ticks:{font:{size:8.5},maxRotation:55,autoSkip:otLabels.length>8}},y:{stacked:true,beginAtZero:true,ticks:{font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}}}}});
+  customOtPayInst=new Chart(document.getElementById('customOtPayChart'),{type:'bar',data:{labels:otLabels,datasets:[{label:'OT Pay',data:otRows.map(w=>w.pay),backgroundColor:'#e6a817'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>'OT Pay: '+fmtDolShort(ctx.parsed.y)}}},scales:{x:{ticks:{font:{size:8.5},maxRotation:55,autoSkip:otLabels.length>8}},y:{beginAtZero:true,ticks:{font:{size:11},callback:v=>fmtK(v)},grid:{color:'rgba(0,0,0,0.05)'}}}}});
+  document.getElementById('customInvoicePill').textContent=fmtDolShort(inv.total);
+  document.getElementById('customInvoiceKpis').innerHTML=invoiceKpiStrip(inv,'Range','Selected');
+  document.getElementById('customInvoiceVendorList').innerHTML=invoiceVendorRows(inv.vendors);
+  customInvoiceInst=new Chart(document.getElementById('customInvoiceChart'),{type:'bar',data:{labels:inv.labels,datasets:[{label:'Paid invoices',data:inv.totals,backgroundColor:'#8e44ad'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>'Paid invoices: '+fmtDolShort(ctx.parsed.y)}}},scales:{y:{beginAtZero:true,ticks:{font:{size:11},callback:v=>fmtK(v)},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:11},autoSkip:false}}}}});
+  setChartGrids();
+}
+
 // Return from YTD to monthly view
 function hideYTD(){
   document.getElementById('ytdDash').style.display = 'none';
+  const customD=document.getElementById('customDash'); if(customD) customD.style.display='none';
   document.getElementById('mainDash').style.display = 'block';
   sel = CURRENT_MONTH_IDX;
   refresh();
