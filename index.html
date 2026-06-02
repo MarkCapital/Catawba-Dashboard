@@ -171,10 +171,24 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
 }
 
 @media print {
-  body * { visibility: hidden !important; }
+  @page { size: letter landscape; margin: 0.22in; }
+  html, body { margin: 0 !important; padding: 0 !important; background: white !important; }
+  body > :not(#printArea) { display: none !important; }
+  #printArea {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    max-width: none !important;
+    padding: 0 !important;
+    box-sizing: border-box;
+    overflow: hidden;
+    zoom: 0.62;
+    break-after: avoid;
+    page-break-after: avoid;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
   #printArea, #printArea * { visibility: visible !important; }
-  #printArea { position: absolute; top: 0; left: 0; right: 0; width: auto; box-sizing: border-box; overflow: hidden; }
-  #printArea { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 </style>
 </head>
@@ -1604,9 +1618,9 @@ function hideYTD(){
 function printTbgLogo(){
   const src = document.querySelector('.tbg-center img')?.src || '';
   const safeSrc = src.replace(/&/g,'&amp;').replace(/"/g,'&quot;');
-  return `<svg aria-label="The Budd Group" role="img" viewBox="0 0 150 76" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:150px;height:76px;display:block;overflow:visible;">
-    <rect x="0" y="0" width="150" height="76" rx="6" fill="#1a3d78"></rect>
-    <image href="${safeSrc}" x="24" y="8" width="102" height="60" preserveAspectRatio="xMidYMid meet"></image>
+  return `<svg aria-label="The Budd Group" role="img" viewBox="0 0 140 70" style="position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:140px;height:70px;display:block;overflow:visible;">
+    <rect x="0" y="0" width="140" height="70" rx="6" fill="#1a3d78"></rect>
+    <image href="${safeSrc}" x="20" y="7" width="100" height="56" preserveAspectRatio="xMidYMid meet"></image>
   </svg>`;
 }
 
