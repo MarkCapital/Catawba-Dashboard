@@ -156,7 +156,7 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
 @media print {
   body * { visibility: hidden !important; }
   #printArea, #printArea * { visibility: visible !important; }
-  #printArea { position: absolute; top: 0; left: 0; width: 100%; }
+  #printArea { position: absolute; top: 0; left: 0; right: 0; width: auto; box-sizing: border-box; overflow: hidden; }
   #printArea { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 </style>
@@ -1408,28 +1408,28 @@ function printYTD(){
     </div>`;
 
   document.getElementById('pCharts').innerHTML = `
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;">
-      <div style="background:#f4f3ef;border-radius:10px;padding:14px;">
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:10px;margin-bottom:12px;">
+      <div style="background:#f4f3ef;border-radius:10px;padding:10px;min-width:0;overflow:hidden;">
         <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">Inspections &amp; APPA — 2026</div>
-        <canvas id="pYtdInspChart" width="360" height="180" role="img"></canvas>
+        <canvas id="pYtdInspChart" width="240" height="150" style="display:block;width:100%;max-width:100%;height:150px;" role="img"></canvas>
       </div>
-      <div style="background:#f4f3ef;border-radius:10px;padding:14px;">
+      <div style="background:#f4f3ef;border-radius:10px;padding:10px;min-width:0;overflow:hidden;">
         <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">PO Request $ — 2026</div>
-        <canvas id="pYtdPoChart" width="360" height="180" role="img"></canvas>
+        <canvas id="pYtdPoChart" width="240" height="150" style="display:block;width:100%;max-width:100%;height:150px;" role="img"></canvas>
       </div>
-      <div style="background:#f4f3ef;border-radius:10px;padding:14px;">
+      <div style="background:#f4f3ef;border-radius:10px;padding:10px;min-width:0;overflow:hidden;">
         <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">Work Orders — 2026</div>
-        <canvas id="pYtdWoChart" width="420" height="200" role="img"></canvas>
+        <canvas id="pYtdWoChart" width="240" height="150" style="display:block;width:100%;max-width:100%;height:150px;" role="img"></canvas>
       </div>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
-      <div style="background:#f4f3ef;border-radius:10px;padding:14px;">
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin-bottom:12px;">
+      <div style="background:#f4f3ef;border-radius:10px;padding:10px;min-width:0;overflow:hidden;">
         <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">OT Hours by Month — 2026</div>
-        <canvas id="pYtdOtHrsChart" width="400" height="180" role="img"></canvas>
+        <canvas id="pYtdOtHrsChart" width="360" height="150" style="display:block;width:100%;max-width:100%;height:150px;" role="img"></canvas>
       </div>
-      <div style="background:#f4f3ef;border-radius:10px;padding:14px;">
+      <div style="background:#f4f3ef;border-radius:10px;padding:10px;min-width:0;overflow:hidden;">
         <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">OT Pay by Month — 2026</div>
-        <canvas id="pYtdOtPayChart" width="400" height="180" role="img"></canvas>
+        <canvas id="pYtdOtPayChart" width="360" height="150" style="display:block;width:100%;max-width:100%;height:150px;" role="img"></canvas>
       </div>
     </div>`;
 
