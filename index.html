@@ -1924,17 +1924,17 @@ function printSummary(){
   // ── Charts ───────────────────────────────────────────────────────────────────
   document.getElementById('pCharts').innerHTML = `
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
-      <div style="background:#f4f3ef;border-radius:10px;padding:14px;">
+      <div style="background:#f4f3ef;border-radius:10px;padding:14px;min-width:0;overflow:hidden;">
         <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">Inspections &amp; APPA Score</div>
-        <canvas id="pInspChart" width="400" height="200" role="img"></canvas>
+        <canvas id="pInspChart" width="560" height="200" style="display:block;width:100%;max-width:100%;height:200px;" role="img"></canvas>
       </div>
-      <div style="background:#f4f3ef;border-radius:10px;padding:14px;">
+      <div style="background:#f4f3ef;border-radius:10px;padding:14px;min-width:0;overflow:hidden;">
         <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">PO Request $ by Month</div>
-        <canvas id="pPoChart" width="400" height="200" role="img"></canvas>
+        <canvas id="pPoChart" width="560" height="200" style="display:block;width:100%;max-width:100%;height:200px;" role="img"></canvas>
       </div>
-      <div style="background:#f4f3ef;border-radius:10px;padding:14px;">
+      <div style="background:#f4f3ef;border-radius:10px;padding:14px;min-width:0;overflow:hidden;">
         <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">WOs Created vs Closed</div>
-        <canvas id="pWoChart" width="400" height="200" role="img"></canvas>
+        <canvas id="pWoChart" width="560" height="200" style="display:block;width:100%;max-width:100%;height:200px;" role="img"></canvas>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
         <div style="background:#f4f3ef;border-radius:10px;padding:14px;">
