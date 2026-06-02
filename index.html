@@ -157,6 +157,7 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
   body * { visibility: hidden !important; }
   #printArea, #printArea * { visibility: visible !important; }
   #printArea { position: absolute; top: 0; left: 0; width: 100%; }
+  #printArea { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 </style>
 </head>
@@ -1326,6 +1327,15 @@ function hideYTD(){
   refresh();
 }
 
+function printTbgLogo(){
+  const src = document.querySelector('.tbg-center img')?.src || '';
+  const safeSrc = src.replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+  return `<svg aria-label="The Budd Group" role="img" viewBox="0 0 150 76" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:150px;height:76px;display:block;overflow:visible;">
+    <rect x="0" y="0" width="150" height="76" rx="6" fill="#1a3d78"></rect>
+    <image href="${safeSrc}" x="24" y="8" width="102" height="60" preserveAspectRatio="xMidYMid meet"></image>
+  </svg>`;
+}
+
 // ── YTD Print Summary ─────────────────────────────────────────────────────────
 function printYTD(){
   const totInsp  = ytdMonths.reduce((s,m)=>s+m.insp,0);
@@ -1351,7 +1361,7 @@ function printYTD(){
           <div style="font-size:12px;color:#6b6a63;margin-top:2px;">The Budd Group &nbsp;·&nbsp; Operations Dashboard &nbsp;·&nbsp; 2026 Year to Date</div>
         </div>
       </div>
-      <img src="${document.querySelector('.tbg-center img').src}" alt="The Budd Group" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);height:58px;width:auto;background:#2a5298;border-radius:4px;padding:6px 12px;box-sizing:content-box;" />
+      ${printTbgLogo()}
       <div style="font-size:11px;color:#9b9a93;font-family:monospace;">Updated ${UPDATED}</div>
     </div>`;
 
@@ -1571,7 +1581,7 @@ function printSummary(){
           <div style="font-size:12px;color:#6b6a63;margin-top:2px;">The Budd Group &nbsp;·&nbsp; Operations Dashboard &nbsp;·&nbsp; ${mo.label}</div>
         </div>
       </div>
-      <img src="${document.querySelector('.tbg-center img').src}" alt="The Budd Group" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);height:58px;width:auto;background:#2a5298;border-radius:4px;padding:6px 12px;box-sizing:content-box;" />
+      ${printTbgLogo()}
       <div style="text-align:right;">
         <div style="font-size:11px;color:#9b9a93;font-family:monospace;">Updated ${UPDATED}</div>
       </div>
