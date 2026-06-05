@@ -969,9 +969,10 @@ function refresh(){
   rowB.style.display = isCurrent ? 'grid' : 'none';
   rowBHist.style.display = isCurrent ? 'none' : 'flex';
   document.getElementById('lastWeekRow').style.display = isCurrent ? '' : 'none';
-  // Training section only shows on current month tab
+  // Training section is tied to the last posted training report.
+  // Hide it from the current June tab until the June training report is provided.
   const trainingW = document.getElementById('trainingWrapper');
-  if(trainingW) trainingW.style.display = isCurrent ? '' : 'none';
+  if(trainingW) trainingW.style.display = mo.key === 'may' ? '' : 'none';
   document.getElementById('printBtn').style.display = isCurrent ? '' : 'none';
 
   const tc  = mo.woCreated.maint+mo.woCreated.hk+mo.woCreated.grnds;
@@ -1036,22 +1037,22 @@ function refresh(){
       `<div class="kpi" style="display:flex;align-items:center;justify-content:center;gap:24px;">
         <div>
           <div class="kpi-label">WOs created</div>
-          <div class="kpi-val">${fmtNum(tc)}</div>
-          <div class="kpi-sub">${colorSub('M:'+mo.woCreated.maint+' · HK:'+mo.woCreated.hk+' · G:'+mo.woCreated.grnds)}</div>
+          <div class="kpi-val">${fmtNum(mtc)}</div>
+          <div class="kpi-sub">${colorSub(mtcSub)}</div>
         </div>
         <div style="width:70px;height:70px;flex-shrink:0;"><canvas id="histCreatedDonut" role="img" aria-label="WOs created department breakdown" width="70" height="70"></canvas></div>
       </div>`+
       `<div class="kpi" style="display:flex;align-items:center;justify-content:center;gap:24px;">
         <div>
           <div class="kpi-label">WOs closed</div>
-          <div class="kpi-val">${fmtNum(tco)}</div>
-          <div class="kpi-sub">${colorSub('M:'+mo.woClosed.maint+' · HK:'+mo.woClosed.hk+' · G:'+mo.woClosed.grnds)}</div>
+          <div class="kpi-val">${fmtNum(mtco)}</div>
+          <div class="kpi-sub">${colorSub(mtcoSub)}</div>
         </div>
         <div style="width:70px;height:70px;flex-shrink:0;"><canvas id="histClosedDonut" role="img" aria-label="WOs closed department breakdown" width="70" height="70"></canvas></div>
       </div>`;
     const histDonutOpts = {responsive:false,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{display:false},datalabels:{display:false}},animation:{duration:300}};
-    [{id:'histCreatedDonut',data:[mo.woCreated.maint,mo.woCreated.hk,mo.woCreated.grnds]},
-     {id:'histClosedDonut',data:[mo.woClosed.maint,mo.woClosed.hk,mo.woClosed.grnds]}
+    [{id:'histCreatedDonut',data:[mo.mtdCreatedM!==undefined?mo.mtdCreatedM:mo.woCreated.maint, mo.mtdCreatedHK!==undefined?mo.mtdCreatedHK:mo.woCreated.hk, mo.mtdCreatedG!==undefined?mo.mtdCreatedG:mo.woCreated.grnds]},
+     {id:'histClosedDonut',data:[mo.mtdClosedM!==undefined?mo.mtdClosedM:mo.woClosed.maint, mo.mtdClosedHK!==undefined?mo.mtdClosedHK:mo.woClosed.hk, mo.mtdClosedG!==undefined?mo.mtdClosedG:mo.woClosed.grnds]}
     ].forEach(({id,data})=>{
       const el=document.getElementById(id);
       if(!el) return;
