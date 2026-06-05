@@ -1275,11 +1275,11 @@ buildTrainingSection();
 setChartGrids();
 
 // ── YTD 2026 ──────────────────────────────────────────────────────────────────
-const ytdMonths = months.filter(m => ['jan','feb','mar','apr','may'].includes(m.key));
+const ytdMonths = months.filter(m => ['jan','feb','mar','apr','may','jun'].includes(m.key));
 
 // Aggregate OT weeks into monthly buckets for 2026
-const otMonthLabels = ['Jan','Feb','Mar','Apr','May'];
-const otMonthMap = { 3:'Jan', 4:'Feb', 5:'Mar', 6:'Apr', 7:'May' };
+const otMonthLabels = ['Jan','Feb','Mar','Apr','May','Jun'];
+const otMonthMap = { 3:'Jan', 4:'Feb', 5:'Mar', 6:'Apr', 7:'May', 8:'Jun' };
 
 function getYtdOtByMonth(){
   const result = {};
