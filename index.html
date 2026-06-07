@@ -207,7 +207,7 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
       <p>The Budd Group &nbsp;·&nbsp; Operations Dashboard</p>
     </div>
   </div>
-  <div class="header-right">Updated 6/5/26</div>
+  <div class="header-right">Updated 6/7/26</div>
 </div>
 
 <div class="quicklinks">
@@ -274,7 +274,7 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
   <!-- Row B: current month only — Open WOs + PM/RM + WO by Week -->
   <div style="display:none;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;" id="chartRowB">
     <div class="chart-card" id="openWoCard">
-      <div class="chart-title">Open WOs as of 6/1/26</div>
+      <div class="chart-title">Open WOs as of 6/7/26</div>
       <div class="chart-legend">
         <span class="leg"><span class="leg-sq" style="background:#c0392b;"></span>Maintenance</span>
         <span class="leg"><span class="leg-sq" style="background:#2a5298;"></span>Housekeeping</span>
@@ -283,7 +283,7 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
       <div class="chart-wrap" style="height:200px;"><canvas id="openWoChart" role="img" aria-label="Open work orders by department"></canvas></div>
     </div>
     <div class="chart-card" id="pmRmCard">
-      <div class="chart-title">Maintenance WO type as of 6/1/26 — <span id="pmRmLabel" style="text-transform:none;letter-spacing:0;font-weight:400;color:var(--text2);"></span></div>
+      <div class="chart-title">Maintenance WO type as of 6/7/26 — <span id="pmRmLabel" style="text-transform:none;letter-spacing:0;font-weight:400;color:var(--text2);"></span></div>
       <div class="chart-legend">
         <span class="leg"><span class="leg-sq" style="background:#2a5298;"></span>Preventive (PM)</span>
         <span class="leg"><span class="leg-sq" style="background:#c0392b;"></span>Reactive (RM)</span>
@@ -577,7 +577,7 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
   </div>
 
 </div>
-<div class="footer">Catawba College Facilities &nbsp;·&nbsp; The Budd Group &nbsp;·&nbsp; Updated 6/5/26</div>
+<div class="footer">Catawba College Facilities &nbsp;·&nbsp; The Budd Group &nbsp;·&nbsp; Updated 6/7/26</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
@@ -609,7 +609,7 @@ const centerTotalPlugin = { id:'centerTotal', afterDraw(chart){
 }};
 Chart.register(centerTotalPlugin);
 
-const UPDATED = '6/5/26';
+const UPDATED = '6/7/26';
 const CURRENT_MONTH_IDX = 8;
 
 function fmtDol(v){return '$'+v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
@@ -762,7 +762,7 @@ const months=[
   {key:'mar',label:'Mar 2026',short:'Mar',insp:203,appa:2.48,openPos:2,poReq:9,poDol:144352.25,afterHrs:1,woCreated:{maint:202,hk:37,grnds:26},woClosed:{maint:215,hk:35,grnds:18},openWO:{maint:59,hk:9,grnds:20},pmRm:{pm:1,rm:87},weeks:[{w:'3/2–3/8',insp:67,appa:2.6,pos:'0',po:3,poDol:24921.57,ah:1,woCreated:69,woClosed:72},{w:'3/9–3/15',insp:66,appa:2.4,pos:'2',po:2,poDol:41561.81,ah:0,woCreated:54,woClosed:50},{w:'3/16–3/22',insp:44,appa:2.4,pos:'4',po:3,poDol:71095,ah:0,woCreated:75,woClosed:54},{w:'3/23–3/29',insp:26,appa:2.5,pos:'2',po:1,poDol:6773.87,ah:0,woCreated:67,woClosed:92}]},
   {key:'apr',label:'Apr 2026',short:'Apr',insp:172,appa:2.4,openPos:1,poReq:5,poDol:470801.28,afterHrs:6,woCreated:{maint:284,hk:69,grnds:25},woClosed:{maint:279,hk:67,grnds:21},openWO:{maint:58,hk:7,grnds:24},pmRm:{pm:7,rm:51},weeks:[{w:'3/30–4/5',insp:25,appa:2.6,pos:'3',po:3,poDol:69383.88,ah:2,woCreated:94,woClosed:49},{w:'4/6–4/12',insp:41,appa:2.5,pos:'2',po:0,poDol:0,ah:3,woCreated:95,woClosed:116},{w:'4/13–4/19',insp:46,appa:2.3,pos:'2',po:2,poDol:401417.4,ah:0,woCreated:97,woClosed:107},{w:'4/20–4/26',insp:60,appa:2.2,pos:'1',po:0,poDol:0,ah:1,woCreated:92,woClosed:95}]},
   {key:'may',label:'May 2026',short:'May',insp:95,appa:2.25,openPos:1,poReq:12,poDol:273826.65,afterHrs:5,woCreated:{maint:21,hk:4,grnds:2},woClosed:{maint:42,hk:5,grnds:2},mtdCreated:250,mtdClosed:291,mtdCreatedM:187,mtdCreatedHK:40,mtdCreatedG:23,mtdClosedM:160,mtdClosedHK:47,mtdClosedG:84,openWO:{maint:86,hk:2,grnds:18},pmRm:{pm:31,rm:55},weeks:[{w:'4/26–5/3',insp:6,appa:2.1,pos:'1',po:4,poDol:125947.39,ah:3,woCreated:58,woClosed:67},{w:'5/4–5/10',insp:43,appa:2.3,pos:'1',po:1,poDol:21103,ah:0,woCreated:74,woClosed:109},{w:'5/11–5/17',insp:30,appa:2.3,pos:'1',po:1,poDol:8520.83,ah:1,woCreated:38,woClosed:30},{w:'5/18–5/24',insp:16,appa:2.3,pos:'1',po:6,poDol:118255.43,ah:1,woCreated:53,woClosed:36},{w:'5/25–5/31',insp:0,appa:null,pos:'1',po:0,poDol:0,ah:0,woCreated:27,woClosed:49}]},
-  {key:'jun',label:'Jun 2026',short:'Jun',insp:67,appa:2.17,openPos:1,poReq:2,poDol:34932.45,afterHrs:0,woCreated:{maint:22,hk:8,grnds:1},woClosed:{maint:17,hk:8,grnds:1},mtdCreated:31,mtdClosed:26,mtdCreatedM:22,mtdCreatedHK:8,mtdCreatedG:1,mtdClosedM:17,mtdClosedHK:8,mtdClosedG:1,openWO:{maint:84,hk:2,grnds:23},pmRm:{pm:29,rm:55},weeks:[{w:'6/1–6/7',insp:56,appa:2.15,pos:'1',po:2,poDol:34932.45,ah:0,woCreated:31,woClosed:26}]}
+  {key:'jun',label:'Jun 2026',short:'Jun',insp:72,appa:2.18,openPos:1,poReq:2,poDol:34932.45,afterHrs:0,woCreated:{maint:22,hk:9,grnds:1},woClosed:{maint:21,hk:8,grnds:1},mtdCreated:32,mtdClosed:30,mtdCreatedM:22,mtdCreatedHK:9,mtdCreatedG:1,mtdClosedM:21,mtdClosedHK:8,mtdClosedG:1,openWO:{maint:84,hk:3,grnds:23},pmRm:{pm:29,rm:55},weeks:[{w:'6/1–6/7',insp:56,appa:2.15,pos:'1',po:2,poDol:34932.45,ah:0,woCreated:32,woClosed:30}]}
 ];
 
 // OT weeks split by year — Oct-Dec show 2025 only, Jan+ show 2026 only
