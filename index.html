@@ -1996,8 +1996,8 @@ function printSummary(){
   new Chart(document.getElementById('pWoChart'),{
     type:'bar',
     data:{labels:ml,datasets:[
-      {label:'Created',data:months.map(m=>m.woCreated.maint+m.woCreated.hk+m.woCreated.grnds),backgroundColor:'#2a5298'},
-      {label:'Closed', data:months.map(m=>m.woClosed.maint+m.woClosed.hk+m.woClosed.grnds), backgroundColor:'#888780'}
+      {label:'Created',data:months.map(m=>(m.mtdCreated!==undefined ? m.mtdCreated : m.woCreated.maint+m.woCreated.hk+m.woCreated.grnds)),backgroundColor:'#2a5298'},
+      {label:'Closed', data:months.map(m=>(m.mtdClosed!==undefined ? m.mtdClosed : m.woClosed.maint+m.woClosed.hk+m.woClosed.grnds)), backgroundColor:'#888780'}
     ]},
     options:{responsive:false,
       plugins:{legend:{display:false},
