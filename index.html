@@ -207,7 +207,7 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
       <p>The Budd Group &nbsp;·&nbsp; Operations Dashboard</p>
     </div>
   </div>
-  <div class="header-right">Updated 8/16/26</div>
+  <div class="header-right">Updated 8/23/26</div>
 </div>
 
 <div class="quicklinks">
@@ -274,7 +274,7 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
   <!-- Row B: current month only — Open WOs + PM/RM + WO by Week -->
   <div style="display:none;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;" id="chartRowB">
     <div class="chart-card" id="openWoCard">
-      <div class="chart-title">Open WOs as of <span id="openWoAsOf">8/16/26</span></div>
+      <div class="chart-title">Open WOs as of <span id="openWoAsOf">8/23/26</span></div>
       <div class="chart-legend">
         <span class="leg"><span class="leg-sq" style="background:#c0392b;"></span>Maintenance</span>
         <span class="leg"><span class="leg-sq" style="background:#2a5298;"></span>Housekeeping</span>
@@ -283,7 +283,7 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
       <div class="chart-wrap" style="height:200px;"><canvas id="openWoChart" role="img" aria-label="Open work orders by department"></canvas></div>
     </div>
     <div class="chart-card" id="pmRmCard">
-      <div class="chart-title">Maintenance WO type as of <span id="pmRmAsOf">8/16/26</span> — <span id="pmRmLabel" style="text-transform:none;letter-spacing:0;font-weight:400;color:var(--text2);"></span></div>
+      <div class="chart-title">Maintenance WO type as of <span id="pmRmAsOf">8/23/26</span> — <span id="pmRmLabel" style="text-transform:none;letter-spacing:0;font-weight:400;color:var(--text2);"></span></div>
       <div class="chart-legend">
         <span class="leg"><span class="leg-sq" style="background:#2a5298;"></span>Preventive (PM)</span>
         <span class="leg"><span class="leg-sq" style="background:#c0392b;"></span>Reactive (RM)</span>
@@ -577,7 +577,7 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
   </div>
 
 </div>
-<div class="footer">Catawba College Facilities &nbsp;·&nbsp; The Budd Group &nbsp;·&nbsp; Updated 8/16/26</div>
+<div class="footer">Catawba College Facilities &nbsp;·&nbsp; The Budd Group &nbsp;·&nbsp; Updated 8/23/26</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
@@ -609,7 +609,7 @@ const centerTotalPlugin = { id:'centerTotal', afterDraw(chart){
 }};
 Chart.register(centerTotalPlugin);
 
-const UPDATED = '8/16/26';
+const UPDATED = '8/23/26';
 const CURRENT_MONTH_IDX = 10;
 
 function fmtDol(v){return '$'+v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
@@ -765,7 +765,7 @@ const months=[
   {key:'may',label:'May 2026',short:'May',insp:95,appa:2.25,openPos:1,poReq:12,poDol:273826.65,afterHrs:5,woCreated:{maint:21,hk:4,grnds:2},woClosed:{maint:42,hk:5,grnds:2},mtdCreated:250,mtdClosed:291,mtdCreatedM:187,mtdCreatedHK:40,mtdCreatedG:23,mtdClosedM:160,mtdClosedHK:47,mtdClosedG:84,openWO:{maint:86,hk:2,grnds:18},pmRm:{pm:31,rm:55},weeks:[{w:'4/26–5/3',insp:6,appa:2.1,pos:'1',po:4,poDol:125947.39,ah:3,woCreated:58,woClosed:67},{w:'5/4–5/10',insp:43,appa:2.3,pos:'1',po:1,poDol:21103,ah:0,woCreated:74,woClosed:109},{w:'5/11–5/17',insp:30,appa:2.3,pos:'1',po:1,poDol:8520.83,ah:1,woCreated:38,woClosed:30},{w:'5/18–5/24',insp:16,appa:2.3,pos:'1',po:6,poDol:118255.43,ah:1,woCreated:53,woClosed:36},{w:'5/25–5/31',insp:0,appa:null,pos:'1',po:0,poDol:0,ah:0,woCreated:27,woClosed:49}]},
   {key:'jun',label:'Jun 2026',short:'Jun',insp:175,appa:2.23,openPos:0,poReq:6,poDol:130672.05,afterHrs:1,woCreated:{maint:27,hk:6,grnds:7},woClosed:{maint:47,hk:9,grnds:4},mtdCreated:169,mtdClosed:180,mtdCreatedM:124,mtdCreatedHK:32,mtdCreatedG:13,mtdClosedM:141,mtdClosedHK:31,mtdClosedG:8,openWO:{maint:68,hk:0,grnds:31},pmRm:{pm:14,rm:54},weeks:[{w:'6/1–6/7',insp:72,appa:2.2,pos:'1',po:2,poDol:34932.45,ah:0,woCreated:28,woClosed:30},{w:'6/8–6/14',insp:50,appa:2.43,pos:'0',po:3,poDol:57189.60,ah:0,woCreated:37,woClosed:31},{w:'6/15–6/21',insp:8,appa:2.1,pos:'0',po:1,poDol:38550,ah:1,woCreated:64,woClosed:59},{w:'6/22–6/28',insp:45,appa:2.2,pos:'0',po:0,poDol:0,ah:0,woCreated:40,woClosed:60}]},
   {key:'jul',label:'Jul 2026',short:'Jul',insp:131,appa:2.21,openPos:4,poReq:19,poDol:206691.76,afterHrs:4,woCreated:{maint:45,hk:4,grnds:9},woClosed:{maint:35,hk:3,grnds:9},mtdCreated:292,mtdClosed:233,mtdCreatedM:245,mtdCreatedHK:18,mtdCreatedG:29,mtdClosedM:191,mtdClosedHK:17,mtdClosedG:25,openWO:{maint:123,hk:3,grnds:34},pmRm:{pm:29,rm:94},weeks:[{w:'6/29–7/5',insp:50,appa:2.2,pos:'0',po:3,poDol:41269.08,ah:2,woCreated:56,woClosed:35},{w:'7/6–7/12',insp:28,appa:2.3,pos:'0',po:5,poDol:52756.12,ah:1,woCreated:65,woClosed:28},{w:'7/13–7/19',insp:32,appa:2.1,pos:'3',po:2,poDol:8805.00,ah:1,woCreated:75,woClosed:66},{w:'7/20–7/26',insp:3,appa:2.0,pos:'4',po:4,poDol:20795.99,ah:0,woCreated:38,woClosed:57},{w:'7/27–8/2',insp:18,appa:2.3,pos:'4',po:5,poDol:83065.57,ah:0,woCreated:58,woClosed:47}]},
-  {key:'aug',label:'Aug 2026',short:'Aug',insp:5,appa:2.1,openPos:3,poReq:10,poDol:90262.68,afterHrs:3,woCreated:{maint:179,hk:12,grnds:25},woClosed:{maint:131,hk:11,grnds:15},mtdCreated:355,mtdClosed:246,mtdCreatedM:290,mtdCreatedHK:30,mtdCreatedG:35,mtdClosedM:198,mtdClosedHK:27,mtdClosedG:21,openWO:{maint:206,hk:5,grnds:45},pmRm:{pm:31,rm:175},weeks:[{w:'8/3–8/9',insp:5,appa:2.1,pos:'3',po:3,poDol:24180.00,ah:2,woCreated:139,woClosed:89},{w:'8/10–8/16',insp:0,appa:null,pos:'3',po:7,poDol:66082.68,ah:1,woCreated:216,woClosed:157}]}
+  {key:'aug',label:'Aug 2026',short:'Aug',insp:5,appa:2.1,openPos:3,poReq:11,poDol:304204.66,afterHrs:7,woCreated:{maint:131,hk:31,grnds:8},woClosed:{maint:156,hk:26,grnds:17},mtdCreated:525,mtdClosed:445,mtdCreatedM:421,mtdCreatedHK:61,mtdCreatedG:43,mtdClosedM:354,mtdClosedHK:53,mtdClosedG:38,openWO:{maint:157,hk:7,grnds:42},pmRm:{pm:24,rm:133},weeks:[{w:'8/3–8/9',insp:5,appa:2.1,pos:'3',po:3,poDol:24180.00,ah:2,woCreated:139,woClosed:89},{w:'8/10–8/16',insp:0,appa:null,pos:'3',po:7,poDol:66082.68,ah:1,woCreated:216,woClosed:157},{w:'8/17–8/23',insp:0,appa:null,pos:'3',po:1,poDol:213941.98,ah:4,woCreated:170,woClosed:199}]}
 ];
 
 // OT weeks split by year — Oct-Dec show 2025 only, Jan+ show 2026 only
@@ -818,6 +818,7 @@ const otWeeks2026=[
   {mo:9,w:'7/27–8/2',   hrs:0.0,   pay:0.0,     mHrs:0.0, hHrs:0.0, gHrs:0.0},
   {mo:10,w:'8/3–8/9',   hrs:30.5,  pay:856.03,  mHrs:9.5, hHrs:19.5,gHrs:1.5},
   {mo:10,w:'8/10–8/16', hrs:57.5,  pay:1774.31, mHrs:22.25,hHrs:29.25,gHrs:6.0},
+  {mo:10,w:'8/17–8/23', hrs:53.75, pay:1761.00, mHrs:26.0, hHrs:20.5,gHrs:7.25},
 ];
 
 let sel = CURRENT_MONTH_IDX;
