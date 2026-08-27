@@ -188,7 +188,9 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
-  #printArea.print-mode-custom { zoom: 0.76; }
+  #printArea.print-mode-custom,
+  #printArea.print-mode-ytd,
+  #printArea.print-mode-month { zoom: 0.76; }
   #printArea table { page-break-inside: auto; break-inside: auto; }
   #printArea thead { display: table-header-group; }
   #printArea tfoot { display: table-footer-group; }
@@ -1910,16 +1912,18 @@ function printYTD(){
   const ytdInvoiceCount = Object.values(invoiceData).reduce((s,m)=>s+(m.count||0),0);
 
   document.getElementById('pHeader').innerHTML = `
-    <div style="position:relative;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid #2a5298;padding-bottom:12px;margin-bottom:20px;min-height:64px;">
+    <div class="print-header-block" style="position:relative;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid #2a5298;padding-bottom:10px;margin-bottom:14px;min-height:60px;">
       <div style="display:flex;align-items:center;gap:14px;">
         <img src="${document.querySelector('.header-logo').src}" style="height:56px;background:white;border-radius:4px;padding:2px 4px;" />
         <div>
-          <div style="font-size:18px;font-weight:700;color:#2a5298;">Catawba College — Facilities</div>
+          <div style="font-size:18px;font-weight:700;color:#2a5298;letter-spacing:-0.01em;">Catawba College — Facilities</div>
           <div style="font-size:12px;color:#6b6a63;margin-top:2px;">The Budd Group &nbsp;·&nbsp; Operations Dashboard &nbsp;·&nbsp; 2026 Year to Date</div>
         </div>
       </div>
       ${printTbgLogo()}
-      <div style="font-size:11px;color:#9b9a93;font-family:monospace;">Updated ${UPDATED}</div>
+      <div style="text-align:right;">
+        <div style="font-size:11px;color:#9b9a93;font-family:monospace;">Updated ${UPDATED}</div>
+      </div>
     </div>`;
 
   function pCard(label,val,sub,badge){
@@ -1928,7 +1932,7 @@ function printYTD(){
       .replace(/(HK:\d+)/g,'<span style="color:#2a5298;font-weight:700;">$1</span>')
       .replace(/(G:\d+)/g,'<span style="color:#1a6b45;font-weight:700;">$1</span>') : '';
     const badgeHtml = badge ? `<div style="display:inline-block;padding:2px 8px;border-radius:99px;font-size:9px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;background:rgba(42,82,152,0.12);color:#1a3d78;">${badge}</div>` : '';
-    return `<div style="background:#f4f3ef;border-radius:10px;padding:14px 16px;">
+    return `<div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:12px 14px;">
       <div style="font-size:11px;color:#9b9a93;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:4px;">${label}</div>
       ${badgeHtml}
       <div style="font-size:26px;font-weight:700;color:#1a1916;line-height:1;">${val}</div>
@@ -1937,8 +1941,8 @@ function printYTD(){
   }
 
   document.getElementById('pKpi1').innerHTML = `
-    <div style="margin-bottom:6px;"><span style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#9b9a93;">2026 Year to Date</span></div>
-    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:10px;">
+    <div style="margin-bottom:4px;"><span style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#9b9a93;">2026 Year to Date</span></div>
+    <div class="print-kpi-grid" style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:8px;">
       ${pCard('Inspections',totInsp)}${pCard('Avg APPA score',avgAppa)}${pCard('Peak open positions',maxPos)}
       ${pCard('PO requests',totPO)}${pCard('PO request $',fmtK(totPODol))}${pCard('After-hrs calls',totAH)}
     </div>`;
@@ -1955,7 +1959,8 @@ function printYTD(){
   const ytdOtHrs = parseFloat(Object.values(otByMoPrint).reduce((s,m)=>s+m.hrs,0).toFixed(1));
   const ytdOtPay = Object.values(otByMoPrint).reduce((s,m)=>s+m.pay,0);
   document.getElementById('pKpi2').innerHTML = `
-    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:20px;">
+    <div style="margin-bottom:4px;"><span style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#9b9a93;">Work orders, OT &amp; invoices</span></div>
+    <div class="print-kpi-grid" style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:14px;">
       ${pCard('WOs created (YTD)',totCreated,'M:'+fmtNum(ytdCreatedM)+' · HK:'+fmtNum(ytdCreatedHK)+' · G:'+fmtNum(ytdCreatedG))}
       ${pCard('WOs closed (YTD)',totClosed,'M:'+fmtNum(ytdClosedM)+' · HK:'+fmtNum(ytdClosedHK)+' · G:'+fmtNum(ytdClosedG))}
       ${pCard('OT hours (YTD)',ytdOtHrs)}
@@ -1965,26 +1970,26 @@ function printYTD(){
     </div>`;
 
   document.getElementById('pCharts').innerHTML = `
-    <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:10px;margin-bottom:12px;">
-      <div style="background:#f4f3ef;border-radius:10px;padding:10px;min-width:0;overflow:hidden;">
+    <div class="print-chart-grid" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:8px;margin-bottom:10px;">
+      <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
         <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">Inspections &amp; APPA — 2026</div>
         <canvas id="pYtdInspChart" width="240" height="150" style="display:block;width:100%;max-width:100%;height:150px;" role="img"></canvas>
       </div>
-      <div style="background:#f4f3ef;border-radius:10px;padding:10px;min-width:0;overflow:hidden;">
+      <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
         <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">PO Request $ — 2026</div>
         <canvas id="pYtdPoChart" width="240" height="150" style="display:block;width:100%;max-width:100%;height:150px;" role="img"></canvas>
       </div>
-      <div style="background:#f4f3ef;border-radius:10px;padding:10px;min-width:0;overflow:hidden;">
+      <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
         <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">Work Orders — 2026</div>
         <canvas id="pYtdWoChart" width="240" height="150" style="display:block;width:100%;max-width:100%;height:150px;" role="img"></canvas>
       </div>
     </div>
-    <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin-bottom:12px;">
-      <div style="background:#f4f3ef;border-radius:10px;padding:10px;min-width:0;overflow:hidden;">
+    <div class="print-chart-grid" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;margin-bottom:10px;">
+      <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
         <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">OT Hours by Month — 2026</div>
         <canvas id="pYtdOtHrsChart" width="360" height="150" style="display:block;width:100%;max-width:100%;height:150px;" role="img"></canvas>
       </div>
-      <div style="background:#f4f3ef;border-radius:10px;padding:10px;min-width:0;overflow:hidden;">
+      <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
         <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">OT Pay by Month — 2026</div>
         <canvas id="pYtdOtPayChart" width="360" height="150" style="display:block;width:100%;max-width:100%;height:150px;" role="img"></canvas>
       </div>
@@ -2023,42 +2028,42 @@ function printYTD(){
       scales:{y:{beginAtZero:true,ticks:{font:{size:9},callback:v=>fmtK(v)}},x:{ticks:{font:{size:9},autoSkip:false}}}}});
 
   document.getElementById('pWeekTable').innerHTML = `
-    <div style="font-size:10px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:#9b9a93;margin-bottom:8px;">2026 Monthly Summary</div>
-    <table style="width:100%;border-collapse:collapse;font-size:15px;">
+    <div style="font-size:10px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:#9b9a93;margin-bottom:6px;">2026 Monthly Summary</div>
+    <table style="width:100%;border-collapse:collapse;font-size:13.5px;">
       <thead><tr style="background:#2a5298;color:white;">
-        <th style="padding:8px 12px;text-align:left;">Month</th>
-        <th style="padding:8px 12px;text-align:left;">Inspections</th>
-        <th style="padding:8px 12px;text-align:left;">Avg APPA</th>
-        <th style="padding:8px 12px;text-align:left;">PO Req</th>
-        <th style="padding:8px 12px;text-align:left;">PO $</th>
-        <th style="padding:8px 12px;text-align:left;">After-Hrs</th>
-        <th style="padding:8px 12px;text-align:left;">WO Created</th>
-        <th style="padding:8px 12px;text-align:left;">WO Closed</th>
+        <th style="padding:7px 10px;text-align:left;">Month</th>
+        <th style="padding:7px 10px;text-align:left;">Inspections</th>
+        <th style="padding:7px 10px;text-align:left;">Avg APPA</th>
+        <th style="padding:7px 10px;text-align:left;">PO Req</th>
+        <th style="padding:7px 10px;text-align:left;">PO $</th>
+        <th style="padding:7px 10px;text-align:left;">After-Hrs</th>
+        <th style="padding:7px 10px;text-align:left;">WO Created</th>
+        <th style="padding:7px 10px;text-align:left;">WO Closed</th>
       </tr></thead>
       <tbody>
         ${ytdMonths.map((m,i)=>{
           const tc=m.mtdCreated!==undefined?m.mtdCreated:m.woCreated.maint+m.woCreated.hk+m.woCreated.grnds;
           const tco=m.mtdClosed!==undefined?m.mtdClosed:m.woClosed.maint+m.woClosed.hk+m.woClosed.grnds;
           return `<tr style="background:${i%2===0?'white':'#f4f3ef'};">
-            <td style="padding:9px 12px;border-bottom:1px solid #e2e0d8;font-weight:600;">${m.label}</td>
-            <td style="padding:9px 12px;border-bottom:1px solid #e2e0d8;">${fmtNum(m.insp)}</td>
-            <td style="padding:9px 12px;border-bottom:1px solid #e2e0d8;">${m.appa.toFixed(2)}</td>
-            <td style="padding:9px 12px;border-bottom:1px solid #e2e0d8;">${m.poReq}</td>
-            <td style="padding:9px 12px;border-bottom:1px solid #e2e0d8;font-family:monospace;">${fmtDol(m.poDol)}</td>
-            <td style="padding:9px 12px;border-bottom:1px solid #e2e0d8;">${m.afterHrs}</td>
-            <td style="padding:9px 12px;border-bottom:1px solid #e2e0d8;">${fmtNum(tc)}</td>
-            <td style="padding:9px 12px;border-bottom:1px solid #e2e0d8;">${fmtNum(tco)}</td>
+            <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;font-weight:600;">${m.label}</td>
+            <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${fmtNum(m.insp)}</td>
+            <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${m.appa.toFixed(2)}</td>
+            <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${m.poReq}</td>
+            <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;font-family:monospace;">${fmtDol(m.poDol)}</td>
+            <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${m.afterHrs}</td>
+            <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${fmtNum(tc)}</td>
+            <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${fmtNum(tco)}</td>
           </tr>`;
         }).join('')}
         <tr style="background:#f4f3ef;font-weight:700;">
-          <td style="padding:9px 12px;">Total / Avg</td>
-          <td style="padding:9px 12px;">${fmtNum(totInsp)}</td>
-          <td style="padding:9px 12px;">${avgAppa}</td>
-          <td style="padding:9px 12px;">${totPO}</td>
-          <td style="padding:9px 12px;font-family:monospace;">${fmtDol(totPODol)}</td>
-          <td style="padding:9px 12px;">${totAH}</td>
-          <td style="padding:9px 12px;">${totCreated}</td>
-          <td style="padding:9px 12px;">${totClosed}</td>
+          <td style="padding:7px 10px;">Total / Avg</td>
+          <td style="padding:7px 10px;">${fmtNum(totInsp)}</td>
+          <td style="padding:7px 10px;">${avgAppa}</td>
+          <td style="padding:7px 10px;">${totPO}</td>
+          <td style="padding:7px 10px;font-family:monospace;">${fmtDol(totPODol)}</td>
+          <td style="padding:7px 10px;">${totAH}</td>
+          <td style="padding:7px 10px;">${totCreated}</td>
+          <td style="padding:7px 10px;">${totClosed}</td>
         </tr>
       </tbody>
     </table>`;
@@ -2131,7 +2136,7 @@ function printSummary(){
 
   // ── Header ──────────────────────────────────────────────────────────────────
   document.getElementById('pHeader').innerHTML = `
-    <div style="position:relative;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid #2a5298;padding-bottom:12px;margin-bottom:20px;min-height:64px;">
+    <div class="print-header-block" style="position:relative;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid #2a5298;padding-bottom:10px;margin-bottom:14px;min-height:60px;">
       <div style="display:flex;align-items:center;gap:14px;">
         <img src="${document.querySelector('.header-logo').src}" style="height:56px;background:white;border-radius:4px;padding:2px 4px;" />
         <div>
@@ -2155,7 +2160,7 @@ function printSummary(){
       ? 'background:rgba(42,82,152,0.12);color:#1a3d78;'
       : 'background:rgba(100,100,96,0.12);color:#4a4a44;';
     const badgeHtml = badge ? `<div style="display:inline-block;padding:2px 8px;border-radius:99px;font-size:9px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;${badgeColors}">${badge.text}</div>` : '';
-    return `<div style="background:#f4f3ef;border-radius:10px;padding:14px 16px;">
+    return `<div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:12px 14px;">
       <div style="font-size:11px;color:#9b9a93;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:4px;">${label}</div>
       ${badgeHtml}
       <div style="font-size:26px;font-weight:700;color:#1a1916;line-height:1;">${val}</div>
@@ -2165,10 +2170,10 @@ function printSummary(){
 
   // ── Row 1 KPIs ──────────────────────────────────────────────────────────────
   document.getElementById('pKpi1').innerHTML = `
-    <div style="margin-bottom:6px;">
+    <div style="margin-bottom:4px;">
       <span style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#9b9a93;">Month to date</span>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:10px;">
+    <div class="print-kpi-grid" style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:8px;">
       ${pCard('Inspections', mo.insp)}
       ${pCard('Avg APPA score', mo.appa.toFixed(2))}
       ${pCard('Open positions', mo.openPos)}
@@ -2179,10 +2184,10 @@ function printSummary(){
 
   // ── Row 2 KPIs ──────────────────────────────────────────────────────────────
   document.getElementById('pKpi2').innerHTML = `
-    <div style="margin-bottom:6px;">
+    <div style="margin-bottom:4px;">
       <span style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#9b9a93;">Last week (${lastCompletedW}) + MTD invoices</span>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:20px;">
+    <div class="print-kpi-grid" style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:14px;">
       ${pCard('Open WOs', top, 'M:'+mo.openWO.maint+' · HK:'+mo.openWO.hk+' · G:'+mo.openWO.grnds, {cls:'snapshot',text:'As of '+UPDATED})}
       ${pCard('Maint WO type', '<span style="color:#2a5298;font-weight:700;">PM: '+mo.pmRm.pm+'</span> &nbsp;·&nbsp; <span style="color:#c0392b;font-weight:700;">RM: '+mo.pmRm.rm+'</span>', '', {cls:'snapshot',text:'As of '+UPDATED})}
       ${pCard('WOs created', tc, 'M:'+mo.woCreated.maint+' · HK:'+mo.woCreated.hk+' · G:'+mo.woCreated.grnds, {cls:'lastweek',text:'Last week · '+lastCompletedW})}
@@ -2193,27 +2198,27 @@ function printSummary(){
 
   // ── Charts ───────────────────────────────────────────────────────────────────
   document.getElementById('pCharts').innerHTML = `
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
-      <div style="background:#f4f3ef;border-radius:10px;padding:14px;min-width:0;overflow:hidden;">
+    <div class="print-chart-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+      <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:10px;min-width:0;overflow:hidden;">
         <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">Inspections &amp; APPA Score</div>
-        <canvas id="pInspChart" width="560" height="200" style="display:block;width:100%;max-width:100%;height:200px;" role="img"></canvas>
+        <canvas id="pInspChart" width="560" height="180" style="display:block;width:100%;max-width:100%;height:180px;" role="img"></canvas>
       </div>
-      <div style="background:#f4f3ef;border-radius:10px;padding:14px;min-width:0;overflow:hidden;">
+      <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:10px;min-width:0;overflow:hidden;">
         <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">PO Request $ by Month</div>
-        <canvas id="pPoChart" width="560" height="200" style="display:block;width:100%;max-width:100%;height:200px;" role="img"></canvas>
+        <canvas id="pPoChart" width="560" height="180" style="display:block;width:100%;max-width:100%;height:180px;" role="img"></canvas>
       </div>
-      <div style="background:#f4f3ef;border-radius:10px;padding:14px;min-width:0;overflow:hidden;">
+      <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:10px;min-width:0;overflow:hidden;">
         <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">WOs Created vs Closed</div>
-        <canvas id="pWoChart" width="560" height="200" style="display:block;width:100%;max-width:100%;height:200px;" role="img"></canvas>
+        <canvas id="pWoChart" width="560" height="180" style="display:block;width:100%;max-width:100%;height:180px;" role="img"></canvas>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-        <div style="background:#f4f3ef;border-radius:10px;padding:14px;">
+      <div class="print-chart-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:10px;">
           <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">Open WOs as of ${UPDATED}</div>
-          <canvas id="pOpenWoChart" width="200" height="200" role="img"></canvas>
+          <canvas id="pOpenWoChart" width="190" height="190" role="img"></canvas>
         </div>
-        <div style="background:#f4f3ef;border-radius:10px;padding:14px;">
+        <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:10px;">
           <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">Maintenance WO Type</div>
-          <canvas id="pPmRmChart" width="200" height="200" role="img"></canvas>
+          <canvas id="pPmRmChart" width="190" height="190" role="img"></canvas>
         </div>
       </div>
     </div>`;
@@ -2279,29 +2284,29 @@ function printSummary(){
 
   // ── Weekly table ─────────────────────────────────────────────────────────────
   document.getElementById('pWeekTable').innerHTML = `
-    <div style="font-size:10px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:#9b9a93;margin-bottom:8px;margin-top:4px;">Weekly detail — ${mo.label}</div>
-    <table style="width:100%;border-collapse:collapse;font-size:15px;">
+    <div style="font-size:10px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:#9b9a93;margin-bottom:6px;margin-top:2px;">Weekly detail — ${mo.label}</div>
+    <table style="width:100%;border-collapse:collapse;font-size:13.5px;">
       <thead>
         <tr style="background:#2a5298;color:white;">
-          <th style="padding:11px 14px;text-align:left;font-weight:600;">Week</th>
-          <th style="padding:11px 14px;text-align:left;font-weight:600;">Inspections</th>
-          <th style="padding:11px 14px;text-align:left;font-weight:600;">Avg APPA</th>
-          <th style="padding:11px 14px;text-align:left;font-weight:600;">Open Positions</th>
-          <th style="padding:11px 14px;text-align:left;font-weight:600;">PO Requests</th>
-          <th style="padding:11px 14px;text-align:left;font-weight:600;">PO $</th>
-          <th style="padding:11px 14px;text-align:left;font-weight:600;">After-Hrs</th>
+          <th style="padding:8px 10px;text-align:left;font-weight:600;">Week</th>
+          <th style="padding:8px 10px;text-align:left;font-weight:600;">Inspections</th>
+          <th style="padding:8px 10px;text-align:left;font-weight:600;">Avg APPA</th>
+          <th style="padding:8px 10px;text-align:left;font-weight:600;">Open Positions</th>
+          <th style="padding:8px 10px;text-align:left;font-weight:600;">PO Requests</th>
+          <th style="padding:8px 10px;text-align:left;font-weight:600;">PO $</th>
+          <th style="padding:8px 10px;text-align:left;font-weight:600;">After-Hrs</th>
         </tr>
       </thead>
       <tbody>
         ${mo.weeks.map((w,i)=>`
           <tr style="background:${i%2===0?'white':'#f4f3ef'};">
-            <td style="padding:11px 14px;border-bottom:1px solid #e2e0d8;font-weight:600;">${w.w}</td>
-            <td style="padding:11px 14px;border-bottom:1px solid #e2e0d8;">${w.insp}</td>
-            <td style="padding:11px 14px;border-bottom:1px solid #e2e0d8;">${w.appa !== null ? w.appa.toFixed(2) : 'N/A'}</td>
-            <td style="padding:11px 14px;border-bottom:1px solid #e2e0d8;">${w.pos}</td>
-            <td style="padding:11px 14px;border-bottom:1px solid #e2e0d8;">${w.po}</td>
-            <td style="padding:11px 14px;border-bottom:1px solid #e2e0d8;font-family:monospace;">${fmtDol(w.poDol)}</td>
-            <td style="padding:11px 14px;border-bottom:1px solid #e2e0d8;">${w.ah}</td>
+            <td style="padding:8px 10px;border-bottom:1px solid #e2e0d8;font-weight:600;">${w.w}</td>
+            <td style="padding:8px 10px;border-bottom:1px solid #e2e0d8;">${w.insp}</td>
+            <td style="padding:8px 10px;border-bottom:1px solid #e2e0d8;">${w.appa !== null ? w.appa.toFixed(2) : 'N/A'}</td>
+            <td style="padding:8px 10px;border-bottom:1px solid #e2e0d8;">${w.pos}</td>
+            <td style="padding:8px 10px;border-bottom:1px solid #e2e0d8;">${w.po}</td>
+            <td style="padding:8px 10px;border-bottom:1px solid #e2e0d8;font-family:monospace;">${fmtDol(w.poDol)}</td>
+            <td style="padding:8px 10px;border-bottom:1px solid #e2e0d8;">${w.ah}</td>
           </tr>`).join('')}
       </tbody>
     </table>`;
