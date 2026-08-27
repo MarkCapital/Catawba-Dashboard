@@ -1694,12 +1694,12 @@ function printCustomRange(){
         <div>
           <div style="font-size:18px;font-weight:700;color:#2a5298;letter-spacing:-0.01em;">Catawba College — Facilities</div>
           <div style="font-size:12px;color:#6b6a63;margin-top:2px;">The Budd Group &nbsp;·&nbsp; Operations Dashboard &nbsp;·&nbsp; Custom Range</div>
-          <div style="font-size:11px;color:#6b6a63;margin-top:4px;font-family:monospace;">${rangeLabel} &nbsp;·&nbsp; ${weekCountLabel}</div>
+          <div style="font-size:11.25px;color:#56524b;margin-top:4px;font-family:monospace;">${rangeLabel} &nbsp;·&nbsp; ${weekCountLabel}</div>
         </div>
       </div>
       ${printTbgLogo()}
       <div style="text-align:right;">
-        <div style="font-size:11px;color:#9b9a93;font-family:monospace;">Updated ${UPDATED}</div>
+        <div style="font-size:10.5px;color:#857f76;font-family:monospace;">Updated ${UPDATED}</div>
       </div>
     </div>`;
 
@@ -1710,15 +1710,15 @@ function printCustomRange(){
       .replace(/(G:[\d,.]+)/g, '<span style="color:#1a6b45;font-weight:700;">$1</span>') : '';
     const badgeHtml = badge ? `<div style="display:inline-block;padding:2px 8px;border-radius:99px;font-size:9px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;background:rgba(42,82,152,0.12);color:#1a3d78;">${badge}</div>` : '';
     return `<div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:12px 14px;">
-      <div style="font-size:11px;color:#9b9a93;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:4px;">${label}</div>
+      <div style="font-size:11.5px;color:#7d796f;font-weight:700;letter-spacing:0.045em;text-transform:uppercase;margin-bottom:4px;">${label}</div>
       ${badgeHtml}
-      <div style="font-size:26px;font-weight:700;color:#1a1916;line-height:1;">${val}</div>
-      ${coloredSub ? `<div style="font-size:11px;margin-top:5px;font-family:monospace;">${coloredSub}</div>` : ''}
+      <div style="font-size:27px;font-weight:700;color:#1a1916;line-height:1;">${val}</div>
+      ${coloredSub ? `<div style="font-size:11.5px;margin-top:5px;font-family:monospace;color:#4e4b45;">${coloredSub}</div>` : ''}
     </div>`;
   }
 
   document.getElementById('pKpi1').innerHTML = `
-    <div style="margin-bottom:4px;"><span style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#9b9a93;">Operational summary</span></div>
+    <div style="margin-bottom:4px;"><span style="font-size:10.5px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:#7d796f;">Operational summary</span></div>
     <div class="print-kpi-grid" style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:8px;">
       ${pCard('Inspections',fmtNum(insp))}
       ${pCard('Avg APPA score',avgAppa==null?'N/A':avgAppa.toFixed(2))}
@@ -1729,7 +1729,7 @@ function printCustomRange(){
     </div>`;
 
   document.getElementById('pKpi2').innerHTML = `
-    <div style="margin-bottom:4px;"><span style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#9b9a93;">Work orders, OT &amp; invoices</span></div>
+    <div style="margin-bottom:4px;"><span style="font-size:10.5px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:#7d796f;">Work orders, OT &amp; invoices</span></div>
     <div class="print-kpi-grid" style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:14px;">
       ${pCard('WOs created',fmtNum(woCreated),weekCountLabel)}
       ${pCard('WOs closed',fmtNum(woClosed),weekCountLabel)}
@@ -1742,29 +1742,29 @@ function printCustomRange(){
   document.getElementById('pCharts').innerHTML = `
     <div class="print-chart-grid" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:8px;margin-bottom:10px;">
       <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
-        <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">Inspections &amp; APPA — selected range</div>
+        <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">Inspections &amp; APPA — selected range</div>
         <canvas id="pCustomInspChart" width="240" height="140" style="display:block;width:100%;max-width:100%;height:140px;" role="img"></canvas>
       </div>
       <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
-        <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">PO Request $ — selected range</div>
+        <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">PO Request $ — selected range</div>
         <canvas id="pCustomPoChart" width="240" height="140" style="display:block;width:100%;max-width:100%;height:140px;" role="img"></canvas>
       </div>
       <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
-        <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">Work orders — selected range</div>
+        <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">Work orders — selected range</div>
         <canvas id="pCustomWoChart" width="240" height="140" style="display:block;width:100%;max-width:100%;height:140px;" role="img"></canvas>
       </div>
     </div>
     <div class="print-chart-grid" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:8px;margin-bottom:12px;">
       <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
-        <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">OT Hours by Week — selected range</div>
+        <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">OT Hours by Week — selected range</div>
         <canvas id="pCustomOtHrsChart" width="240" height="140" style="display:block;width:100%;max-width:100%;height:140px;" role="img"></canvas>
       </div>
       <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
-        <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">OT Pay by Week — selected range</div>
+        <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">OT Pay by Week — selected range</div>
         <canvas id="pCustomOtPayChart" width="240" height="140" style="display:block;width:100%;max-width:100%;height:140px;" role="img"></canvas>
       </div>
       <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
-        <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">Paid Invoices by Processed Month</div>
+        <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">Paid Invoices by Processed Month</div>
         <canvas id="pCustomInvoiceChart" width="240" height="140" style="display:block;width:100%;max-width:100%;height:140px;" role="img"></canvas>
       </div>
     </div>`;
@@ -1826,8 +1826,8 @@ function printCustomRange(){
   });
 
   document.getElementById('pWeekTable').innerHTML = `
-    <div style="font-size:10px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:#9b9a93;margin-bottom:6px;margin-top:2px;">Weekly detail — ${rangeLabel}</div>
-    <table style="width:100%;border-collapse:collapse;font-size:13.5px;margin-bottom:12px;">
+    <div style="font-size:10.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#7d796f;margin-bottom:6px;margin-top:2px;">Weekly detail — ${rangeLabel}</div>
+    <table style="width:100%;border-collapse:collapse;font-size:14px;margin-bottom:12px;">
       <thead>
         <tr style="background:#2a5298;color:white;">
           <th style="padding:7px 10px;text-align:left;font-weight:600;">Week</th>
@@ -1866,8 +1866,8 @@ function printCustomRange(){
         </tr>` : ''}
       </tbody>
     </table>
-    <div style="font-size:10px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:#9b9a93;margin-bottom:6px;">Top vendors in range</div>
-    <table style="width:100%;border-collapse:collapse;font-size:13.5px;">
+    <div style="font-size:10.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#7d796f;margin-bottom:6px;">Top vendors in range</div>
+    <table style="width:100%;border-collapse:collapse;font-size:14px;">
       <thead>
         <tr style="background:#2a5298;color:white;">
           <th style="padding:7px 10px;text-align:left;font-weight:600;">Vendor</th>
@@ -1922,7 +1922,7 @@ function printYTD(){
       </div>
       ${printTbgLogo()}
       <div style="text-align:right;">
-        <div style="font-size:11px;color:#9b9a93;font-family:monospace;">Updated ${UPDATED}</div>
+        <div style="font-size:10.5px;color:#857f76;font-family:monospace;">Updated ${UPDATED}</div>
       </div>
     </div>`;
 
@@ -1933,15 +1933,15 @@ function printYTD(){
       .replace(/(G:\d+)/g,'<span style="color:#1a6b45;font-weight:700;">$1</span>') : '';
     const badgeHtml = badge ? `<div style="display:inline-block;padding:2px 8px;border-radius:99px;font-size:9px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;background:rgba(42,82,152,0.12);color:#1a3d78;">${badge}</div>` : '';
     return `<div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:12px 14px;">
-      <div style="font-size:11px;color:#9b9a93;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:4px;">${label}</div>
+      <div style="font-size:11.5px;color:#7d796f;font-weight:700;letter-spacing:0.045em;text-transform:uppercase;margin-bottom:4px;">${label}</div>
       ${badgeHtml}
-      <div style="font-size:26px;font-weight:700;color:#1a1916;line-height:1;">${val}</div>
-      ${coloredSub?`<div style="font-size:11px;margin-top:5px;font-family:monospace;">${coloredSub}</div>`:''}
+      <div style="font-size:27px;font-weight:700;color:#1a1916;line-height:1;">${val}</div>
+      ${coloredSub?`<div style="font-size:11.5px;margin-top:5px;font-family:monospace;color:#4e4b45;">${coloredSub}</div>`:''}
     </div>`;
   }
 
   document.getElementById('pKpi1').innerHTML = `
-    <div style="margin-bottom:4px;"><span style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#9b9a93;">2026 Year to Date</span></div>
+    <div style="margin-bottom:4px;"><span style="font-size:10.5px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:#7d796f;">2026 Year to Date</span></div>
     <div class="print-kpi-grid" style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:8px;">
       ${pCard('Inspections',totInsp)}${pCard('Avg APPA score',avgAppa)}${pCard('Peak open positions',maxPos)}
       ${pCard('PO requests',totPO)}${pCard('PO request $',fmtK(totPODol))}${pCard('After-hrs calls',totAH)}
@@ -1959,7 +1959,7 @@ function printYTD(){
   const ytdOtHrs = parseFloat(Object.values(otByMoPrint).reduce((s,m)=>s+m.hrs,0).toFixed(1));
   const ytdOtPay = Object.values(otByMoPrint).reduce((s,m)=>s+m.pay,0);
   document.getElementById('pKpi2').innerHTML = `
-    <div style="margin-bottom:4px;"><span style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#9b9a93;">Work orders, OT &amp; invoices</span></div>
+    <div style="margin-bottom:4px;"><span style="font-size:10.5px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:#7d796f;">Work orders, OT &amp; invoices</span></div>
     <div class="print-kpi-grid" style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:14px;">
       ${pCard('WOs created (YTD)',totCreated,'M:'+fmtNum(ytdCreatedM)+' · HK:'+fmtNum(ytdCreatedHK)+' · G:'+fmtNum(ytdCreatedG))}
       ${pCard('WOs closed (YTD)',totClosed,'M:'+fmtNum(ytdClosedM)+' · HK:'+fmtNum(ytdClosedHK)+' · G:'+fmtNum(ytdClosedG))}
@@ -1972,25 +1972,25 @@ function printYTD(){
   document.getElementById('pCharts').innerHTML = `
     <div class="print-chart-grid" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:8px;margin-bottom:10px;">
       <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
-        <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">Inspections &amp; APPA — 2026</div>
+        <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">Inspections &amp; APPA — 2026</div>
         <canvas id="pYtdInspChart" width="240" height="150" style="display:block;width:100%;max-width:100%;height:150px;" role="img"></canvas>
       </div>
       <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
-        <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">PO Request $ — 2026</div>
+        <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">PO Request $ — 2026</div>
         <canvas id="pYtdPoChart" width="240" height="150" style="display:block;width:100%;max-width:100%;height:150px;" role="img"></canvas>
       </div>
       <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
-        <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">Work Orders — 2026</div>
+        <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">Work Orders — 2026</div>
         <canvas id="pYtdWoChart" width="240" height="150" style="display:block;width:100%;max-width:100%;height:150px;" role="img"></canvas>
       </div>
     </div>
     <div class="print-chart-grid" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;margin-bottom:10px;">
       <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
-        <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">OT Hours by Month — 2026</div>
+        <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">OT Hours by Month — 2026</div>
         <canvas id="pYtdOtHrsChart" width="360" height="150" style="display:block;width:100%;max-width:100%;height:150px;" role="img"></canvas>
       </div>
       <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
-        <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">OT Pay by Month — 2026</div>
+        <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">OT Pay by Month — 2026</div>
         <canvas id="pYtdOtPayChart" width="360" height="150" style="display:block;width:100%;max-width:100%;height:150px;" role="img"></canvas>
       </div>
     </div>`;
@@ -2028,8 +2028,8 @@ function printYTD(){
       scales:{y:{beginAtZero:true,ticks:{font:{size:9},callback:v=>fmtK(v)}},x:{ticks:{font:{size:9},autoSkip:false}}}}});
 
   document.getElementById('pWeekTable').innerHTML = `
-    <div style="font-size:10px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:#9b9a93;margin-bottom:6px;">2026 Monthly Summary</div>
-    <table style="width:100%;border-collapse:collapse;font-size:13.5px;">
+    <div style="font-size:10.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#7d796f;margin-bottom:6px;">2026 Monthly Summary</div>
+    <table style="width:100%;border-collapse:collapse;font-size:14px;">
       <thead><tr style="background:#2a5298;color:white;">
         <th style="padding:7px 10px;text-align:left;">Month</th>
         <th style="padding:7px 10px;text-align:left;">Inspections</th>
@@ -2146,7 +2146,7 @@ function printSummary(){
       </div>
       ${printTbgLogo()}
       <div style="text-align:right;">
-        <div style="font-size:11px;color:#9b9a93;font-family:monospace;">Updated ${UPDATED}</div>
+        <div style="font-size:10.5px;color:#857f76;font-family:monospace;">Updated ${UPDATED}</div>
       </div>
     </div>`;
 
@@ -2161,17 +2161,17 @@ function printSummary(){
       : 'background:rgba(100,100,96,0.12);color:#4a4a44;';
     const badgeHtml = badge ? `<div style="display:inline-block;padding:2px 8px;border-radius:99px;font-size:9px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;${badgeColors}">${badge.text}</div>` : '';
     return `<div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:12px 14px;">
-      <div style="font-size:11px;color:#9b9a93;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:4px;">${label}</div>
+      <div style="font-size:11.5px;color:#7d796f;font-weight:700;letter-spacing:0.045em;text-transform:uppercase;margin-bottom:4px;">${label}</div>
       ${badgeHtml}
-      <div style="font-size:26px;font-weight:700;color:#1a1916;line-height:1;">${val}</div>
-      ${coloredSub ? `<div style="font-size:11px;margin-top:5px;font-family:monospace;">${coloredSub}</div>` : ''}
+      <div style="font-size:27px;font-weight:700;color:#1a1916;line-height:1;">${val}</div>
+      ${coloredSub ? `<div style="font-size:11.5px;margin-top:5px;font-family:monospace;color:#4e4b45;">${coloredSub}</div>` : ''}
     </div>`;
   }
 
   // ── Row 1 KPIs ──────────────────────────────────────────────────────────────
   document.getElementById('pKpi1').innerHTML = `
     <div style="margin-bottom:4px;">
-      <span style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#9b9a93;">Month to date</span>
+      <span style="font-size:10.5px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:#7d796f;">Month to date</span>
     </div>
     <div class="print-kpi-grid" style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:8px;">
       ${pCard('Inspections', mo.insp)}
@@ -2185,7 +2185,7 @@ function printSummary(){
   // ── Row 2 KPIs ──────────────────────────────────────────────────────────────
   document.getElementById('pKpi2').innerHTML = `
     <div style="margin-bottom:4px;">
-      <span style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#9b9a93;">Last week (${lastCompletedW}) + MTD invoices</span>
+      <span style="font-size:10.5px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:#7d796f;">Last week (${lastCompletedW}) + MTD invoices</span>
     </div>
     <div class="print-kpi-grid" style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:14px;">
       ${pCard('Open WOs', top, 'M:'+mo.openWO.maint+' · HK:'+mo.openWO.hk+' · G:'+mo.openWO.grnds, {cls:'snapshot',text:'As of '+UPDATED})}
@@ -2200,24 +2200,24 @@ function printSummary(){
   document.getElementById('pCharts').innerHTML = `
     <div class="print-chart-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
       <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:10px;min-width:0;overflow:hidden;">
-        <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">Inspections &amp; APPA Score</div>
+        <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">Inspections &amp; APPA Score</div>
         <canvas id="pInspChart" width="560" height="180" style="display:block;width:100%;max-width:100%;height:180px;" role="img"></canvas>
       </div>
       <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:10px;min-width:0;overflow:hidden;">
-        <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">PO Request $ by Month</div>
+        <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">PO Request $ by Month</div>
         <canvas id="pPoChart" width="560" height="180" style="display:block;width:100%;max-width:100%;height:180px;" role="img"></canvas>
       </div>
       <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:10px;min-width:0;overflow:hidden;">
-        <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">WOs Created vs Closed</div>
+        <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">WOs Created vs Closed</div>
         <canvas id="pWoChart" width="560" height="180" style="display:block;width:100%;max-width:100%;height:180px;" role="img"></canvas>
       </div>
       <div class="print-chart-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
         <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:10px;">
-          <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">Open WOs as of ${UPDATED}</div>
+          <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">Open WOs as of ${UPDATED}</div>
           <canvas id="pOpenWoChart" width="190" height="190" role="img"></canvas>
         </div>
         <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:10px;">
-          <div style="font-size:11px;font-weight:700;color:#6b6a63;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">Maintenance WO Type</div>
+          <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">Maintenance WO Type</div>
           <canvas id="pPmRmChart" width="190" height="190" role="img"></canvas>
         </div>
       </div>
@@ -2284,8 +2284,8 @@ function printSummary(){
 
   // ── Weekly table ─────────────────────────────────────────────────────────────
   document.getElementById('pWeekTable').innerHTML = `
-    <div style="font-size:10px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:#9b9a93;margin-bottom:6px;margin-top:2px;">Weekly detail — ${mo.label}</div>
-    <table style="width:100%;border-collapse:collapse;font-size:13.5px;">
+    <div style="font-size:10.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#7d796f;margin-bottom:6px;margin-top:2px;">Weekly detail — ${mo.label}</div>
+    <table style="width:100%;border-collapse:collapse;font-size:14px;">
       <thead>
         <tr style="background:#2a5298;color:white;">
           <th style="padding:8px 10px;text-align:left;font-weight:600;">Week</th>
