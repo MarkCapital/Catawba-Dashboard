@@ -11,51 +11,57 @@
 <link rel="manifest" href="site.webmanifest">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f4f3ef;--surface:#ffffff;--surface2:#f0efe9;--border:#e2e0d8;--text:#1a1916;--text2:#6b6a63;--text3:#9b9a93;--accent:#2a5298;--accent2:#1a3d78;--green:#1a6b45;--green-bg:#e8f5ee;--amber:#7a4f00;--amber-bg:#fef3d8;--red:#8b2020;--red-bg:#fde8e8;}
+:root{--bg:#f4f3ef;--surface:#ffffff;--surface2:#f0efe9;--border:#e2e0d8;--text:#1a1916;--text2:#6b6a63;--text3:#9b9a93;--accent:#2a5298;--accent2:#1a3d78;--green:#1a6b45;--green-bg:#e8f5ee;--amber:#7a4f00;--amber-bg:#fef3d8;--red:#8b2020;--red-bg:#fde8e8;--gold:#d5af63;--gold-soft:#f8eed5;}
 *{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-y:auto;}
-.header{background:var(--accent);color:white;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
-.header-left{display:flex;align-items:center;gap:14px;}
-.header-logo{height:52px;width:auto;background:white;border-radius:6px;padding:4px 6px;}
-.header-text h1{font-size:17px;font-weight:600;letter-spacing:-0.01em;}
-.header-text p{font-size:11px;opacity:0.65;margin-top:2px;font-family:'DM Mono',monospace;}
-.header-right{font-size:11px;opacity:0.6;font-family:'DM Mono',monospace;text-align:right;}
-.quicklinks{background:var(--accent2);padding:9px 32px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
-.ql-label{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-right:4px;white-space:nowrap;}
-.ql-btn{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:6px;padding:5px 12px;color:white;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:500;text-decoration:none;transition:background 0.15s;cursor:pointer;white-space:nowrap;}
-.ql-btn:hover{background:rgba(255,255,255,0.2);}
+html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:radial-gradient(circle at 50% 0%,rgba(57,101,176,.10) 0%,rgba(57,101,176,.04) 18%,transparent 36%),linear-gradient(180deg,#f6f4ee 0%,#f4f2eb 18%,#f1efe8 100%);color:var(--text);min-height:100vh;overflow-y:auto;}
+#fixedHeader{background:linear-gradient(180deg,#254b8d 0%,#1b3d73 58%,#18335e 100%);box-shadow:0 18px 38px rgba(17,36,69,.28);border-bottom:1px solid rgba(255,255,255,.08);}
+.header{background:linear-gradient(135deg,rgba(52,94,167,.98) 0%,rgba(30,64,122,.98) 54%,rgba(20,48,91,.98) 100%);color:white;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;box-shadow:none;border-bottom:1px solid rgba(255,255,255,.08);position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 10%,rgba(255,255,255,.12),transparent 42%);pointer-events:none;}
+.header-left{display:flex;align-items:center;gap:14px;position:relative;z-index:1;}
+.header-logo{height:52px;width:auto;background:white;border-radius:10px;padding:4px 6px;border:1px solid rgba(255,255,255,.22);box-shadow:0 12px 24px rgba(10,24,48,.22);}
+.header-text h1{font-size:18px;font-weight:700;letter-spacing:-0.02em;text-shadow:0 1px 0 rgba(0,0,0,.08);}
+.header-text p{font-size:11px;opacity:0.82;margin-top:3px;font-family:'DM Mono',monospace;letter-spacing:.05em;}
+.header-right{font-size:11px;opacity:1;font-family:'DM Mono',monospace;text-align:right;color:rgba(255,255,255,.88);padding:8px 12px;border:1px solid rgba(255,255,255,.14);border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.06));box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 10px 24px rgba(10,24,48,.16);position:relative;z-index:1;}
+.tbg-center img{filter:drop-shadow(0 8px 18px rgba(12,26,49,.24));}
+.quicklinks{background:linear-gradient(180deg,rgba(22,54,101,.92),rgba(17,41,79,.96));padding:10px 32px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;border-top:1px solid rgba(255,255,255,.05);box-shadow:inset 0 1px 0 rgba(255,255,255,.04);}
+.ql-label{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.56);margin-right:4px;white-space:nowrap;}
+.ql-btn{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.07));border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:6px 12px;color:white;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:600;text-decoration:none;transition:background .15s,transform .15s,box-shadow .15s,border-color .15s;cursor:pointer;white-space:nowrap;box-shadow:0 8px 18px rgba(9,22,44,.16),inset 0 1px 0 rgba(255,255,255,.1);}
+.ql-btn:hover{background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.10));transform:translateY(-1px);box-shadow:0 12px 22px rgba(9,22,44,.2),inset 0 1px 0 rgba(255,255,255,.12);}
 .main{max-width:1200px;margin:0 auto;padding:24px 32px 56px;padding-top:calc(var(--fixed-header-height, 116px) + 24px);}
 .section-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;margin-top:32px;}
-.section-head h2{font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:#878279;white-space:nowrap;}
-.section-head .divider{flex:1;height:1px;background:var(--border);}
+.section-head h2{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:#7f7a72;white-space:nowrap;}
+.section-head h2::before{content:'';width:18px;height:4px;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--gold));box-shadow:0 0 0 3px rgba(42,82,152,.06);}
+.section-head .divider{flex:1;height:1px;background:linear-gradient(90deg,rgba(42,82,152,.24),rgba(42,82,152,.06) 35%,rgba(42,82,152,0));}
 .tabs{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
 .year-tab-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
 .year-label{font-size:10px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--text3);margin-right:4px;}
-.archive-toggle{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;font-family:'DM Sans',sans-serif;}
-.archive-toggle:hover{border-color:var(--accent);color:var(--accent);}
+.archive-toggle{background:linear-gradient(180deg,#f7f7fa,#eceff5);border:1px solid #dbe1ee;border-radius:999px;padding:6px 12px;font-size:12px;font-weight:700;color:var(--text2);cursor:pointer;font-family:'DM Sans',sans-serif;box-shadow:0 6px 14px rgba(26,61,120,.06);}
+.archive-toggle:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 10px 20px rgba(26,61,120,.10);}
 .archive-months{display:none;flex-wrap:wrap;gap:6px;margin-left:18px;margin-top:6px;}
 .archive-year.open .archive-months{display:flex;}
-.tab{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 14px;font-size:12px;font-weight:500;color:var(--text2);cursor:pointer;transition:all 0.15s;font-family:'DM Sans',sans-serif;}
-.tab:hover{border-color:var(--accent);color:var(--accent);}
-.tab.active{background:var(--accent);border-color:var(--accent);color:white;}
+.tab{background:linear-gradient(180deg,#fff,#f4f6fa);border:1px solid #dbe1ee;border-radius:999px;padding:6px 14px;font-size:12px;font-weight:700;color:#66625c;cursor:pointer;transition:all 0.15s;font-family:'DM Sans',sans-serif;box-shadow:0 6px 14px rgba(26,61,120,.05);}
+.tab:hover{border-color:var(--accent);color:var(--accent);background:linear-gradient(180deg,#fff,#edf3ff);box-shadow:0 10px 20px rgba(26,61,120,.10);}
+.tab.active{background:linear-gradient(135deg,#2856a1 0%,#153a70 100%);border-color:#183f79;color:white;box-shadow:0 12px 22px rgba(26,61,120,.18);}
 .kpi-row{display:grid;gap:10px;margin-bottom:10px;}
 .kpi-row-1{grid-template-columns:repeat(6,1fr);}
 .kpi-row-1.current-month{grid-template-columns:repeat(4,1fr);}
 .kpi-row-2{grid-template-columns:repeat(4,1fr);}
-.kpi{background:linear-gradient(180deg,#fff,#fbfcff);border:1px solid #d7e2f3;border-left:3px solid var(--accent);border-radius:14px;padding:14px 16px;box-shadow:0 10px 22px rgba(42,82,152,0.08);}
+.kpi{background:linear-gradient(180deg,#fff,#fbfcff);border:1px solid #d7e2f3;border-left:3px solid var(--accent);border-radius:14px;padding:14px 16px;box-shadow:0 14px 28px rgba(42,82,152,0.10);position:relative;overflow:hidden;}
+.kpi::before{content:'';position:absolute;left:0;right:0;top:0;height:54px;background:linear-gradient(180deg,rgba(255,255,255,.76),rgba(255,255,255,0));pointer-events:none;}
 .kpi.accent{border-left-color:var(--accent);}
 .kpi-label{font-size:10.5px;color:#8f8b82;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;}
 .kpi-val{font-size:24px;font-weight:700;color:var(--text);line-height:1;letter-spacing:-0.02em;}
 .kpi-sub{font-size:10.5px;color:#78746d;margin-top:5px;font-family:'DM Mono',monospace;}
 .charts-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
-.chart-card{background:linear-gradient(180deg,#fff,#fbfcff);border:1px solid #d9dfeb;border-radius:16px;padding:16px 16px 14px;box-shadow:0 12px 26px rgba(26,61,120,0.07);position:relative;overflow:hidden;}
+.chart-card{background:linear-gradient(180deg,#fff,#fbfcff);border:1px solid #d9dfeb;border-radius:16px;padding:16px 16px 14px;box-shadow:0 16px 30px rgba(26,61,120,0.09);position:relative;overflow:hidden;}
 .chart-card::before{content:'';position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,#2a5298,#5d83c4);opacity:.96;}
+.chart-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.22),transparent 32%);pointer-events:none;}
 .chart-title{font-size:12px;font-weight:700;color:#4f4d47;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:4px;line-height:1.25;}
 .chart-legend{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(42,82,152,0.08);}
 .leg{display:flex;align-items:center;gap:6px;font-size:11.5px;color:#77736b;font-weight:600;}
 .leg-sq{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
 .chart-wrap{position:relative;width:100%;padding-top:2px;}
-.table-card{background:linear-gradient(180deg,#fff,#fcfbf7);border:1px solid #dfddd5;border-radius:16px;overflow:hidden;margin-bottom:14px;box-shadow:0 10px 22px rgba(26,61,120,0.05);}
+.table-card{background:linear-gradient(180deg,#fff,#fcfbf7);border:1px solid #dfddd5;border-radius:16px;overflow:hidden;margin-bottom:14px;box-shadow:0 14px 28px rgba(26,61,120,0.07);}
 .table-card table{width:100%;border-collapse:collapse;font-size:13px;}
 .table-card th{background:#f6f3ec;padding:10px 13px;text-align:left;font-size:10.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#8b867d;border-bottom:1px solid var(--border);}
 .table-card td{padding:10px 13px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:middle;}
@@ -73,7 +79,7 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
 .collapsible-toggle.collapsed::after{content:'▼';}
 .collapsible-content{transition:opacity 0.2s;overflow:hidden;}
 .collapsible-content.collapsed{display:none;}
-.footer{text-align:center;padding:22px;font-size:11px;color:var(--text3);border-top:1px solid var(--border);margin-top:40px;}
+.footer{text-align:center;padding:24px;font-size:11px;color:#928d86;border-top:1px solid rgba(42,82,152,.10);margin-top:44px;letter-spacing:.02em;}
 .card-badge{display:inline-block;padding:2px 8px;border-radius:99px;font-size:9px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;}
 .badge-snapshot{background:rgba(42,82,152,0.12);color:#1a3d78;}
 .badge-lastweek{background:rgba(100,100,96,0.12);color:#4a4a44;}
@@ -81,6 +87,11 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
 .stat-pill-label{font-size:10px;font-weight:700;color:#185fa5;letter-spacing:0.06em;text-transform:uppercase;}
 .stat-pill-val{font-size:12px;font-weight:700;color:#0c447c;}
 .chart-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;gap:10px;}
+
+.kpi,.chart-card,.table-card,.invoice-kpi-card,.vendor-row,.date-range-panel,.sticky-tab-shell,.print-btn{transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;}
+@media (hover:hover){
+  .kpi:hover,.chart-card:hover,.table-card:hover,.invoice-kpi-card:hover,.vendor-row:hover,.date-range-panel:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(17,36,69,.12);}
+}
 
 .print-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:linear-gradient(180deg,#2f5aa5,#224885);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:10px;padding:7px 14px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;box-shadow:0 8px 18px rgba(26,61,120,0.18);}
 .print-btn:hover{filter:brightness(.98);transform:translateY(-1px);}
@@ -100,7 +111,8 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
 .vendor-review{display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:999px;background:#fff3d8;color:#7a4f00;font-size:9px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;}
 
 .invoice-kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;}
-.invoice-kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:13px 14px;min-width:0;}
+.invoice-kpi-card{background:linear-gradient(180deg,#fff,#fbfcff);border:1px solid #dddfea;border-radius:14px;padding:13px 14px;min-width:0;box-shadow:0 10px 22px rgba(26,61,120,.06);position:relative;overflow:hidden;}
+.invoice-kpi-card::before{content:'';position:absolute;left:0;right:0;top:0;height:42px;background:linear-gradient(180deg,rgba(255,255,255,.72),rgba(255,255,255,0));pointer-events:none;}
 .invoice-kpi-card.invoice{border-color:#e0c8ea;box-shadow:inset 3px 0 0 #8e44ad;background:linear-gradient(180deg,#fff,#fbf6ff);}
 .invoice-kpi-card.good{box-shadow:inset 3px 0 0 var(--green);}
 .invoice-kpi-card.warn{box-shadow:inset 3px 0 0 #d48a00;}
@@ -110,24 +122,25 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
 .invoice-kpi-sub{font-size:10px;color:var(--text3);margin-top:4px;font-family:'DM Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .invoice-kpi-tag{display:inline-block;border:1px solid #e0c8ea;background:#fbf6ff;color:#7a4b93;border-radius:99px;padding:2px 7px;font-size:9px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-left:6px;vertical-align:middle;}
 /* Compact sticky month selector: stays visible while scrolling and uses one horizontal row. */
-.sticky-tab-shell{position:sticky;top:calc(var(--fixed-header-height,116px) - 1px);z-index:160;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border:1px solid #d8dce7;box-shadow:0 9px 24px rgba(26,61,120,.13);border-radius:12px;margin:0 0 18px;padding:8px 10px;display:flex;align-items:center;gap:10px;}
+.sticky-tab-shell{position:sticky;top:calc(var(--fixed-header-height,116px) - 1px);z-index:160;background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(250,251,254,.94));backdrop-filter:blur(16px);border:1px solid #dbe2ee;box-shadow:0 18px 34px rgba(26,61,120,.14);border-radius:16px;margin:0 0 18px;padding:8px 10px;display:flex;align-items:center;gap:10px;position:sticky;overflow:hidden;}
+.sticky-tab-shell::after{content:'';position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,rgba(255,255,255,.8),rgba(255,255,255,.2));pointer-events:none;}
 .sticky-tab-shell::before{content:'Switch view';font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#6b6a63;white-space:nowrap;padding-left:2px;}
 .sticky-tab-shell .tabs{margin-bottom:0;min-width:0;flex:1;display:flex;flex-direction:row;align-items:center;gap:5px;overflow-x:auto;scrollbar-width:thin;}
 .sticky-tab-shell .year-tab-row{flex-wrap:nowrap;overflow:visible;gap:5px;padding-bottom:1px;flex:0 0 auto;}
 .sticky-tab-shell .archive-year{display:flex;align-items:center;gap:5px;flex:0 0 auto;}
 .sticky-tab-shell .archive-year .archive-months{margin:0;flex-wrap:nowrap;gap:5px;}
-.sticky-tab-shell .archive-toggle{border-radius:999px;padding:6px 12px;font-size:11px;font-weight:700;white-space:nowrap;background:#eef1f7;}
+.sticky-tab-shell .archive-toggle{border-radius:999px;padding:6px 12px;font-size:11px;font-weight:700;white-space:nowrap;background:linear-gradient(180deg,#f4f7fb,#e8edf5);}
 .sticky-tab-shell .year-label{display:none;}
-.sticky-tab-shell .tab{border-radius:999px;padding:6px 12px;font-size:11px;font-weight:700;white-space:nowrap;background:#f5f6fa;}
-.sticky-tab-shell .tab.active{background:#1a3d78;border-color:#1a3d78;color:white;box-shadow:0 3px 8px rgba(26,61,120,.22);}
+.sticky-tab-shell .tab{border-radius:999px;padding:6px 12px;font-size:11px;font-weight:700;white-space:nowrap;background:linear-gradient(180deg,#fff,#f3f6fa);}
+.sticky-tab-shell .tab.active{background:linear-gradient(135deg,#2856a1 0%,#153a70 100%);border-color:#183f79;color:white;box-shadow:0 12px 22px rgba(26,61,120,.2);}
 
-.date-range-panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:16px;box-shadow:0 8px 18px rgba(42,82,152,0.06);}
+.date-range-panel{background:linear-gradient(180deg,#fff,#fbfcff);border:1px solid #dce2ee;border-radius:16px;padding:14px 16px;margin-bottom:16px;box-shadow:0 12px 24px rgba(42,82,152,0.08);}
 .date-range-grid{display:grid;grid-template-columns:repeat(2,minmax(160px,220px)) auto;gap:10px;align-items:end;margin-bottom:10px;}
 .date-field{display:flex;flex-direction:column;gap:5px;}
 .date-field label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);}
 .date-field input{border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:#fff;}
-.range-btn{background:var(--accent);border:1px solid var(--accent);border-radius:8px;color:white;padding:8px 14px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;}
-.range-btn.secondary{background:var(--surface2);border-color:var(--border);color:var(--text2);}
+.range-btn{background:linear-gradient(135deg,#2a5298 0%,#183e78 100%);border:1px solid #1e4786;border-radius:10px;color:white;padding:8px 14px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;box-shadow:0 10px 18px rgba(26,61,120,.16);}
+.range-btn.secondary{background:linear-gradient(180deg,#f8f7f3,#efede6);border-color:var(--border);color:var(--text2);box-shadow:none;}
 .range-btn:hover{filter:brightness(.96);}
 .range-quick-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px;}
 .range-status{font-size:11px;color:var(--text2);font-family:'DM Mono',monospace;margin-top:9px;}
@@ -722,6 +735,30 @@ function gridStyle(extra={}){
   return {color:CHART_COLORS.grid,drawBorder:false,...extra};
 }
 
+function hexToRgba(hex, alpha){
+  const raw = String(hex).replace('#','').trim();
+  const full = raw.length===3 ? raw.split('').map(ch=>ch+ch).join('') : raw;
+  const int = parseInt(full,16);
+  const r=(int>>16)&255, g=(int>>8)&255, b=int&255;
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+function emphasizedBarColors(count, activeIndex, baseHex, inactiveAlpha=.28){
+  return Array.from({length:count}, (_,i)=>i===activeIndex ? baseHex : hexToRgba(baseHex,inactiveAlpha));
+}
+
+function emphasizedPointColors(count, activeIndex, baseHex, inactiveAlpha=.38){
+  return Array.from({length:count}, (_,i)=>i===activeIndex ? baseHex : hexToRgba(baseHex,inactiveAlpha));
+}
+
+function emphasizedPointRadii(count, activeIndex, active=5, inactive=3){
+  return Array.from({length:count}, (_,i)=>i===activeIndex ? active : inactive);
+}
+
+function activeMonthChartIndex(){
+  return sel >= 0 && sel < months.length ? sel : CURRENT_MONTH_IDX;
+}
+
 const UPDATED = '8/30/26';
 const CURRENT_MONTH_IDX = 10;
 
@@ -836,9 +873,11 @@ function renderInvoiceSection(mo){
   document.getElementById('invoiceVendorList').innerHTML = invoiceVendorRows(info.vendors);
   const labels=Object.keys(invoiceData).map(m=>m.replace(' 2026',''));
   const totals=Object.values(invoiceData).map(m=>m.total);
+  const activeMonthLabel = mo.short || mo.label.replace(/\s+\d{4}\b/,'');
+  const activeIdx = Math.max(0, labels.indexOf(activeMonthLabel));
   const el=document.getElementById('invoiceMonthChart');
   const ex=Chart.getChart(el); if(ex) ex.destroy();
-  invoiceMonthInst = new Chart(el,{type:'bar',data:{labels,datasets:[barDataset('Paid invoices',totals,CHART_COLORS.purple)]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>'Paid invoices: '+fmtDolShort(ctx.parsed.y)}}},scales:{y:{beginAtZero:true,ticks:tickStyle(11,{callback:v=>fmtK(v)}),grid:gridStyle()},x:{ticks:tickStyle(11,{autoSkip:false}),grid:{display:false}}}}});
+  invoiceMonthInst = new Chart(el,{type:'bar',data:{labels,datasets:[barDataset('Paid invoices',totals,CHART_COLORS.purple,{backgroundColor:emphasizedBarColors(labels.length,activeIdx,CHART_COLORS.purple,.22),borderColor:emphasizedBarColors(labels.length,activeIdx,CHART_COLORS.purple,.28),maxBarThickness:44})]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>'Paid invoices: '+fmtDolShort(ctx.parsed.y)}}},scales:{y:{beginAtZero:true,ticks:tickStyle(11,{callback:v=>fmtK(v)}),grid:gridStyle()},x:{ticks:tickStyle(11,{autoSkip:false}),grid:{display:false}}}}});
 }
 function renderYtdInvoiceSection(){
   const labels=Object.keys(invoiceData).map(m=>m.replace(' 2026',''));
@@ -853,7 +892,8 @@ function renderYtdInvoiceSection(){
   const list=document.getElementById('ytdInvoiceVendorList'); if(list) list.innerHTML=invoiceVendorRows(invoiceYtdVendors);
   const el=document.getElementById('ytdInvoiceChart'); if(!el) return;
   const ex=Chart.getChart(el); if(ex) ex.destroy();
-  ytdInvoiceInst = new Chart(el,{type:'bar',data:{labels,datasets:[barDataset('Paid invoices',totals,CHART_COLORS.purple)]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>'Paid invoices: '+fmtDolShort(ctx.parsed.y)}}},scales:{y:{beginAtZero:true,ticks:tickStyle(11,{callback:v=>fmtK(v)}),grid:gridStyle()},x:{ticks:tickStyle(11,{autoSkip:false}),grid:{display:false}}}}});
+  const activeIdx = labels.length ? labels.length-1 : 0;
+  ytdInvoiceInst = new Chart(el,{type:'bar',data:{labels,datasets:[barDataset('Paid invoices',totals,CHART_COLORS.purple,{backgroundColor:emphasizedBarColors(labels.length,activeIdx,CHART_COLORS.purple,.22),borderColor:emphasizedBarColors(labels.length,activeIdx,CHART_COLORS.purple,.28),maxBarThickness:44})]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>'Paid invoices: '+fmtDolShort(ctx.parsed.y)}}},scales:{y:{beginAtZero:true,ticks:tickStyle(11,{callback:v=>fmtK(v)}),grid:gridStyle()},x:{ticks:tickStyle(11,{autoSkip:false}),grid:{display:false}}}}});
 }
 
 function colorSub(sub){
@@ -1038,6 +1078,7 @@ function refresh(){
   if(customT) customT.classList.remove('active');
   const mo = months[sel];
   const isCurrent = sel === CURRENT_MONTH_IDX;
+  updateMainChartHighlights();
 
   document.getElementById('weekLabel').textContent = mo.label;
   // Rebuild OT charts with year-appropriate data
@@ -1226,12 +1267,38 @@ function refresh(){
 // Month-level charts — improved tooltips
 const ml = months.map(m=>m.short);
 
+let mainInspInst=null, mainPoInst=null, mainWoInst=null;
+
+function updateMainChartHighlights(){
+  const activeIndex = activeMonthChartIndex();
+  if(mainInspInst){
+    mainInspInst.data.datasets[0].backgroundColor = emphasizedBarColors(ml.length,activeIndex,CHART_COLORS.blue,.28);
+    mainInspInst.data.datasets[0].borderColor = emphasizedBarColors(ml.length,activeIndex,CHART_COLORS.blue,.34);
+    mainInspInst.data.datasets[1].pointBackgroundColor = emphasizedPointColors(ml.length,activeIndex,CHART_COLORS.red,.34);
+    mainInspInst.data.datasets[1].pointRadius = emphasizedPointRadii(ml.length,activeIndex,5,3);
+    mainInspInst.data.datasets[1].pointHoverRadius = emphasizedPointRadii(ml.length,activeIndex,7,4);
+    mainInspInst.update('none');
+  }
+  if(mainPoInst){
+    mainPoInst.data.datasets[0].backgroundColor = emphasizedBarColors(ml.length,activeIndex,CHART_COLORS.green,.26);
+    mainPoInst.data.datasets[0].borderColor = emphasizedBarColors(ml.length,activeIndex,CHART_COLORS.green,.32);
+    mainPoInst.update('none');
+  }
+  if(mainWoInst){
+    mainWoInst.data.datasets[0].backgroundColor = emphasizedBarColors(ml.length,activeIndex,CHART_COLORS.blue,.28);
+    mainWoInst.data.datasets[0].borderColor = emphasizedBarColors(ml.length,activeIndex,CHART_COLORS.blue,.34);
+    mainWoInst.data.datasets[1].backgroundColor = emphasizedBarColors(ml.length,activeIndex,CHART_COLORS.gray,.34);
+    mainWoInst.data.datasets[1].borderColor = emphasizedBarColors(ml.length,activeIndex,CHART_COLORS.gray,.40);
+    mainWoInst.update('none');
+  }
+}
+
 // Inspections + APPA: show both datasets in tooltip
-new Chart(document.getElementById('inspChart'),{
+mainInspInst = new Chart(document.getElementById('inspChart'),{
   type:'bar',
   data:{labels:ml,datasets:[
-    barDataset('Inspections',months.map(m=>m.insp),CHART_COLORS.blue,{yAxisID:'y'}),
-    lineDataset('Avg APPA',months.map(m=>m.appa),CHART_COLORS.red,{yAxisID:'y2'})
+    barDataset('Inspections',months.map(m=>m.insp),CHART_COLORS.blue,{yAxisID:'y',backgroundColor:emphasizedBarColors(ml.length,CURRENT_MONTH_IDX,CHART_COLORS.blue,.28),borderColor:emphasizedBarColors(ml.length,CURRENT_MONTH_IDX,CHART_COLORS.blue,.34),maxBarThickness:38}),
+    lineDataset('Avg APPA',months.map(m=>m.appa),CHART_COLORS.red,{yAxisID:'y2',pointBackgroundColor:emphasizedPointColors(ml.length,CURRENT_MONTH_IDX,CHART_COLORS.red,.34),pointRadius:emphasizedPointRadii(ml.length,CURRENT_MONTH_IDX,5,3),pointHoverRadius:emphasizedPointRadii(ml.length,CURRENT_MONTH_IDX,7,4)})
   ]},
   options:{
     responsive:true,maintainAspectRatio:false,
@@ -1251,9 +1318,9 @@ new Chart(document.getElementById('inspChart'),{
 });
 
 // PO chart — clean dollar tooltip
-new Chart(document.getElementById('poChart'),{
+mainPoInst = new Chart(document.getElementById('poChart'),{
   type:'bar',
-  data:{labels:ml,datasets:[barDataset('PO $',months.map(m=>m.poDol),CHART_COLORS.green)]},
+  data:{labels:ml,datasets:[barDataset('PO $',months.map(m=>m.poDol),CHART_COLORS.green,{backgroundColor:emphasizedBarColors(ml.length,CURRENT_MONTH_IDX,CHART_COLORS.green,.26),borderColor:emphasizedBarColors(ml.length,CURRENT_MONTH_IDX,CHART_COLORS.green,.32),maxBarThickness:38})]},
   options:{
     responsive:true,maintainAspectRatio:false,
     plugins:{
@@ -1265,11 +1332,11 @@ new Chart(document.getElementById('poChart'),{
   }
 });
 
-new Chart(document.getElementById('woChart'),{
+mainWoInst = new Chart(document.getElementById('woChart'),{
   type:'bar',
   data:{labels:ml,datasets:[
-    barDataset('Created',months.map(m=>m.mtdCreated!==undefined?m.mtdCreated:m.woCreated.maint+m.woCreated.hk+m.woCreated.grnds),CHART_COLORS.blue),
-    barDataset('Closed',months.map(m=>m.mtdClosed!==undefined?m.mtdClosed:m.woClosed.maint+m.woClosed.hk+m.woClosed.grnds),CHART_COLORS.gray)
+    barDataset('Created',months.map(m=>m.mtdCreated!==undefined?m.mtdCreated:m.woCreated.maint+m.woCreated.hk+m.woCreated.grnds),CHART_COLORS.blue,{backgroundColor:emphasizedBarColors(ml.length,CURRENT_MONTH_IDX,CHART_COLORS.blue,.28),borderColor:emphasizedBarColors(ml.length,CURRENT_MONTH_IDX,CHART_COLORS.blue,.34),maxBarThickness:32}),
+    barDataset('Closed',months.map(m=>m.mtdClosed!==undefined?m.mtdClosed:m.woClosed.maint+m.woClosed.hk+m.woClosed.grnds),CHART_COLORS.gray,{backgroundColor:emphasizedBarColors(ml.length,CURRENT_MONTH_IDX,CHART_COLORS.gray,.34),borderColor:emphasizedBarColors(ml.length,CURRENT_MONTH_IDX,CHART_COLORS.gray,.40),maxBarThickness:32})
   ]},
   options:{
     responsive:true,maintainAspectRatio:false,
@@ -1481,13 +1548,14 @@ function showYTD(){
 
   // ── Charts ──
   const ml = ytdMonths.map(m=>m.short);
+  const ytdActiveIdx = Math.max(0, ytdMonths.findIndex(m=>m.key === months[CURRENT_MONTH_IDX].key));
 
   if(ytdInspInst) ytdInspInst.destroy();
   ytdInspInst = new Chart(document.getElementById('ytdInspChart'),{
     type:'bar',
     data:{labels:ml,datasets:[
-      barDataset('Inspections',ytdMonths.map(m=>m.insp),CHART_COLORS.blue,{yAxisID:'y'}),
-      lineDataset('Avg APPA',ytdMonths.map(m=>m.appa),CHART_COLORS.red,{yAxisID:'y2'})
+      barDataset('Inspections',ytdMonths.map(m=>m.insp),CHART_COLORS.blue,{yAxisID:'y',backgroundColor:emphasizedBarColors(ml.length,ytdActiveIdx,CHART_COLORS.blue,.28),borderColor:emphasizedBarColors(ml.length,ytdActiveIdx,CHART_COLORS.blue,.34),maxBarThickness:38}),
+      lineDataset('Avg APPA',ytdMonths.map(m=>m.appa),CHART_COLORS.red,{yAxisID:'y2',pointBackgroundColor:emphasizedPointColors(ml.length,ytdActiveIdx,CHART_COLORS.red,.34),pointRadius:emphasizedPointRadii(ml.length,ytdActiveIdx,5,3),pointHoverRadius:emphasizedPointRadii(ml.length,ytdActiveIdx,7,4)})
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:false},datalabels:{display:false},
@@ -1503,7 +1571,7 @@ function showYTD(){
   if(ytdPoInst) ytdPoInst.destroy();
   ytdPoInst = new Chart(document.getElementById('ytdPoChart'),{
     type:'bar',
-    data:{labels:ml,datasets:[barDataset('PO $',ytdMonths.map(m=>m.poDol),CHART_COLORS.green)]},
+    data:{labels:ml,datasets:[barDataset('PO $',ytdMonths.map(m=>m.poDol),CHART_COLORS.green,{backgroundColor:emphasizedBarColors(ml.length,ytdActiveIdx,CHART_COLORS.green,.26),borderColor:emphasizedBarColors(ml.length,ytdActiveIdx,CHART_COLORS.green,.32),maxBarThickness:38})]},
     options:{responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>'PO $: '+fmtDolShort(ctx.parsed.y)}}},
       scales:{y:{beginAtZero:true,ticks:tickStyle(11,{callback:v=>fmtK(v)}),grid:gridStyle()},x:{ticks:tickStyle(11,{autoSkip:false}),grid:{display:false}}}}
@@ -1513,8 +1581,8 @@ function showYTD(){
   ytdWoInst = new Chart(document.getElementById('ytdWoChart'),{
     type:'bar',
     data:{labels:ml,datasets:[
-      barDataset('Created',ytdMonths.map(m=>m.mtdCreated!==undefined?m.mtdCreated:m.woCreated.maint+m.woCreated.hk+m.woCreated.grnds),CHART_COLORS.blue),
-      barDataset('Closed', ytdMonths.map(m=>m.mtdClosed!==undefined?m.mtdClosed:m.woClosed.maint+m.woClosed.hk+m.woClosed.grnds), CHART_COLORS.gray)
+      barDataset('Created',ytdMonths.map(m=>m.mtdCreated!==undefined?m.mtdCreated:m.woCreated.maint+m.woCreated.hk+m.woCreated.grnds),CHART_COLORS.blue,{backgroundColor:emphasizedBarColors(ml.length,ytdActiveIdx,CHART_COLORS.blue,.28),borderColor:emphasizedBarColors(ml.length,ytdActiveIdx,CHART_COLORS.blue,.34),maxBarThickness:32}),
+      barDataset('Closed', ytdMonths.map(m=>m.mtdClosed!==undefined?m.mtdClosed:m.woClosed.maint+m.woClosed.hk+m.woClosed.grnds), CHART_COLORS.gray,{backgroundColor:emphasizedBarColors(ml.length,ytdActiveIdx,CHART_COLORS.gray,.34),borderColor:emphasizedBarColors(ml.length,ytdActiveIdx,CHART_COLORS.gray,.40),maxBarThickness:32})
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:false},datalabels:{display:false}},
@@ -1721,11 +1789,12 @@ function applyCustomRange(){
   setTimeout(()=>{animateKpiRow('customKpi1');animateKpiRow('customKpi2');},50);
   document.getElementById('customWeekBody').innerHTML = hasWeeklyRows ? weekRows.map(w=>`<tr><td class="mono">${w.w}</td><td>${fmtNum(w.insp)}</td><td>${appaBadge(w.appa)}</td><td style="font-size:12px;">${w.pos}</td><td>${fmtNum(w.po)}</td><td class="mono">${fmtDol(w.poDol)}</td><td>${fmtNum(w.ah)}</td><td>${fmtNum(w.woCreated||0)}</td><td>${fmtNum(w.woClosed||0)}</td></tr>`).join('') : '<tr><td colspan="9" style="color:var(--text3);">No weekly records overlap this range.</td></tr>';
   const labels=weekRows.map(w=>w.w);
+  const activeRangeIdx = labels.length ? labels.length-1 : 0;
   ['customInspChart','customPoChart','customWoChart'].forEach(id=>{const el=document.getElementById(id); const ex=Chart.getChart(el); if(ex) ex.destroy();});
   if(hasWeeklyRows){
-    customInspInst=new Chart(document.getElementById('customInspChart'),{type:'bar',data:{labels,datasets:[barDataset('Inspections',weekRows.map(w=>w.insp),CHART_COLORS.blue,{yAxisID:'y'}),lineDataset('Avg APPA',weekRows.map(w=>w.appa),CHART_COLORS.red,{yAxisID:'y2'})]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},datalabels:{display:false}},scales:{y:{beginAtZero:true,ticks:tickStyle(11),grid:gridStyle()},y2:{position:'right',min:2.0,max:3.2,ticks:tickStyle(11),grid:gridStyle({drawOnChartArea:false,color:CHART_COLORS.gridLight})},x:{ticks:tickStyle(9,{maxRotation:45,autoSkip:labels.length>8}),grid:{display:false}}}}});
-    customPoInst=new Chart(document.getElementById('customPoChart'),{type:'bar',data:{labels,datasets:[barDataset('PO $',weekRows.map(w=>w.poDol),CHART_COLORS.green)]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>'PO $: '+fmtDolShort(ctx.parsed.y)}}},scales:{y:{beginAtZero:true,ticks:tickStyle(11,{callback:v=>fmtK(v)}),grid:gridStyle()},x:{ticks:tickStyle(9,{maxRotation:45,autoSkip:labels.length>8}),grid:{display:false}}}}});
-    customWoInst=new Chart(document.getElementById('customWoChart'),{type:'bar',data:{labels,datasets:[barDataset('Created',weekRows.map(w=>w.woCreated||0),CHART_COLORS.blue),barDataset('Closed',weekRows.map(w=>w.woClosed||0),CHART_COLORS.gray)]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},datalabels:{display:false}},scales:{y:{beginAtZero:true,ticks:tickStyle(11),grid:gridStyle()},x:{ticks:tickStyle(9,{maxRotation:45,autoSkip:labels.length>8}),grid:{display:false}}}}});
+    customInspInst=new Chart(document.getElementById('customInspChart'),{type:'bar',data:{labels,datasets:[barDataset('Inspections',weekRows.map(w=>w.insp),CHART_COLORS.blue,{yAxisID:'y',backgroundColor:emphasizedBarColors(labels.length,activeRangeIdx,CHART_COLORS.blue,.28),borderColor:emphasizedBarColors(labels.length,activeRangeIdx,CHART_COLORS.blue,.34),maxBarThickness:36}),lineDataset('Avg APPA',weekRows.map(w=>w.appa),CHART_COLORS.red,{yAxisID:'y2',pointBackgroundColor:emphasizedPointColors(labels.length,activeRangeIdx,CHART_COLORS.red,.34),pointRadius:emphasizedPointRadii(labels.length,activeRangeIdx,5,3),pointHoverRadius:emphasizedPointRadii(labels.length,activeRangeIdx,7,4)})]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},datalabels:{display:false}},scales:{y:{beginAtZero:true,ticks:tickStyle(11),grid:gridStyle()},y2:{position:'right',min:2.0,max:3.2,ticks:tickStyle(11),grid:gridStyle({drawOnChartArea:false,color:CHART_COLORS.gridLight})},x:{ticks:tickStyle(9,{maxRotation:45,autoSkip:labels.length>8}),grid:{display:false}}}}});
+    customPoInst=new Chart(document.getElementById('customPoChart'),{type:'bar',data:{labels,datasets:[barDataset('PO $',weekRows.map(w=>w.poDol),CHART_COLORS.green,{backgroundColor:emphasizedBarColors(labels.length,activeRangeIdx,CHART_COLORS.green,.26),borderColor:emphasizedBarColors(labels.length,activeRangeIdx,CHART_COLORS.green,.32),maxBarThickness:36})]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>'PO $: '+fmtDolShort(ctx.parsed.y)}}},scales:{y:{beginAtZero:true,ticks:tickStyle(11,{callback:v=>fmtK(v)}),grid:gridStyle()},x:{ticks:tickStyle(9,{maxRotation:45,autoSkip:labels.length>8}),grid:{display:false}}}}});
+    customWoInst=new Chart(document.getElementById('customWoChart'),{type:'bar',data:{labels,datasets:[barDataset('Created',weekRows.map(w=>w.woCreated||0),CHART_COLORS.blue,{backgroundColor:emphasizedBarColors(labels.length,activeRangeIdx,CHART_COLORS.blue,.28),borderColor:emphasizedBarColors(labels.length,activeRangeIdx,CHART_COLORS.blue,.34),maxBarThickness:30}),barDataset('Closed',weekRows.map(w=>w.woClosed||0),CHART_COLORS.gray,{backgroundColor:emphasizedBarColors(labels.length,activeRangeIdx,CHART_COLORS.gray,.34),borderColor:emphasizedBarColors(labels.length,activeRangeIdx,CHART_COLORS.gray,.40),maxBarThickness:30})]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},datalabels:{display:false}},scales:{y:{beginAtZero:true,ticks:tickStyle(11),grid:gridStyle()},x:{ticks:tickStyle(9,{maxRotation:45,autoSkip:labels.length>8}),grid:{display:false}}}}});
   } else {
     customInspInst=null; customPoInst=null; customWoInst=null;
   }
@@ -1742,7 +1811,8 @@ function applyCustomRange(){
   document.getElementById('customInvoicePill').textContent=fmtDolShort(inv.total);
   document.getElementById('customInvoiceKpis').innerHTML=invoiceKpiStrip(inv,'Range','Selected');
   document.getElementById('customInvoiceVendorList').innerHTML=invoiceVendorRows(inv.vendors);
-  customInvoiceInst=new Chart(document.getElementById('customInvoiceChart'),{type:'bar',data:{labels:inv.labels,datasets:[barDataset('Paid invoices',inv.totals,CHART_COLORS.purple)]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>'Paid invoices: '+fmtDolShort(ctx.parsed.y)}}},scales:{y:{beginAtZero:true,ticks:tickStyle(11,{callback:v=>fmtK(v)}),grid:gridStyle()},x:{ticks:tickStyle(11,{autoSkip:false}),grid:{display:false}}}}});
+  const activeInvoiceIdx = inv.labels.length ? inv.labels.length-1 : 0;
+  customInvoiceInst=new Chart(document.getElementById('customInvoiceChart'),{type:'bar',data:{labels:inv.labels,datasets:[barDataset('Paid invoices',inv.totals,CHART_COLORS.purple,{backgroundColor:emphasizedBarColors(inv.labels.length,activeInvoiceIdx,CHART_COLORS.purple,.22),borderColor:emphasizedBarColors(inv.labels.length,activeInvoiceIdx,CHART_COLORS.purple,.28),maxBarThickness:40})]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>'Paid invoices: '+fmtDolShort(ctx.parsed.y)}}},scales:{y:{beginAtZero:true,ticks:tickStyle(11,{callback:v=>fmtK(v)}),grid:gridStyle()},x:{ticks:tickStyle(11,{autoSkip:false}),grid:{display:false}}}}});
   setChartGrids();
 }
 
