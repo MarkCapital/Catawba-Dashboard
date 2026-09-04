@@ -1816,7 +1816,7 @@ function applyCustomRange(){
   document.getElementById('customRangeCoverageSub').textContent = hasWeeklyRows ? `Published through ${weekRows[weekRows.length-1].w}` : 'No published weekly overlap yet';
   document.getElementById('customRangeInvoiceMeta').textContent = `${invoiceBucketCount} month${invoiceBucketCount===1?'':'s'}`;
   document.getElementById('customRangeInvoiceSub').textContent = invoiceBucketCount ? (bucketStart===bucketEnd ? bucketStart : `${bucketStart}–${bucketEnd}`) : 'No processed months';
-  document.getElementById('customRangeTopVendorMeta').textContent = topVendor ? topVendor.name : 'No vendor yet';
+  document.getElementById('customRangeTopVendorMeta').textContent = topVendor ? topVendor.vendor : 'No vendor yet';
   document.getElementById('customRangeTopVendorSub').textContent = topVendor ? `${fmtDolShort(topVendor.total)} · ${fmtNum(topVendor.count)} invoice${topVendor.count===1?'':'s'}` : 'Range spend leader';
   const customDash=document.getElementById('customDash');
   if(customDash){
