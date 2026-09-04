@@ -165,6 +165,40 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:radial-g
 #customDash .chart-card{box-shadow:0 18px 34px rgba(26,61,120,.11);}
 #customDash .chart-card::before{background:linear-gradient(90deg,#2a5298,#7b63c8);}
 #customDash .stat-pill{background:linear-gradient(180deg,#eff6ff,#e8f1fe);border-color:#d4e2f7;box-shadow:inset 0 1px 0 rgba(255,255,255,.85),0 6px 14px rgba(26,61,120,.06);}
+#customDash .custom-chart-card{background:linear-gradient(180deg,#fff,#fafdff 100%);box-shadow:0 20px 38px rgba(26,61,120,.12);}
+#customDash .custom-chart-card::after{background:linear-gradient(135deg,rgba(255,255,255,.34),transparent 34%),radial-gradient(circle at 100% 0%,rgba(42,82,152,.06),transparent 30%);}
+#customDash .custom-chart-card .chart-header{margin-bottom:8px;}
+#customDash .custom-chart-card .chart-legend{gap:8px;margin-bottom:12px;padding-bottom:0;border-bottom:none;}
+#customDash .custom-chart-card .leg{padding:5px 10px;border-radius:999px;border:1px solid #e1e7f1;background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(247,249,253,.96));box-shadow:inset 0 1px 0 rgba(255,255,255,.9);font-size:11px;}
+#customDash .custom-chart-card .leg-sq{width:9px;height:9px;border-radius:999px;box-shadow:none;}
+#customDash .custom-chart-card .chart-wrap{border:1px solid #e6ebf4;border-radius:14px;background:linear-gradient(180deg,#fcfdff,#f6f8fc);box-shadow:inset 0 1px 0 rgba(255,255,255,.88);padding:10px 12px 8px;}
+#customDash .custom-chart-card .chart-wrap canvas{display:block;}
+#customDash .custom-chart-card .chart-title{max-width:75%;}
+#customDash .custom-chart-card.custom-chart-ops::before{background:linear-gradient(90deg,#2a5298,#c0392b);}
+#customDash .custom-chart-card.custom-chart-po::before{background:linear-gradient(90deg,#1a6b45,#71a98a);}
+#customDash .custom-chart-card.custom-chart-wo::before{background:linear-gradient(90deg,#2a5298,#888780);}
+#customDash .custom-chart-card.custom-chart-ot-hours::before{background:linear-gradient(90deg,#c0392b,#2a5298 54%,#1a6b45);}
+#customDash .custom-chart-card.custom-chart-ot-pay::before{background:linear-gradient(90deg,#d69200,#f0bf39);}
+#customDash .custom-chart-card.custom-chart-invoice::before{background:linear-gradient(90deg,#8e44ad,#b175cf);}
+#customDash .custom-chart-card.custom-chart-vendors::before{background:linear-gradient(90deg,#8e44ad,#2a5298);}
+#customDash .custom-chart-card.custom-chart-ops .stat-pill{background:linear-gradient(180deg,#edf4ff,#e6effd);border-color:#d6e3f8;}
+#customDash .custom-chart-card.custom-chart-po .stat-pill{background:linear-gradient(180deg,#eff9f4,#e6f3eb);border-color:#d7ebde;}
+#customDash .custom-chart-card.custom-chart-wo .stat-pill{background:linear-gradient(180deg,#eef3ff,#eef0f4);border-color:#d8e2f2;}
+#customDash .custom-chart-card.custom-chart-ot-hours .stat-pill{background:linear-gradient(180deg,#f5f7ff,#ebf3ff);border-color:#dce5f6;}
+#customDash .custom-chart-card.custom-chart-ot-pay .stat-pill{background:linear-gradient(180deg,#fff8e8,#fff2cf);border-color:#f0dfab;}
+#customDash .custom-chart-card.custom-chart-invoice .stat-pill{background:linear-gradient(180deg,#faf2ff,#f4ebff);border-color:#e8d7f3;}
+#customDash .custom-chart-card.custom-chart-ops .chart-wrap{background:linear-gradient(180deg,#fcfdff,#f4f8ff);}
+#customDash .custom-chart-card.custom-chart-po .chart-wrap{background:linear-gradient(180deg,#fcfffd,#f2fbf6);}
+#customDash .custom-chart-card.custom-chart-wo .chart-wrap{background:linear-gradient(180deg,#fcfdff,#f5f7fb);}
+#customDash .custom-chart-card.custom-chart-ot-hours .chart-wrap{background:linear-gradient(180deg,#fcfdff,#f3f7ff);}
+#customDash .custom-chart-card.custom-chart-ot-pay .chart-wrap{background:linear-gradient(180deg,#fffdfa,#fff8ea);}
+#customDash .custom-chart-card.custom-chart-invoice .chart-wrap{background:linear-gradient(180deg,#fefcff,#f7f2ff);}
+#customDash .custom-chart-card .leg-blue{border-color:#d7e2f7;background:linear-gradient(180deg,#f3f7ff,#eaf1ff);color:#264f8e;}
+#customDash .custom-chart-card .leg-red{border-color:#f1d4cf;background:linear-gradient(180deg,#fff7f5,#fbe7e2);color:#9a3328;}
+#customDash .custom-chart-card .leg-green{border-color:#d7eadc;background:linear-gradient(180deg,#f5fcf7,#e8f5ec);color:#245f43;}
+#customDash .custom-chart-card .leg-gray{border-color:#e3e3df;background:linear-gradient(180deg,#fbfbfa,#f0efeb);color:#67645d;}
+#customDash .custom-chart-card .leg-amber{border-color:#f2dfac;background:linear-gradient(180deg,#fff9ec,#fff2d5);color:#8a6100;}
+#customDash .custom-chart-card .leg-purple{border-color:#ead7f1;background:linear-gradient(180deg,#fdf8ff,#f3e9fb);color:#7a4597;}
 #customDash .range-empty-note{background:linear-gradient(180deg,#fff,#f5f9ff 55%,#fbf8ff 100%);border-color:#d6e2f3;box-shadow:0 12px 24px rgba(26,61,120,.08);}
 #customDash .invoice-kpi-card{box-shadow:0 12px 24px rgba(26,61,120,.07);}
 #customDash .section-head h2{color:#756f65;}
@@ -591,33 +625,33 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:radial-g
     <div id="customNoWeeklyRowsNote" class="range-empty-note"><strong>No weekly dashboard rows overlap this date range yet.</strong><p>The invoice section below can still be reviewed because invoice totals are bucketed by processed month. Weekly operational charts and tables will appear automatically once the selected dates overlap published weekly dashboard rows.</p></div>
 
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;" id="customChartsRow">
-      <div class="chart-card">
+      <div class="chart-card custom-chart-card custom-chart-ops">
         <div class="chart-header"><div class="chart-title">Inspections &amp; APPA — selected range</div><div class="stat-pill"><span class="stat-pill-label">Weekly rows</span><span class="stat-pill-val" id="customInspPill">—</span></div></div>
-        <div class="chart-legend"><span class="leg"><span class="leg-sq" style="background:#2a5298;"></span>Inspections</span><span class="leg"><span class="leg-sq" style="background:#c0392b;"></span>Avg APPA (right)</span></div>
+        <div class="chart-legend"><span class="leg leg-blue"><span class="leg-sq" style="background:#2a5298;"></span>Inspections</span><span class="leg leg-red"><span class="leg-sq" style="background:#c0392b;"></span>Avg APPA (right)</span></div>
         <div class="chart-wrap" style="height:200px;"><canvas id="customInspChart" role="img" aria-label="Custom range inspections and APPA"></canvas></div>
       </div>
-      <div class="chart-card">
+      <div class="chart-card custom-chart-card custom-chart-po">
         <div class="chart-header"><div class="chart-title">PO Request $ — selected range</div><div class="stat-pill"><span class="stat-pill-label">Range total</span><span class="stat-pill-val" id="customPoPill">—</span></div></div>
-        <div class="chart-legend"><span class="leg"><span class="leg-sq" style="background:#1a6b45;"></span>PO $</span></div>
+        <div class="chart-legend"><span class="leg leg-green"><span class="leg-sq" style="background:#1a6b45;"></span>PO $</span></div>
         <div class="chart-wrap" style="height:200px;"><canvas id="customPoChart" role="img" aria-label="Custom range PO request dollars"></canvas></div>
       </div>
-      <div class="chart-card">
+      <div class="chart-card custom-chart-card custom-chart-wo">
         <div class="chart-header"><div class="chart-title">Work orders by week — selected range</div><div class="stat-pill"><span class="stat-pill-label">Range total</span><span class="stat-pill-val" id="customWoPill">—</span></div></div>
-        <div class="chart-legend"><span class="leg"><span class="leg-sq" style="background:#2a5298;"></span>Created</span><span class="leg"><span class="leg-sq" style="background:#888780;"></span>Closed</span></div>
+        <div class="chart-legend"><span class="leg leg-blue"><span class="leg-sq" style="background:#2a5298;"></span>Created</span><span class="leg leg-gray"><span class="leg-sq" style="background:#888780;"></span>Closed</span></div>
         <div class="chart-wrap" style="height:200px;"><canvas id="customWoChart" role="img" aria-label="Custom range work orders"></canvas></div>
       </div>
     </div>
 
     <div class="section-head" id="customOtSectionHead"><h2>Overtime by week — selected range</h2><div class="divider"></div></div>
     <div class="charts-row" style="margin-bottom:14px;" id="customOtChartsRow">
-      <div class="chart-card">
+      <div class="chart-card custom-chart-card custom-chart-ot-hours">
         <div class="chart-header"><div class="chart-title">OT hours by week — stacked by dept</div><div class="stat-pill"><span class="stat-pill-label">Range total</span><span class="stat-pill-val" id="customOtHrsPill">—</span></div></div>
-        <div class="chart-legend"><span class="leg"><span class="leg-sq" style="background:#c0392b;"></span>Maintenance</span><span class="leg"><span class="leg-sq" style="background:#2a5298;"></span>Housekeeping</span><span class="leg"><span class="leg-sq" style="background:#1a6b45;"></span>Grounds</span></div>
+        <div class="chart-legend"><span class="leg leg-red"><span class="leg-sq" style="background:#c0392b;"></span>Maintenance</span><span class="leg leg-blue"><span class="leg-sq" style="background:#2a5298;"></span>Housekeeping</span><span class="leg leg-green"><span class="leg-sq" style="background:#1a6b45;"></span>Grounds</span></div>
         <div class="chart-wrap" style="height:240px;"><canvas id="customOtHrsChart" role="img" aria-label="Custom range OT hours"></canvas></div>
       </div>
-      <div class="chart-card">
+      <div class="chart-card custom-chart-card custom-chart-ot-pay">
         <div class="chart-header"><div class="chart-title">OT pay $ by week</div><div class="stat-pill"><span class="stat-pill-label">Range total</span><span class="stat-pill-val" id="customOtPayPill">—</span></div></div>
-        <div class="chart-legend"><span class="leg"><span class="leg-sq" style="background:#e6a817;"></span>Total OT pay</span></div>
+        <div class="chart-legend"><span class="leg leg-amber"><span class="leg-sq" style="background:#e6a817;"></span>Total OT pay</span></div>
         <div class="chart-wrap" style="height:240px;"><canvas id="customOtPayChart" role="img" aria-label="Custom range OT pay"></canvas></div>
       </div>
     </div>
@@ -625,12 +659,12 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:radial-g
     <div class="section-head"><h2>Processed invoices — selected dates <span class="invoice-kpi-tag">Range</span></h2><div class="divider"></div></div>
     <div class="invoice-kpi-strip" id="customInvoiceKpis"></div>
     <div class="charts-row" style="margin-bottom:14px;">
-      <div class="chart-card">
+      <div class="chart-card custom-chart-card custom-chart-invoice">
         <div class="chart-header"><div class="chart-title">Paid invoices by processed month</div><div class="stat-pill"><span class="stat-pill-label">Range total</span><span class="stat-pill-val" id="customInvoicePill">—</span></div></div>
-        <div class="chart-legend"><span class="leg"><span class="leg-sq" style="background:#8e44ad;"></span>Paid invoices</span></div>
+        <div class="chart-legend"><span class="leg leg-purple"><span class="leg-sq" style="background:#8e44ad;"></span>Paid invoices</span></div>
         <div class="chart-wrap" style="height:240px;"><canvas id="customInvoiceChart" role="img" aria-label="Custom range processed invoice payments"></canvas></div>
       </div>
-      <div class="chart-card">
+      <div class="chart-card custom-chart-card custom-chart-vendors">
         <div class="chart-header"><div class="chart-title">Top vendors in range</div><a href="https://docs.google.com/spreadsheets/d/1H5tpj1VXhorWHuuO0jVQluNYrU1UNDFiwXDDbLekGpM/edit?usp=sharing" target="_blank" style="font-size:11px;color:#2a5298;font-weight:600;text-decoration:none;">Open report ↗</a></div>
         <div id="customInvoiceVendorList" style="display:flex;flex-direction:column;gap:8px;"></div>
       </div>
