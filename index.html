@@ -26,7 +26,7 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
 .ql-btn:hover{background:rgba(255,255,255,0.2);}
 .main{max-width:1200px;margin:0 auto;padding:24px 32px 56px;padding-top:calc(var(--fixed-header-height, 116px) + 24px);}
 .section-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;margin-top:32px;}
-.section-head h2{font-size:11px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:var(--text3);white-space:nowrap;}
+.section-head h2{font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:#878279;white-space:nowrap;}
 .section-head .divider{flex:1;height:1px;background:var(--border);}
 .tabs{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
 .year-tab-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
@@ -42,25 +42,27 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
 .kpi-row-1{grid-template-columns:repeat(6,1fr);}
 .kpi-row-1.current-month{grid-template-columns:repeat(4,1fr);}
 .kpi-row-2{grid-template-columns:repeat(4,1fr);}
-.kpi{background:linear-gradient(180deg,#fff,#f8fbff);border:1px solid #d7e2f3;border-left:3px solid var(--accent);border-radius:10px;padding:14px 16px;box-shadow:0 8px 18px rgba(42,82,152,0.08);}
+.kpi{background:linear-gradient(180deg,#fff,#fbfcff);border:1px solid #d7e2f3;border-left:3px solid var(--accent);border-radius:14px;padding:14px 16px;box-shadow:0 10px 22px rgba(42,82,152,0.08);}
 .kpi.accent{border-left-color:var(--accent);}
-.kpi-label{font-size:11px;color:var(--text3);font-weight:500;letter-spacing:0.02em;margin-bottom:5px;}
-.kpi-val{font-size:23px;font-weight:600;color:var(--text);line-height:1;}
-.kpi-sub{font-size:10px;color:var(--text3);margin-top:4px;font-family:'DM Mono',monospace;}
+.kpi-label{font-size:10.5px;color:#8f8b82;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;}
+.kpi-val{font-size:24px;font-weight:700;color:var(--text);line-height:1;letter-spacing:-0.02em;}
+.kpi-sub{font-size:10.5px;color:#78746d;margin-top:5px;font-family:'DM Mono',monospace;}
 .charts-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
-.chart-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 18px 14px;}
-.chart-title{font-size:11px;font-weight:600;color:var(--text2);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:4px;}
-.chart-legend{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:10px;}
-.leg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3);}
-.leg-sq{width:9px;height:9px;border-radius:2px;flex-shrink:0;}
-.chart-wrap{position:relative;width:100%;}
-.table-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px;}
+.chart-card{background:linear-gradient(180deg,#fff,#fbfcff);border:1px solid #d9dfeb;border-radius:16px;padding:16px 16px 14px;box-shadow:0 12px 26px rgba(26,61,120,0.07);position:relative;overflow:hidden;}
+.chart-card::before{content:'';position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,#2a5298,#5d83c4);opacity:.96;}
+.chart-title{font-size:12px;font-weight:700;color:#4f4d47;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:4px;line-height:1.25;}
+.chart-legend{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(42,82,152,0.08);}
+.leg{display:flex;align-items:center;gap:6px;font-size:11.5px;color:#77736b;font-weight:600;}
+.leg-sq{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
+.chart-wrap{position:relative;width:100%;padding-top:2px;}
+.table-card{background:linear-gradient(180deg,#fff,#fcfbf7);border:1px solid #dfddd5;border-radius:16px;overflow:hidden;margin-bottom:14px;box-shadow:0 10px 22px rgba(26,61,120,0.05);}
 .table-card table{width:100%;border-collapse:collapse;font-size:13px;}
-.table-card th{background:var(--surface2);padding:8px 13px;text-align:left;font-size:10px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);border-bottom:1px solid var(--border);}
-.table-card td{padding:9px 13px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:middle;}
+.table-card th{background:#f6f3ec;padding:10px 13px;text-align:left;font-size:10.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#8b867d;border-bottom:1px solid var(--border);}
+.table-card td{padding:10px 13px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:middle;}
 .table-card tr:last-child td{border-bottom:none;}
 .table-card tr.total-row td{background:var(--surface2);font-weight:600;}
-.table-card tr:hover:not(.total-row) td{background:#fafaf8;}
+.table-card tbody tr:nth-child(even):not(.total-row) td{background:rgba(42,82,152,0.018);}
+.table-card tr:hover:not(.total-row) td{background:#f6f9ff;}
 .badge{display:inline-block;padding:2px 8px;border-radius:99px;font-size:10px;font-weight:600;}
 .badge-green{background:var(--green-bg);color:var(--green);}
 .badge-amber{background:var(--amber-bg);color:var(--amber);}
@@ -75,10 +77,27 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
 .card-badge{display:inline-block;padding:2px 8px;border-radius:99px;font-size:9px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;}
 .badge-snapshot{background:rgba(42,82,152,0.12);color:#1a3d78;}
 .badge-lastweek{background:rgba(100,100,96,0.12);color:#4a4a44;}
-.stat-pill{background:#e6f1fb;border-radius:20px;padding:3px 11px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;}
-.stat-pill-label{font-size:10px;font-weight:600;color:#185fa5;letter-spacing:0.04em;text-transform:uppercase;}
-.stat-pill-val{font-size:12px;font-weight:600;color:#0c447c;}
-.chart-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}
+.stat-pill{background:linear-gradient(180deg,#eef6ff,#e6f1fb);border:1px solid #d7e5f8;border-radius:999px;padding:4px 11px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;box-shadow:inset 0 1px 0 rgba(255,255,255,0.8);}
+.stat-pill-label{font-size:10px;font-weight:700;color:#185fa5;letter-spacing:0.06em;text-transform:uppercase;}
+.stat-pill-val{font-size:12px;font-weight:700;color:#0c447c;}
+.chart-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;gap:10px;}
+
+.print-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:linear-gradient(180deg,#2f5aa5,#224885);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:10px;padding:7px 14px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;box-shadow:0 8px 18px rgba(26,61,120,0.18);}
+.print-btn:hover{filter:brightness(.98);transform:translateY(-1px);}
+
+.range-empty-note{display:none;background:linear-gradient(180deg,#fff,#f7f9fd);border:1px solid #d8e2f0;border-left:4px solid var(--accent);border-radius:14px;padding:14px 16px;margin-bottom:18px;box-shadow:0 8px 20px rgba(26,61,120,0.06);}
+.range-empty-note strong{display:block;font-size:13px;color:var(--text);margin-bottom:5px;}
+.range-empty-note p{font-size:12px;color:var(--text2);line-height:1.45;}
+
+.vendor-list{display:flex;flex-direction:column;gap:10px;}
+.vendor-row{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 12px;border:1px solid #e4e1d9;background:linear-gradient(180deg,#fff,#f8f6f1);border-radius:12px;box-shadow:0 6px 14px rgba(26,61,120,0.04);}
+.vendor-row.top{border-color:#e0c8ea;background:linear-gradient(180deg,#fff,#fbf6ff);box-shadow:0 10px 20px rgba(142,68,173,0.08);}
+.vendor-rank{width:28px;height:28px;border-radius:999px;background:#f0efe9;color:#6b6a63;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;}
+.vendor-row.top .vendor-rank{background:#8e44ad;color:#fff;box-shadow:0 8px 16px rgba(142,68,173,0.22);}
+.vendor-name{font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.vendor-meta{font-size:10.5px;color:#8d887f;margin-top:3px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+.vendor-total{font-family:'DM Mono',monospace;font-size:12.5px;font-weight:700;color:#26231f;white-space:nowrap;}
+.vendor-review{display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:999px;background:#fff3d8;color:#7a4f00;font-size:9px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;}
 
 .invoice-kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;}
 .invoice-kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:13px 14px;min-width:0;}
@@ -163,6 +182,8 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
   .sticky-tab-shell{top:calc(var(--fixed-header-height,180px) - 1px);margin:0 -2px 14px;padding:7px 8px;gap:7px;}
   .sticky-tab-shell::before{content:'View';font-size:9px;}
   .sticky-tab-shell .tab{font-size:10px;padding:6px 10px;}
+  .print-btn{width:100%;}
+  .range-empty-note{padding:12px 13px;}
 }
 @media(max-width:400px){
   .kpi-val{font-size:18px;}
@@ -188,9 +209,9 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
-  #printArea.print-mode-custom,
+  #printArea.print-mode-custom { zoom: 0.76; }
   #printArea.print-mode-ytd,
-  #printArea.print-mode-month { zoom: 0.76; }
+  #printArea.print-mode-month { zoom: 0.72; }
   #printArea table { page-break-inside: auto; break-inside: auto; }
   #printArea thead { display: table-header-group; }
   #printArea tfoot { display: table-footer-group; }
@@ -223,7 +244,7 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
       <p>The Budd Group &nbsp;·&nbsp; Operations Dashboard</p>
     </div>
   </div>
-  <div class="header-right">Updated 8/30/26</div>
+  <div class="header-right">Ops updated 8/30/26</div>
 </div>
 
 <div class="quicklinks">
@@ -249,7 +270,7 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
   </div>
   <div id="mainDash">
   <div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
-    <button id="printBtn" onclick="printSummary()" style="display:none;background:var(--accent);color:white;border:none;border-radius:6px;padding:6px 14px;font-size:12px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;">🖨 Print Summary</button>
+    <button id="printBtn" class="print-btn" onclick="printSummary()" style="display:none;">🖨 Print Summary</button>
   </div>
   <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
     <span style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);">Month to date</span>
@@ -265,7 +286,7 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
   <!-- Row A: 3 charts always shown -->
   <div id="chartsRowA" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;">
     <div class="chart-card">
-      <div class="chart-title">Inspections &amp; APPA score</div>
+      <div class="chart-header"><div class="chart-title">Inspections &amp; APPA score</div><div class="stat-pill"><span class="stat-pill-label">Current APPA</span><span class="stat-pill-val" id="inspPill">—</span></div></div>
       <div class="chart-legend">
         <span class="leg"><span class="leg-sq" style="background:#2a5298;"></span>Inspections</span>
         <span class="leg"><span class="leg-sq" style="background:#c0392b;"></span>Avg APPA (right)</span>
@@ -273,12 +294,12 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
       <div class="chart-wrap" style="height:200px;"><canvas id="inspChart" role="img" aria-label="Inspections and APPA score by month"></canvas></div>
     </div>
     <div class="chart-card">
-      <div class="chart-title">PO Request $ by month</div>
+      <div class="chart-header"><div class="chart-title">PO Request $ by month</div><div class="stat-pill"><span class="stat-pill-label">Selected month</span><span class="stat-pill-val" id="poPill">—</span></div></div>
       <div class="chart-legend"><span class="leg"><span class="leg-sq" style="background:#1a6b45;"></span>PO $</span></div>
       <div class="chart-wrap" style="height:200px;"><canvas id="poChart" role="img" aria-label="PO request dollars by month"></canvas></div>
     </div>
     <div class="chart-card">
-      <div class="chart-title">Work orders by month</div>
+      <div class="chart-header"><div class="chart-title">Work orders by month</div><div class="stat-pill"><span class="stat-pill-label">Selected month</span><span class="stat-pill-val" id="woPill">—</span></div></div>
       <div class="chart-legend">
         <span class="leg"><span class="leg-sq" style="background:#2a5298;"></span>Created</span>
         <span class="leg"><span class="leg-sq" style="background:#888780;"></span>Closed</span>
@@ -392,7 +413,7 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
       <span style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);">2026 year to date</span>
       <div style="flex:1;height:1px;background:var(--border);"></div>
-      <button id="ytdPrintBtn" onclick="printYTD()" style="background:var(--accent);color:white;border:none;border-radius:6px;padding:6px 14px;font-size:12px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;">🖨 Print Summary</button>
+      <button id="ytdPrintBtn" class="print-btn" onclick="printYTD()">🖨 Print Summary</button>
     </div>
     <div class="kpi-row kpi-row-1" id="ytdKpi1" style="margin-bottom:10px;"></div>
 
@@ -402,7 +423,7 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
     <!-- YTD Row 3: 3 charts (2026 only) -->
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;" id="ytdChartsRow">
       <div class="chart-card">
-        <div class="chart-title">Inspections &amp; APPA — 2026</div>
+        <div class="chart-header"><div class="chart-title">Inspections &amp; APPA — 2026</div><div class="stat-pill"><span class="stat-pill-label">YTD avg</span><span class="stat-pill-val" id="ytdInspPill">—</span></div></div>
         <div class="chart-legend">
           <span class="leg"><span class="leg-sq" style="background:#2a5298;"></span>Inspections</span>
           <span class="leg"><span class="leg-sq" style="background:#c0392b;"></span>Avg APPA (right)</span>
@@ -410,12 +431,12 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
         <div class="chart-wrap" style="height:200px;"><canvas id="ytdInspChart" role="img" aria-label="YTD inspections and APPA"></canvas></div>
       </div>
       <div class="chart-card">
-        <div class="chart-title">PO Request $ — 2026</div>
+        <div class="chart-header"><div class="chart-title">PO Request $ — 2026</div><div class="stat-pill"><span class="stat-pill-label">YTD total</span><span class="stat-pill-val" id="ytdPoPill">—</span></div></div>
         <div class="chart-legend"><span class="leg"><span class="leg-sq" style="background:#1a6b45;"></span>PO $</span></div>
         <div class="chart-wrap" style="height:200px;"><canvas id="ytdPoChart" role="img" aria-label="YTD PO request dollars"></canvas></div>
       </div>
       <div class="chart-card">
-        <div class="chart-title">Work orders by month — 2026</div>
+        <div class="chart-header"><div class="chart-title">Work orders by month — 2026</div><div class="stat-pill"><span class="stat-pill-label">YTD total</span><span class="stat-pill-val" id="ytdWoPill">—</span></div></div>
         <div class="chart-legend">
           <span class="leg"><span class="leg-sq" style="background:#2a5298;"></span>Created</span>
           <span class="leg"><span class="leg-sq" style="background:#888780;"></span>Closed</span>
@@ -490,7 +511,7 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
         <span style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);">Custom date range</span>
         <div style="flex:1;height:1px;background:var(--border);"></div>
-        <button id="customPrintBtn" type="button" onclick="printCustomRange()" style="background:var(--accent);color:white;border:none;border-radius:6px;padding:6px 14px;font-size:12px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;">🖨 Print Summary</button>
+        <button id="customPrintBtn" class="print-btn" type="button" onclick="printCustomRange()">🖨 Print Summary</button>
       </div>
       <div class="date-range-grid">
         <div class="date-field"><label for="customStart">Start date</label><input id="customStart" type="date" min="2025-10-20"></div>
@@ -513,27 +534,28 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
     </div>
     <div class="kpi-row kpi-row-1" id="customKpi1" style="margin-bottom:10px;"></div>
     <div class="kpi-row" style="grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:20px;" id="customKpi2"></div>
+    <div id="customNoWeeklyRowsNote" class="range-empty-note"><strong>No weekly dashboard rows overlap this date range yet.</strong><p>The invoice section below can still be reviewed because invoice totals are bucketed by processed month. Weekly operational charts and tables will appear automatically once the selected dates overlap published weekly dashboard rows.</p></div>
 
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;" id="customChartsRow">
       <div class="chart-card">
-        <div class="chart-title">Inspections &amp; APPA — selected range</div>
+        <div class="chart-header"><div class="chart-title">Inspections &amp; APPA — selected range</div><div class="stat-pill"><span class="stat-pill-label">Weekly rows</span><span class="stat-pill-val" id="customInspPill">—</span></div></div>
         <div class="chart-legend"><span class="leg"><span class="leg-sq" style="background:#2a5298;"></span>Inspections</span><span class="leg"><span class="leg-sq" style="background:#c0392b;"></span>Avg APPA (right)</span></div>
         <div class="chart-wrap" style="height:200px;"><canvas id="customInspChart" role="img" aria-label="Custom range inspections and APPA"></canvas></div>
       </div>
       <div class="chart-card">
-        <div class="chart-title">PO Request $ — selected range</div>
+        <div class="chart-header"><div class="chart-title">PO Request $ — selected range</div><div class="stat-pill"><span class="stat-pill-label">Range total</span><span class="stat-pill-val" id="customPoPill">—</span></div></div>
         <div class="chart-legend"><span class="leg"><span class="leg-sq" style="background:#1a6b45;"></span>PO $</span></div>
         <div class="chart-wrap" style="height:200px;"><canvas id="customPoChart" role="img" aria-label="Custom range PO request dollars"></canvas></div>
       </div>
       <div class="chart-card">
-        <div class="chart-title">Work orders by week — selected range</div>
+        <div class="chart-header"><div class="chart-title">Work orders by week — selected range</div><div class="stat-pill"><span class="stat-pill-label">Range total</span><span class="stat-pill-val" id="customWoPill">—</span></div></div>
         <div class="chart-legend"><span class="leg"><span class="leg-sq" style="background:#2a5298;"></span>Created</span><span class="leg"><span class="leg-sq" style="background:#888780;"></span>Closed</span></div>
         <div class="chart-wrap" style="height:200px;"><canvas id="customWoChart" role="img" aria-label="Custom range work orders"></canvas></div>
       </div>
     </div>
 
-    <div class="section-head"><h2>Overtime by week — selected range</h2><div class="divider"></div></div>
-    <div class="charts-row" style="margin-bottom:14px;">
+    <div class="section-head" id="customOtSectionHead"><h2>Overtime by week — selected range</h2><div class="divider"></div></div>
+    <div class="charts-row" style="margin-bottom:14px;" id="customOtChartsRow">
       <div class="chart-card">
         <div class="chart-header"><div class="chart-title">OT hours by week — stacked by dept</div><div class="stat-pill"><span class="stat-pill-label">Range total</span><span class="stat-pill-val" id="customOtHrsPill">—</span></div></div>
         <div class="chart-legend"><span class="leg"><span class="leg-sq" style="background:#c0392b;"></span>Maintenance</span><span class="leg"><span class="leg-sq" style="background:#2a5298;"></span>Housekeeping</span><span class="leg"><span class="leg-sq" style="background:#1a6b45;"></span>Grounds</span></div>
@@ -560,8 +582,8 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
       </div>
     </div>
 
-    <div class="section-head"><h2>Weekly detail — selected range</h2><div class="divider"></div></div>
-    <div class="table-card">
+    <div class="section-head" id="customWeeklySectionHead"><h2>Weekly detail — selected range</h2><div class="divider"></div></div>
+    <div class="table-card" id="customWeekTableCard">
       <table>
         <thead><tr><th>Week</th><th>Inspections</th><th>Avg APPA</th><th>Open Positions</th><th>PO Requests</th><th>PO $</th><th>After-Hrs</th><th>WO Created</th><th>WO Closed</th></tr></thead>
         <tbody id="customWeekBody"></tbody>
@@ -594,7 +616,7 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:var(--bg
   </div>
 
 </div>
-<div class="footer">Catawba College Facilities &nbsp;·&nbsp; The Budd Group &nbsp;·&nbsp; Updated 8/30/26</div>
+<div class="footer">Catawba College Facilities &nbsp;·&nbsp; The Budd Group &nbsp;·&nbsp; Ops updated 8/30/26</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
@@ -616,15 +638,89 @@ const centerTotalPlugin = { id:'centerTotal', afterDraw(chart){
   const {ctx,chartArea:{left,top,right,bottom}} = chart;
   const cx=(left+right)/2, cy=(top+bottom)/2;
   const total = chart.data.datasets[0].data.reduce((a,b)=>a+b,0);
+  const donutSize = Math.max(18, Math.min(26, Math.round((right-left)*0.18)));
+  const subSize = Math.max(10, Math.round(donutSize*0.56));
   ctx.save();
   ctx.textAlign='center'; ctx.textBaseline='middle';
-  ctx.font='bold 20px DM Sans,sans-serif'; ctx.fillStyle='#1a1916';
+  ctx.font=`bold ${donutSize}px DM Sans,sans-serif`; ctx.fillStyle='#1a1916';
   ctx.fillText(total, cx, cy-8);
-  ctx.font='11px DM Sans,sans-serif'; ctx.fillStyle='#9b9a93';
+  ctx.font=`${subSize}px DM Sans,sans-serif`; ctx.fillStyle='#8e8a82';
   ctx.fillText('total', cx, cy+10);
   ctx.restore();
 }};
 Chart.register(centerTotalPlugin);
+
+const CHART_COLORS = {
+  blue:'#2a5298',
+  blueDark:'#1a3d78',
+  red:'#c0392b',
+  green:'#1a6b45',
+  amber:'#e6a817',
+  purple:'#8e44ad',
+  gray:'#888780',
+  tick:'#6b6a63',
+  grid:'rgba(26,61,120,0.10)',
+  gridLight:'rgba(26,61,120,0.08)'
+};
+
+Chart.defaults.font.family = 'DM Sans, sans-serif';
+Chart.defaults.color = CHART_COLORS.tick;
+Chart.defaults.borderColor = CHART_COLORS.gridLight;
+Chart.defaults.plugins.tooltip = {
+  backgroundColor:'rgba(255,255,255,0.98)',
+  titleColor:'#1a1916',
+  bodyColor:'#4e4b45',
+  borderColor:'rgba(26,61,120,0.14)',
+  borderWidth:1,
+  cornerRadius:10,
+  padding:10,
+  displayColors:true,
+  boxPadding:4,
+  titleFont:{family:'DM Sans, sans-serif',size:12,weight:'700'},
+  bodyFont:{family:'DM Sans, sans-serif',size:12,weight:'600'}
+};
+
+function barDataset(label,data,color,extra={}){
+  return {
+    label,
+    data,
+    backgroundColor:color,
+    borderColor:color,
+    borderRadius:8,
+    borderSkipped:false,
+    maxBarThickness:36,
+    categoryPercentage:0.74,
+    barPercentage:0.9,
+    ...extra,
+  };
+}
+
+function lineDataset(label,data,color,extra={}){
+  return {
+    label,
+    data,
+    type:'line',
+    borderColor:color,
+    backgroundColor:'transparent',
+    pointBackgroundColor:color,
+    pointBorderColor:'#fff',
+    pointBorderWidth:2,
+    pointRadius:4,
+    pointHoverRadius:6,
+    pointHitRadius:10,
+    borderWidth:3,
+    tension:0.35,
+    ...extra,
+  };
+}
+
+function tickStyle(size=11, extra={}){
+  return {color:CHART_COLORS.tick,font:{size,weight:'600'},...extra};
+}
+
+function gridStyle(extra={}){
+  return {color:CHART_COLORS.grid,drawBorder:false,...extra};
+}
 
 const UPDATED = '8/30/26';
 const CURRENT_MONTH_IDX = 10;
@@ -689,12 +785,18 @@ function animateKpiRow(rowId){
 
 function invoiceVendorRows(vendors){
   if(!vendors || !vendors.length) return `<div style="font-size:12px;color:var(--text3);padding:10px 2px;">No processed invoice vendors yet for this period.</div>`;
-  return vendors.map((v,i)=>`
-    <div style="display:grid;grid-template-columns:22px 1fr auto;gap:8px;align-items:center;font-size:12px;padding:7px 9px;background:var(--surface2);border-radius:8px;">
-      <div style="font-weight:700;color:var(--text3);">${i+1}</div>
-      <div style="min-width:0;"><div style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${v.vendor}</div><div style="font-size:10px;color:var(--text3);">${v.count} invoice${v.count===1?'':'s'}${v.needsReview?` · ${v.needsReview} OCR review`:''}</div></div>
-      <div class="mono" style="font-size:12px;font-weight:700;">${fmtDolShort(v.total)}</div>
-    </div>`).join('');
+  return `<div class="vendor-list">${vendors.map((v,i)=>`
+    <div class="vendor-row${i===0?' top':''}">
+      <div class="vendor-rank">${i+1}</div>
+      <div style="min-width:0;">
+        <div class="vendor-name">${v.vendor}</div>
+        <div class="vendor-meta">
+          <span>${v.count} invoice${v.count===1?'':'s'}</span>
+          ${v.needsReview ? `<span class="vendor-review">${v.needsReview} need review</span>` : ''}
+        </div>
+      </div>
+      <div class="vendor-total">${fmtDolShort(v.total)}</div>
+    </div>`).join('')}</div>`;
 }
 function invoiceTopVendor(vendors){ return vendors && vendors.length ? vendors[0] : null; }
 function invoiceKpiCard(label,val,sub,cls='',scope=''){
@@ -736,7 +838,7 @@ function renderInvoiceSection(mo){
   const totals=Object.values(invoiceData).map(m=>m.total);
   const el=document.getElementById('invoiceMonthChart');
   const ex=Chart.getChart(el); if(ex) ex.destroy();
-  invoiceMonthInst = new Chart(el,{type:'bar',data:{labels,datasets:[{label:'Paid invoices',data:totals,backgroundColor:'#8e44ad'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>'Paid invoices: '+fmtDolShort(ctx.parsed.y)}}},scales:{y:{beginAtZero:true,ticks:{font:{size:11},callback:v=>fmtK(v)},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:11},autoSkip:false}}}}});
+  invoiceMonthInst = new Chart(el,{type:'bar',data:{labels,datasets:[barDataset('Paid invoices',totals,CHART_COLORS.purple)]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>'Paid invoices: '+fmtDolShort(ctx.parsed.y)}}},scales:{y:{beginAtZero:true,ticks:tickStyle(11,{callback:v=>fmtK(v)}),grid:gridStyle()},x:{ticks:tickStyle(11,{autoSkip:false}),grid:{display:false}}}}});
 }
 function renderYtdInvoiceSection(){
   const labels=Object.keys(invoiceData).map(m=>m.replace(' 2026',''));
@@ -751,7 +853,7 @@ function renderYtdInvoiceSection(){
   const list=document.getElementById('ytdInvoiceVendorList'); if(list) list.innerHTML=invoiceVendorRows(invoiceYtdVendors);
   const el=document.getElementById('ytdInvoiceChart'); if(!el) return;
   const ex=Chart.getChart(el); if(ex) ex.destroy();
-  ytdInvoiceInst = new Chart(el,{type:'bar',data:{labels,datasets:[{label:'Paid invoices',data:totals,backgroundColor:'#8e44ad'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>'Paid invoices: '+fmtDolShort(ctx.parsed.y)}}},scales:{y:{beginAtZero:true,ticks:{font:{size:11},callback:v=>fmtK(v)},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:11},autoSkip:false}}}}});
+  ytdInvoiceInst = new Chart(el,{type:'bar',data:{labels,datasets:[barDataset('Paid invoices',totals,CHART_COLORS.purple)]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>'Paid invoices: '+fmtDolShort(ctx.parsed.y)}}},scales:{y:{beginAtZero:true,ticks:tickStyle(11,{callback:v=>fmtK(v)}),grid:gridStyle()},x:{ticks:tickStyle(11,{autoSkip:false}),grid:{display:false}}}}});
 }
 
 function colorSub(sub){
@@ -956,6 +1058,12 @@ function refresh(){
   if(openWoAsOf) openWoAsOf.textContent = UPDATED;
   const pmRmAsOf = document.getElementById('pmRmAsOf');
   if(pmRmAsOf) pmRmAsOf.textContent = UPDATED;
+  const inspPill = document.getElementById('inspPill');
+  if(inspPill) inspPill.textContent = mo.appa.toFixed(2);
+  const poPill = document.getElementById('poPill');
+  if(poPill) poPill.textContent = fmtDolShort(mo.poDol);
+  const woPill = document.getElementById('woPill');
+  if(woPill) woPill.textContent = `${fmtNum(mo.mtdCreated!==undefined ? mo.mtdCreated : mo.woCreated.maint+mo.woCreated.hk+mo.woCreated.grnds)} / ${fmtNum(mo.mtdClosed!==undefined ? mo.mtdClosed : mo.woClosed.maint+mo.woClosed.hk+mo.woClosed.grnds)}`;
   const rowB = document.getElementById('chartRowB');
   const rowBHist = document.getElementById('chartRowBHistorical');
   rowB.style.display = isCurrent ? 'grid' : 'none';
@@ -1122,8 +1230,8 @@ const ml = months.map(m=>m.short);
 new Chart(document.getElementById('inspChart'),{
   type:'bar',
   data:{labels:ml,datasets:[
-    {label:'Inspections',data:months.map(m=>m.insp),backgroundColor:'#2a5298',yAxisID:'y'},
-    {label:'Avg APPA',data:months.map(m=>m.appa),type:'line',borderColor:'#c0392b',backgroundColor:'transparent',pointBackgroundColor:'#c0392b',yAxisID:'y2',tension:0.35,pointRadius:4}
+    barDataset('Inspections',months.map(m=>m.insp),CHART_COLORS.blue,{yAxisID:'y'}),
+    lineDataset('Avg APPA',months.map(m=>m.appa),CHART_COLORS.red,{yAxisID:'y2'})
   ]},
   options:{
     responsive:true,maintainAspectRatio:false,
@@ -1138,14 +1246,14 @@ new Chart(document.getElementById('inspChart'),{
         }
       }}
     },
-    scales:{y:{beginAtZero:true,ticks:{font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}},y2:{position:'right',min:2.0,max:3.2,ticks:{font:{size:11}},grid:{drawOnChartArea:false}},x:{ticks:{font:{size:11},autoSkip:false}}}
+    scales:{y:{beginAtZero:true,ticks:tickStyle(11),grid:gridStyle()},y2:{position:'right',min:2.0,max:3.2,ticks:tickStyle(11),grid:gridStyle({drawOnChartArea:false,color:CHART_COLORS.gridLight})},x:{ticks:tickStyle(11,{autoSkip:false}),grid:{display:false}}}
   }
 });
 
 // PO chart — clean dollar tooltip
 new Chart(document.getElementById('poChart'),{
   type:'bar',
-  data:{labels:ml,datasets:[{label:'PO $',data:months.map(m=>m.poDol),backgroundColor:'#1a6b45'}]},
+  data:{labels:ml,datasets:[barDataset('PO $',months.map(m=>m.poDol),CHART_COLORS.green)]},
   options:{
     responsive:true,maintainAspectRatio:false,
     plugins:{
@@ -1153,21 +1261,21 @@ new Chart(document.getElementById('poChart'),{
       datalabels:{display:false},
       tooltip:{callbacks:{label:ctx=>`PO $: ${fmtDolShort(ctx.parsed.y)}`}}
     },
-    scales:{y:{beginAtZero:true,ticks:{font:{size:11},callback:v=>fmtK(v)},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:11},autoSkip:false}}}
+    scales:{y:{beginAtZero:true,ticks:tickStyle(11,{callback:v=>fmtK(v)}),grid:gridStyle()},x:{ticks:tickStyle(11,{autoSkip:false}),grid:{display:false}}}
   }
 });
 
 new Chart(document.getElementById('woChart'),{
   type:'bar',
   data:{labels:ml,datasets:[
-    {label:'Created',data:months.map(m=>m.mtdCreated!==undefined?m.mtdCreated:m.woCreated.maint+m.woCreated.hk+m.woCreated.grnds),backgroundColor:'#2a5298'},
-    {label:'Closed', data:months.map(m=>m.mtdClosed!==undefined?m.mtdClosed:m.woClosed.maint+m.woClosed.hk+m.woClosed.grnds), backgroundColor:'#888780'}
+    barDataset('Created',months.map(m=>m.mtdCreated!==undefined?m.mtdCreated:m.woCreated.maint+m.woCreated.hk+m.woCreated.grnds),CHART_COLORS.blue),
+    barDataset('Closed',months.map(m=>m.mtdClosed!==undefined?m.mtdClosed:m.woClosed.maint+m.woClosed.hk+m.woClosed.grnds),CHART_COLORS.gray)
   ]},
   options:{
     responsive:true,maintainAspectRatio:false,
     interaction:{mode:'index',intersect:false},
     plugins:{legend:{display:false},datalabels:{display:false}},
-    scales:{y:{beginAtZero:true,ticks:{font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:11},autoSkip:false}}}
+    scales:{y:{beginAtZero:true,ticks:tickStyle(11),grid:gridStyle()},x:{ticks:tickStyle(11,{autoSkip:false}),grid:{display:false}}}
   }
 });
 
@@ -1188,8 +1296,8 @@ function buildOtCharts(otData){
   const otL = otData.map(w=>w.w);
   if(otHrsChartInst) otHrsChartInst.destroy();
   if(otPayChartInst) otPayChartInst.destroy();
-  otHrsChartInst = new Chart(document.getElementById('otHrsChart'),{type:'bar',data:{labels:otL,datasets:[{label:'Maintenance',data:otData.map(w=>w.mHrs),backgroundColor:'#c0392b',stack:'a'},{label:'Housekeeping',data:otData.map(w=>w.hHrs),backgroundColor:'#2a5298',stack:'a'},{label:'Grounds',data:otData.map(w=>w.gHrs),backgroundColor:'#1a6b45',stack:'a'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false}},scales:{x:{stacked:true,ticks:{font:{size:8.5},maxRotation:55,autoSkip:false}},y:{stacked:true,beginAtZero:true,ticks:{font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}}}}});
-  otPayChartInst = new Chart(document.getElementById('otPayChart'),{type:'bar',data:{labels:otL,datasets:[{label:'OT Pay',data:otData.map(w=>w.pay),backgroundColor:'#e6a817'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>`OT Pay: ${fmtDolShort(ctx.parsed.y)}`}}},scales:{x:{ticks:{font:{size:8.5},maxRotation:55,autoSkip:false}},y:{beginAtZero:true,ticks:{font:{size:11},callback:v=>fmtK(v)},grid:{color:'rgba(0,0,0,0.05)'}}}}});
+  otHrsChartInst = new Chart(document.getElementById('otHrsChart'),{type:'bar',data:{labels:otL,datasets:[barDataset('Maintenance',otData.map(w=>w.mHrs),CHART_COLORS.red,{stack:'a',maxBarThickness:42}),barDataset('Housekeeping',otData.map(w=>w.hHrs),CHART_COLORS.blue,{stack:'a',maxBarThickness:42}),barDataset('Grounds',otData.map(w=>w.gHrs),CHART_COLORS.green,{stack:'a',maxBarThickness:42})]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false}},scales:{x:{stacked:true,ticks:tickStyle(8.5,{maxRotation:55,autoSkip:false}),grid:{display:false}},y:{stacked:true,beginAtZero:true,ticks:tickStyle(11),grid:gridStyle()}}}});
+  otPayChartInst = new Chart(document.getElementById('otPayChart'),{type:'bar',data:{labels:otL,datasets:[barDataset('OT Pay',otData.map(w=>w.pay),CHART_COLORS.amber,{maxBarThickness:42})]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>`OT Pay: ${fmtDolShort(ctx.parsed.y)}`}}},scales:{x:{ticks:tickStyle(8.5,{maxRotation:55,autoSkip:false}),grid:{display:false}},y:{beginAtZero:true,ticks:tickStyle(11,{callback:v=>fmtK(v)}),grid:gridStyle()}}}});
 }
 
 // ── TRAINING DATA ─────────────────────────────────────────────────────────────
@@ -1319,6 +1427,10 @@ function showYTD(){
     kpi('PO requests', totPO)+
     kpi('PO request $','<span style="font-size:18px;">'+fmtK(totPODol)+'</span>')+
     kpi('After-hrs calls', totAH);
+  const ytdInspPill = document.getElementById('ytdInspPill');
+  if(ytdInspPill) ytdInspPill.textContent = avgAppa;
+  const ytdPoPill = document.getElementById('ytdPoPill');
+  if(ytdPoPill) ytdPoPill.textContent = fmtDolShort(totPODol);
   setTimeout(()=>animateKpiRow('ytdKpi1'), 50);
 
   // ── KPI Row 2: WOs Created + Closed ──
@@ -1331,6 +1443,8 @@ function showYTD(){
   const ytdClM  = ytdMonths.reduce((s,m)=>s+(m.mtdClosedM!==undefined?m.mtdClosedM:m.woClosed.maint),0);
   const ytdClHK = ytdMonths.reduce((s,m)=>s+(m.mtdClosedHK!==undefined?m.mtdClosedHK:m.woClosed.hk),0);
   const ytdClG  = ytdMonths.reduce((s,m)=>s+(m.mtdClosedG!==undefined?m.mtdClosedG:m.woClosed.grnds),0);
+  const ytdWoPill = document.getElementById('ytdWoPill');
+  if(ytdWoPill) ytdWoPill.textContent = `${fmtNum(totCreated)} / ${fmtNum(totClosed)}`;
   document.getElementById('ytdKpi2').innerHTML = `
     <div class="kpi" style="display:flex;align-items:center;justify-content:center;gap:24px;">
       <div>
@@ -1372,8 +1486,8 @@ function showYTD(){
   ytdInspInst = new Chart(document.getElementById('ytdInspChart'),{
     type:'bar',
     data:{labels:ml,datasets:[
-      {label:'Inspections',data:ytdMonths.map(m=>m.insp),backgroundColor:'#2a5298',yAxisID:'y'},
-      {label:'Avg APPA',data:ytdMonths.map(m=>m.appa),type:'line',borderColor:'#c0392b',backgroundColor:'transparent',pointBackgroundColor:'#c0392b',yAxisID:'y2',tension:0.35,pointRadius:4}
+      barDataset('Inspections',ytdMonths.map(m=>m.insp),CHART_COLORS.blue,{yAxisID:'y'}),
+      lineDataset('Avg APPA',ytdMonths.map(m=>m.appa),CHART_COLORS.red,{yAxisID:'y2'})
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:false},datalabels:{display:false},
@@ -1381,30 +1495,30 @@ function showYTD(){
           if(ctx.dataset.label==='Avg APPA') return 'Avg APPA: '+ctx.parsed.y.toFixed(2);
           return 'Inspections: '+ctx.parsed.y;
         }}}},
-      scales:{y:{beginAtZero:true,ticks:{font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}},
-        y2:{position:'right',min:2.0,max:3.2,ticks:{font:{size:11}},grid:{drawOnChartArea:false}},
-        x:{ticks:{font:{size:11},autoSkip:false}}}}
+      scales:{y:{beginAtZero:true,ticks:tickStyle(11),grid:gridStyle()},
+        y2:{position:'right',min:2.0,max:3.2,ticks:tickStyle(11),grid:gridStyle({drawOnChartArea:false,color:CHART_COLORS.gridLight})},
+        x:{ticks:tickStyle(11,{autoSkip:false}),grid:{display:false}}}}
   });
 
   if(ytdPoInst) ytdPoInst.destroy();
   ytdPoInst = new Chart(document.getElementById('ytdPoChart'),{
     type:'bar',
-    data:{labels:ml,datasets:[{label:'PO $',data:ytdMonths.map(m=>m.poDol),backgroundColor:'#1a6b45'}]},
+    data:{labels:ml,datasets:[barDataset('PO $',ytdMonths.map(m=>m.poDol),CHART_COLORS.green)]},
     options:{responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>'PO $: '+fmtDolShort(ctx.parsed.y)}}},
-      scales:{y:{beginAtZero:true,ticks:{font:{size:11},callback:v=>fmtK(v)},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:11},autoSkip:false}}}}
+      scales:{y:{beginAtZero:true,ticks:tickStyle(11,{callback:v=>fmtK(v)}),grid:gridStyle()},x:{ticks:tickStyle(11,{autoSkip:false}),grid:{display:false}}}}
   });
 
   if(ytdWoInst) ytdWoInst.destroy();
   ytdWoInst = new Chart(document.getElementById('ytdWoChart'),{
     type:'bar',
     data:{labels:ml,datasets:[
-      {label:'Created',data:ytdMonths.map(m=>m.mtdCreated!==undefined?m.mtdCreated:m.woCreated.maint+m.woCreated.hk+m.woCreated.grnds),backgroundColor:'#2a5298'},
-      {label:'Closed', data:ytdMonths.map(m=>m.mtdClosed!==undefined?m.mtdClosed:m.woClosed.maint+m.woClosed.hk+m.woClosed.grnds), backgroundColor:'#888780'}
+      barDataset('Created',ytdMonths.map(m=>m.mtdCreated!==undefined?m.mtdCreated:m.woCreated.maint+m.woCreated.hk+m.woCreated.grnds),CHART_COLORS.blue),
+      barDataset('Closed', ytdMonths.map(m=>m.mtdClosed!==undefined?m.mtdClosed:m.woClosed.maint+m.woClosed.hk+m.woClosed.grnds), CHART_COLORS.gray)
     ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:false},datalabels:{display:false}},
-      scales:{y:{beginAtZero:true,ticks:{font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:11},autoSkip:false}}}}
+      scales:{y:{beginAtZero:true,ticks:tickStyle(11),grid:gridStyle()},x:{ticks:tickStyle(11,{autoSkip:false}),grid:{display:false}}}}
   });
 
   // ── OT by month ──
@@ -1419,21 +1533,21 @@ function showYTD(){
   ytdOtHrsInst = new Chart(document.getElementById('ytdOtHrsChart'),{
     type:'bar',
     data:{labels:otLabels,datasets:[
-      {label:'Maintenance', data:otLabels.map(l=>otByMo[l].mHrs), backgroundColor:'#c0392b',stack:'a'},
-      {label:'Housekeeping',data:otLabels.map(l=>otByMo[l].hHrs), backgroundColor:'#2a5298',stack:'a'},
-      {label:'Grounds',     data:otLabels.map(l=>otByMo[l].gHrs), backgroundColor:'#1a6b45',stack:'a'}
+      barDataset('Maintenance', otLabels.map(l=>otByMo[l].mHrs), CHART_COLORS.red,{stack:'a',maxBarThickness:42}),
+      barDataset('Housekeeping',otLabels.map(l=>otByMo[l].hHrs), CHART_COLORS.blue,{stack:'a',maxBarThickness:42}),
+      barDataset('Grounds',     otLabels.map(l=>otByMo[l].gHrs), CHART_COLORS.green,{stack:'a',maxBarThickness:42})
     ]},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false}},
-      scales:{x:{stacked:true,ticks:{font:{size:11}}},y:{stacked:true,beginAtZero:true,ticks:{font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}}}}
+      scales:{x:{stacked:true,ticks:tickStyle(11),grid:{display:false}},y:{stacked:true,beginAtZero:true,ticks:tickStyle(11),grid:gridStyle()}}}
   });
 
   if(ytdOtPayInst) ytdOtPayInst.destroy();
   ytdOtPayInst = new Chart(document.getElementById('ytdOtPayChart'),{
     type:'bar',
-    data:{labels:otLabels,datasets:[{label:'OT Pay',data:otLabels.map(l=>otByMo[l].pay),backgroundColor:'#e6a817'}]},
+    data:{labels:otLabels,datasets:[barDataset('OT Pay',otLabels.map(l=>otByMo[l].pay),CHART_COLORS.amber,{maxBarThickness:42})]},
     options:{responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>'OT Pay: '+fmtDolShort(ctx.parsed.y)}}},
-      scales:{y:{beginAtZero:true,ticks:{font:{size:11},callback:v=>fmtK(v)},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:11},autoSkip:false}}}}
+      scales:{y:{beginAtZero:true,ticks:tickStyle(11,{callback:v=>fmtK(v)}),grid:gridStyle()},x:{ticks:tickStyle(11,{autoSkip:false}),grid:{display:false}}}}
   });
 
   // ── Monthly summary table ──
@@ -1577,8 +1691,16 @@ function applyCustomRange(){
   const snapshot=getCustomRangeSnapshot();
   if(!snapshot) return;
   const {startInput,endInput,start,end,weekRows,otRows,insp,avgAppa,peakPos,poReq,poDol,ah,woCreated,woClosed,otHrs,otPay,inv,rangeLabel}=snapshot;
+  const hasWeeklyRows = weekRows.length > 0;
   startInput.value=isoDate(start); endInput.value=isoDate(end);
   document.getElementById('customRangeStatus').textContent = `Showing ${rangeLabel} · ${weekRows.length} weekly record${weekRows.length===1?'':'s'} included`;
+  const noRowsNote=document.getElementById('customNoWeeklyRowsNote');
+  if(noRowsNote) noRowsNote.style.display = hasWeeklyRows ? 'none' : 'block';
+  const customChartsRow=document.getElementById('customChartsRow');
+  if(customChartsRow) customChartsRow.style.display = hasWeeklyRows ? 'grid' : 'none';
+  [document.getElementById('customOtSectionHead'), document.getElementById('customOtChartsRow'), document.getElementById('customWeeklySectionHead'), document.getElementById('customWeekTableCard')].forEach(el=>{
+    if(el) el.style.display = hasWeeklyRows ? '' : 'none';
+  });
   document.getElementById('customKpi1').innerHTML =
     kpi('Inspections',fmtNum(insp),'',true)+
     kpi('Avg APPA score',avgAppa==null?'N/A':avgAppa.toFixed(2))+
@@ -1593,23 +1715,34 @@ function applyCustomRange(){
     kpi('OT pay $',`<span style="font-size:18px;">${fmtK(otPay)}</span>`,'')+
     kpi('Invoice $',`<span style="font-size:18px;">${fmtDolShort(inv.total)}</span>`,'Processed invoices')+
     kpi('Invoices',fmtNum(inv.count),'Processed invoices');
+  document.getElementById('customInspPill').textContent = `${weekRows.length} wk${weekRows.length===1?'':'s'}`;
+  document.getElementById('customPoPill').textContent = fmtDolShort(poDol);
+  document.getElementById('customWoPill').textContent = `${fmtNum(woCreated)} / ${fmtNum(woClosed)}`;
   setTimeout(()=>{animateKpiRow('customKpi1');animateKpiRow('customKpi2');},50);
-  document.getElementById('customWeekBody').innerHTML = weekRows.length ? weekRows.map(w=>`<tr><td class="mono">${w.w}</td><td>${fmtNum(w.insp)}</td><td>${appaBadge(w.appa)}</td><td style="font-size:12px;">${w.pos}</td><td>${fmtNum(w.po)}</td><td class="mono">${fmtDol(w.poDol)}</td><td>${fmtNum(w.ah)}</td><td>${fmtNum(w.woCreated||0)}</td><td>${fmtNum(w.woClosed||0)}</td></tr>`).join('') : '<tr><td colspan="9" style="color:var(--text3);">No weekly records overlap this range.</td></tr>';
+  document.getElementById('customWeekBody').innerHTML = hasWeeklyRows ? weekRows.map(w=>`<tr><td class="mono">${w.w}</td><td>${fmtNum(w.insp)}</td><td>${appaBadge(w.appa)}</td><td style="font-size:12px;">${w.pos}</td><td>${fmtNum(w.po)}</td><td class="mono">${fmtDol(w.poDol)}</td><td>${fmtNum(w.ah)}</td><td>${fmtNum(w.woCreated||0)}</td><td>${fmtNum(w.woClosed||0)}</td></tr>`).join('') : '<tr><td colspan="9" style="color:var(--text3);">No weekly records overlap this range.</td></tr>';
   const labels=weekRows.map(w=>w.w);
-  [['customInspChart','insp'],['customPoChart','po'],['customWoChart','wo']].forEach(([id])=>{const el=document.getElementById(id); const ex=Chart.getChart(el); if(ex) ex.destroy();});
-  customInspInst=new Chart(document.getElementById('customInspChart'),{type:'bar',data:{labels,datasets:[{label:'Inspections',data:weekRows.map(w=>w.insp),backgroundColor:'#2a5298',yAxisID:'y'},{label:'Avg APPA',data:weekRows.map(w=>w.appa),type:'line',borderColor:'#c0392b',backgroundColor:'transparent',pointBackgroundColor:'#c0392b',yAxisID:'y2',tension:.35,pointRadius:4}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},datalabels:{display:false}},scales:{y:{beginAtZero:true,ticks:{font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}},y2:{position:'right',min:2.0,max:3.2,ticks:{font:{size:11}},grid:{drawOnChartArea:false}},x:{ticks:{font:{size:9},maxRotation:45,autoSkip:labels.length>8}}}}});
-  customPoInst=new Chart(document.getElementById('customPoChart'),{type:'bar',data:{labels,datasets:[{label:'PO $',data:weekRows.map(w=>w.poDol),backgroundColor:'#1a6b45'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>'PO $: '+fmtDolShort(ctx.parsed.y)}}},scales:{y:{beginAtZero:true,ticks:{font:{size:11},callback:v=>fmtK(v)},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:9},maxRotation:45,autoSkip:labels.length>8}}}}});
-  customWoInst=new Chart(document.getElementById('customWoChart'),{type:'bar',data:{labels,datasets:[{label:'Created',data:weekRows.map(w=>w.woCreated||0),backgroundColor:'#2a5298'},{label:'Closed',data:weekRows.map(w=>w.woClosed||0),backgroundColor:'#888780'}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},datalabels:{display:false}},scales:{y:{beginAtZero:true,ticks:{font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:9},maxRotation:45,autoSkip:labels.length>8}}}}});
+  ['customInspChart','customPoChart','customWoChart'].forEach(id=>{const el=document.getElementById(id); const ex=Chart.getChart(el); if(ex) ex.destroy();});
+  if(hasWeeklyRows){
+    customInspInst=new Chart(document.getElementById('customInspChart'),{type:'bar',data:{labels,datasets:[barDataset('Inspections',weekRows.map(w=>w.insp),CHART_COLORS.blue,{yAxisID:'y'}),lineDataset('Avg APPA',weekRows.map(w=>w.appa),CHART_COLORS.red,{yAxisID:'y2'})]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},datalabels:{display:false}},scales:{y:{beginAtZero:true,ticks:tickStyle(11),grid:gridStyle()},y2:{position:'right',min:2.0,max:3.2,ticks:tickStyle(11),grid:gridStyle({drawOnChartArea:false,color:CHART_COLORS.gridLight})},x:{ticks:tickStyle(9,{maxRotation:45,autoSkip:labels.length>8}),grid:{display:false}}}}});
+    customPoInst=new Chart(document.getElementById('customPoChart'),{type:'bar',data:{labels,datasets:[barDataset('PO $',weekRows.map(w=>w.poDol),CHART_COLORS.green)]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>'PO $: '+fmtDolShort(ctx.parsed.y)}}},scales:{y:{beginAtZero:true,ticks:tickStyle(11,{callback:v=>fmtK(v)}),grid:gridStyle()},x:{ticks:tickStyle(9,{maxRotation:45,autoSkip:labels.length>8}),grid:{display:false}}}}});
+    customWoInst=new Chart(document.getElementById('customWoChart'),{type:'bar',data:{labels,datasets:[barDataset('Created',weekRows.map(w=>w.woCreated||0),CHART_COLORS.blue),barDataset('Closed',weekRows.map(w=>w.woClosed||0),CHART_COLORS.gray)]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},datalabels:{display:false}},scales:{y:{beginAtZero:true,ticks:tickStyle(11),grid:gridStyle()},x:{ticks:tickStyle(9,{maxRotation:45,autoSkip:labels.length>8}),grid:{display:false}}}}});
+  } else {
+    customInspInst=null; customPoInst=null; customWoInst=null;
+  }
   const otLabels=otRows.map(w=>w.w);
   document.getElementById('customOtHrsPill').textContent=otHrs.toFixed(1)+' hrs';
   document.getElementById('customOtPayPill').textContent=fmtDolShort(otPay);
   ['customOtHrsChart','customOtPayChart','customInvoiceChart'].forEach(id=>{const el=document.getElementById(id); const ex=Chart.getChart(el); if(ex) ex.destroy();});
-  customOtHrsInst=new Chart(document.getElementById('customOtHrsChart'),{type:'bar',data:{labels:otLabels,datasets:[{label:'Maintenance',data:otRows.map(w=>w.mHrs),backgroundColor:'#c0392b',stack:'a'},{label:'Housekeeping',data:otRows.map(w=>w.hHrs),backgroundColor:'#2a5298',stack:'a'},{label:'Grounds',data:otRows.map(w=>w.gHrs),backgroundColor:'#1a6b45',stack:'a'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false}},scales:{x:{stacked:true,ticks:{font:{size:8.5},maxRotation:55,autoSkip:otLabels.length>8}},y:{stacked:true,beginAtZero:true,ticks:{font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}}}}});
-  customOtPayInst=new Chart(document.getElementById('customOtPayChart'),{type:'bar',data:{labels:otLabels,datasets:[{label:'OT Pay',data:otRows.map(w=>w.pay),backgroundColor:'#e6a817'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>'OT Pay: '+fmtDolShort(ctx.parsed.y)}}},scales:{x:{ticks:{font:{size:8.5},maxRotation:55,autoSkip:otLabels.length>8}},y:{beginAtZero:true,ticks:{font:{size:11},callback:v=>fmtK(v)},grid:{color:'rgba(0,0,0,0.05)'}}}}});
+  if(otLabels.length){
+    customOtHrsInst=new Chart(document.getElementById('customOtHrsChart'),{type:'bar',data:{labels:otLabels,datasets:[barDataset('Maintenance',otRows.map(w=>w.mHrs),CHART_COLORS.red,{stack:'a',maxBarThickness:42}),barDataset('Housekeeping',otRows.map(w=>w.hHrs),CHART_COLORS.blue,{stack:'a',maxBarThickness:42}),barDataset('Grounds',otRows.map(w=>w.gHrs),CHART_COLORS.green,{stack:'a',maxBarThickness:42})]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false}},scales:{x:{stacked:true,ticks:tickStyle(8.5,{maxRotation:55,autoSkip:otLabels.length>8}),grid:{display:false}},y:{stacked:true,beginAtZero:true,ticks:tickStyle(11),grid:gridStyle()}}}});
+    customOtPayInst=new Chart(document.getElementById('customOtPayChart'),{type:'bar',data:{labels:otLabels,datasets:[barDataset('OT Pay',otRows.map(w=>w.pay),CHART_COLORS.amber,{maxBarThickness:42})]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>'OT Pay: '+fmtDolShort(ctx.parsed.y)}}},scales:{x:{ticks:tickStyle(8.5,{maxRotation:55,autoSkip:otLabels.length>8}),grid:{display:false}},y:{beginAtZero:true,ticks:tickStyle(11,{callback:v=>fmtK(v)}),grid:gridStyle()}}}});
+  } else {
+    customOtHrsInst=null; customOtPayInst=null;
+  }
   document.getElementById('customInvoicePill').textContent=fmtDolShort(inv.total);
   document.getElementById('customInvoiceKpis').innerHTML=invoiceKpiStrip(inv,'Range','Selected');
   document.getElementById('customInvoiceVendorList').innerHTML=invoiceVendorRows(inv.vendors);
-  customInvoiceInst=new Chart(document.getElementById('customInvoiceChart'),{type:'bar',data:{labels:inv.labels,datasets:[{label:'Paid invoices',data:inv.totals,backgroundColor:'#8e44ad'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>'Paid invoices: '+fmtDolShort(ctx.parsed.y)}}},scales:{y:{beginAtZero:true,ticks:{font:{size:11},callback:v=>fmtK(v)},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:11},autoSkip:false}}}}});
+  customInvoiceInst=new Chart(document.getElementById('customInvoiceChart'),{type:'bar',data:{labels:inv.labels,datasets:[barDataset('Paid invoices',inv.totals,CHART_COLORS.purple)]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:ctx=>'Paid invoices: '+fmtDolShort(ctx.parsed.y)}}},scales:{y:{beginAtZero:true,ticks:tickStyle(11,{callback:v=>fmtK(v)}),grid:gridStyle()},x:{ticks:tickStyle(11,{autoSkip:false}),grid:{display:false}}}}});
   setChartGrids();
 }
 
@@ -1636,6 +1769,8 @@ function printCustomRange(){
   const snapshot=getCustomRangeSnapshot();
   if(!snapshot) return;
   const {startInput,endInput,start,end,weekRows,otRows,insp,avgAppa,peakPos,poReq,poDol,ah,woCreated,woClosed,otHrs,otPay,inv,rangeLabel}=snapshot;
+  const hasWeeklyRows = weekRows.length > 0;
+  const topVendor = inv.vendors[0] || null;
   startInput.value=isoDate(start);
   endInput.value=isoDate(end);
   applyCustomRange();
@@ -1656,7 +1791,7 @@ function printCustomRange(){
       </div>
       ${printTbgLogo()}
       <div style="text-align:right;">
-        <div style="font-size:10.5px;color:#857f76;font-family:monospace;">Updated ${UPDATED}</div>
+        <div style="font-size:10.5px;color:#857f76;font-family:monospace;">Ops updated ${UPDATED}</div>
       </div>
     </div>`;
 
@@ -1696,152 +1831,148 @@ function printCustomRange(){
       ${pCard('Invoices',fmtNum(inv.count),inv.needsReview ? `${fmtNum(inv.needsReview)} needing review` : 'Processed invoices')}
     </div>`;
 
-  document.getElementById('pCharts').innerHTML = `
-    <div class="print-chart-grid" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:8px;margin-bottom:10px;">
-      <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
-        <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">Inspections &amp; APPA — selected range</div>
-        <canvas id="pCustomInspChart" width="240" height="140" style="display:block;width:100%;max-width:100%;height:140px;" role="img"></canvas>
-      </div>
-      <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
-        <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">PO Request $ — selected range</div>
-        <canvas id="pCustomPoChart" width="240" height="140" style="display:block;width:100%;max-width:100%;height:140px;" role="img"></canvas>
-      </div>
-      <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
-        <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">Work orders — selected range</div>
-        <canvas id="pCustomWoChart" width="240" height="140" style="display:block;width:100%;max-width:100%;height:140px;" role="img"></canvas>
-      </div>
-    </div>
-    <div class="print-chart-grid" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:8px;margin-bottom:12px;">
-      <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
-        <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">OT Hours by Week — selected range</div>
-        <canvas id="pCustomOtHrsChart" width="240" height="140" style="display:block;width:100%;max-width:100%;height:140px;" role="img"></canvas>
-      </div>
-      <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
-        <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">OT Pay by Week — selected range</div>
-        <canvas id="pCustomOtPayChart" width="240" height="140" style="display:block;width:100%;max-width:100%;height:140px;" role="img"></canvas>
-      </div>
-      <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
-        <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">Paid Invoices by Processed Month</div>
-        <canvas id="pCustomInvoiceChart" width="240" height="140" style="display:block;width:100%;max-width:100%;height:140px;" role="img"></canvas>
-      </div>
-    </div>`;
-
   ['pCustomInspChart','pCustomPoChart','pCustomWoChart','pCustomOtHrsChart','pCustomOtPayChart','pCustomInvoiceChart'].forEach(id=>{
     const c=document.getElementById(id); if(c){ const ex=Chart.getChart(c); if(ex) ex.destroy(); }
   });
 
-  new Chart(document.getElementById('pCustomInspChart'),{
-    type:'bar',
-    data:{labels:weekLabels,datasets:[
-      {label:'Inspections',data:weekRows.map(w=>w.insp),backgroundColor:'#2a5298',yAxisID:'y'},
-      {label:'Avg APPA',data:weekRows.map(w=>w.appa),type:'line',borderColor:'#c0392b',backgroundColor:'transparent',pointBackgroundColor:'#c0392b',yAxisID:'y2',tension:0.35,pointRadius:3}
-    ]},
-    options:{responsive:false,plugins:{legend:{display:false},datalabels:{display:false}},
-      scales:{y:{beginAtZero:true,ticks:{font:{size:10}}},y2:{position:'right',min:2.0,max:3.2,ticks:{font:{size:10}},grid:{drawOnChartArea:false}},x:{ticks:{font:{size:10},maxRotation:55,autoSkip:weekLabels.length>8}}}}
-  });
+  if(hasWeeklyRows){
+    document.getElementById('pCharts').innerHTML = `
+      <div class="print-chart-grid" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:8px;margin-bottom:10px;">
+        <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
+          <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">Inspections &amp; APPA — selected range</div>
+          <canvas id="pCustomInspChart" width="240" height="140" style="display:block;width:100%;max-width:100%;height:140px;" role="img"></canvas>
+        </div>
+        <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
+          <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">PO Request $ — selected range</div>
+          <canvas id="pCustomPoChart" width="240" height="140" style="display:block;width:100%;max-width:100%;height:140px;" role="img"></canvas>
+        </div>
+        <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
+          <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">Work orders — selected range</div>
+          <canvas id="pCustomWoChart" width="240" height="140" style="display:block;width:100%;max-width:100%;height:140px;" role="img"></canvas>
+        </div>
+      </div>
+      <div class="print-chart-grid" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:8px;margin-bottom:12px;">
+        <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
+          <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">OT Hours by Week — selected range</div>
+          <canvas id="pCustomOtHrsChart" width="240" height="140" style="display:block;width:100%;max-width:100%;height:140px;" role="img"></canvas>
+        </div>
+        <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
+          <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">OT Pay by Week — selected range</div>
+          <canvas id="pCustomOtPayChart" width="240" height="140" style="display:block;width:100%;max-width:100%;height:140px;" role="img"></canvas>
+        </div>
+        <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
+          <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">Paid Invoices by Processed Month</div>
+          <canvas id="pCustomInvoiceChart" width="240" height="140" style="display:block;width:100%;max-width:100%;height:140px;" role="img"></canvas>
+        </div>
+      </div>`;
 
-  new Chart(document.getElementById('pCustomPoChart'),{
-    type:'bar',
-    data:{labels:weekLabels,datasets:[{label:'PO $',data:weekRows.map(w=>w.poDol),backgroundColor:'#1a6b45'}]},
-    options:{responsive:false,plugins:{legend:{display:false},datalabels:{display:false}},
-      scales:{y:{beginAtZero:true,ticks:{font:{size:10},callback:v=>fmtK(v)}},x:{ticks:{font:{size:10},maxRotation:55,autoSkip:weekLabels.length>8}}}}
-  });
+    new Chart(document.getElementById('pCustomInspChart'),{type:'bar',data:{labels:weekLabels,datasets:[barDataset('Inspections',weekRows.map(w=>w.insp),CHART_COLORS.blue,{yAxisID:'y',maxBarThickness:34}),lineDataset('Avg APPA',weekRows.map(w=>w.appa),CHART_COLORS.red,{yAxisID:'y2',pointRadius:3,borderWidth:2.5})]},options:{responsive:false,plugins:{legend:{display:false},datalabels:{display:false}},scales:{y:{beginAtZero:true,ticks:tickStyle(10),grid:gridStyle()},y2:{position:'right',min:2.0,max:3.2,ticks:tickStyle(10),grid:gridStyle({drawOnChartArea:false,color:CHART_COLORS.gridLight})},x:{ticks:tickStyle(10,{maxRotation:55,autoSkip:weekLabels.length>8}),grid:{display:false}}}}});
+    new Chart(document.getElementById('pCustomPoChart'),{type:'bar',data:{labels:weekLabels,datasets:[barDataset('PO $',weekRows.map(w=>w.poDol),CHART_COLORS.green,{maxBarThickness:34})]},options:{responsive:false,plugins:{legend:{display:false},datalabels:{display:false}},scales:{y:{beginAtZero:true,ticks:tickStyle(10,{callback:v=>fmtK(v)}),grid:gridStyle()},x:{ticks:tickStyle(10,{maxRotation:55,autoSkip:weekLabels.length>8}),grid:{display:false}}}}});
+    new Chart(document.getElementById('pCustomWoChart'),{type:'bar',data:{labels:weekLabels,datasets:[barDataset('Created',weekRows.map(w=>w.woCreated||0),CHART_COLORS.blue,{maxBarThickness:34}),barDataset('Closed',weekRows.map(w=>w.woClosed||0),CHART_COLORS.gray,{maxBarThickness:34})]},options:{responsive:false,plugins:{legend:{display:false},datalabels:{display:false}},scales:{y:{beginAtZero:true,ticks:tickStyle(10),grid:gridStyle()},x:{ticks:tickStyle(10,{maxRotation:55,autoSkip:weekLabels.length>8}),grid:{display:false}}}}});
+    new Chart(document.getElementById('pCustomOtHrsChart'),{type:'bar',data:{labels:otLabels,datasets:[barDataset('Maintenance',otRows.map(w=>w.mHrs),CHART_COLORS.red,{stack:'a',maxBarThickness:36}),barDataset('Housekeeping',otRows.map(w=>w.hHrs),CHART_COLORS.blue,{stack:'a',maxBarThickness:36}),barDataset('Grounds',otRows.map(w=>w.gHrs),CHART_COLORS.green,{stack:'a',maxBarThickness:36})]},options:{responsive:false,plugins:{legend:{display:false},datalabels:{display:false}},scales:{x:{stacked:true,ticks:tickStyle(10,{maxRotation:55,autoSkip:otLabels.length>8}),grid:{display:false}},y:{stacked:true,beginAtZero:true,ticks:tickStyle(10),grid:gridStyle()}}}});
+    new Chart(document.getElementById('pCustomOtPayChart'),{type:'bar',data:{labels:otLabels,datasets:[barDataset('OT Pay',otRows.map(w=>w.pay),CHART_COLORS.amber,{maxBarThickness:36})]},options:{responsive:false,plugins:{legend:{display:false},datalabels:{display:false}},scales:{y:{beginAtZero:true,ticks:tickStyle(10,{callback:v=>fmtK(v)}),grid:gridStyle()},x:{ticks:tickStyle(10,{maxRotation:55,autoSkip:otLabels.length>8}),grid:{display:false}}}}});
+    new Chart(document.getElementById('pCustomInvoiceChart'),{type:'bar',data:{labels:inv.labels,datasets:[barDataset('Paid invoices',inv.totals,CHART_COLORS.purple,{maxBarThickness:36})]},options:{responsive:false,plugins:{legend:{display:false},datalabels:{display:false}},scales:{y:{beginAtZero:true,ticks:tickStyle(10,{callback:v=>fmtK(v)}),grid:gridStyle()},x:{ticks:tickStyle(10,{autoSkip:false}),grid:{display:false}}}}});
 
-  new Chart(document.getElementById('pCustomWoChart'),{
-    type:'bar',
-    data:{labels:weekLabels,datasets:[
-      {label:'Created',data:weekRows.map(w=>w.woCreated||0),backgroundColor:'#2a5298'},
-      {label:'Closed',data:weekRows.map(w=>w.woClosed||0),backgroundColor:'#888780'}
-    ]},
-    options:{responsive:false,plugins:{legend:{display:false},datalabels:{display:false}},
-      scales:{y:{beginAtZero:true,ticks:{font:{size:10}}},x:{ticks:{font:{size:10},maxRotation:55,autoSkip:weekLabels.length>8}}}}
-  });
+    document.getElementById('pWeekTable').innerHTML = `
+      <div style="font-size:10.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#7d796f;margin-bottom:6px;margin-top:2px;">Weekly detail — ${rangeLabel}</div>
+      <table style="width:100%;border-collapse:collapse;font-size:14px;margin-bottom:12px;">
+        <thead>
+          <tr style="background:#2a5298;color:white;">
+            <th style="padding:7px 10px;text-align:left;font-weight:600;">Week</th>
+            <th style="padding:7px 10px;text-align:left;font-weight:600;">Inspections</th>
+            <th style="padding:7px 10px;text-align:left;font-weight:600;">Avg APPA</th>
+            <th style="padding:7px 10px;text-align:left;font-weight:600;">Open Positions</th>
+            <th style="padding:7px 10px;text-align:left;font-weight:600;">PO Requests</th>
+            <th style="padding:7px 10px;text-align:left;font-weight:600;">PO $</th>
+            <th style="padding:7px 10px;text-align:left;font-weight:600;">After-Hrs</th>
+            <th style="padding:7px 10px;text-align:left;font-weight:600;">WO Created</th>
+            <th style="padding:7px 10px;text-align:left;font-weight:600;">WO Closed</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${weekRows.map((w,i)=>`<tr style="background:${i%2===0?'white':'#f4f3ef'};">
+            <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;font-weight:600;">${w.w}</td>
+            <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${fmtNum(w.insp)}</td>
+            <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${w.appa !== null ? w.appa.toFixed(2) : 'N/A'}</td>
+            <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${w.pos}</td>
+            <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${fmtNum(w.po)}</td>
+            <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;font-family:monospace;">${fmtDol(w.poDol)}</td>
+            <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${fmtNum(w.ah)}</td>
+            <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${fmtNum(w.woCreated||0)}</td>
+            <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${fmtNum(w.woClosed||0)}</td>
+          </tr>`).join('')}
+          <tr style="background:#f4f3ef;font-weight:700;">
+            <td style="padding:7px 10px;">Total / Avg</td>
+            <td style="padding:7px 10px;">${fmtNum(insp)}</td>
+            <td style="padding:7px 10px;">${avgAppa==null?'N/A':avgAppa.toFixed(2)}</td>
+            <td style="padding:7px 10px;">Peak ${fmtNum(peakPos)}</td>
+            <td style="padding:7px 10px;">${fmtNum(poReq)}</td>
+            <td style="padding:7px 10px;font-family:monospace;">${fmtDol(poDol)}</td>
+            <td style="padding:7px 10px;">${fmtNum(ah)}</td>
+            <td style="padding:7px 10px;">${fmtNum(woCreated)}</td>
+            <td style="padding:7px 10px;">${fmtNum(woClosed)}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="font-size:10.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#7d796f;margin-bottom:6px;">Top vendors in range</div>
+      <table style="width:100%;border-collapse:collapse;font-size:14px;">
+        <thead>
+          <tr style="background:#2a5298;color:white;">
+            <th style="padding:7px 10px;text-align:left;font-weight:600;">Vendor</th>
+            <th style="padding:7px 10px;text-align:left;font-weight:600;">Invoices</th>
+            <th style="padding:7px 10px;text-align:left;font-weight:600;">Paid $</th>
+            <th style="padding:7px 10px;text-align:left;font-weight:600;">Needs Review</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${inv.vendors.length ? inv.vendors.map((v,i)=>`<tr style="background:${i%2===0?'white':'#f4f3ef'};">
+            <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;font-weight:600;">${v.vendor}</td>
+            <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${fmtNum(v.count)}</td>
+            <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;font-family:monospace;">${fmtDol(v.total)}</td>
+            <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${fmtNum(v.needsReview||0)}</td>
+          </tr>`).join('') : `<tr><td colspan="4" style="padding:12px;color:#6b6a63;">No processed invoice months overlap this range.</td></tr>`}
+        </tbody>
+      </table>`;
+  } else {
+    document.getElementById('pCharts').innerHTML = `
+      <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:12px 14px;margin-bottom:10px;">
+        <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:6px;">No weekly operational rows in this date range</div>
+        <div style="font-size:12px;color:#56524b;line-height:1.45;">Weekly operational charts are hidden in this print summary because the selected dates do not overlap any published weekly dashboard rows. Processed-invoice totals below still reflect the months that overlap the selected range.</div>
+      </div>
+      <div class="print-chart-grid" style="display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,0.85fr);gap:8px;margin-bottom:12px;">
+        <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:8px;min-width:0;overflow:hidden;">
+          <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:7px;">Paid Invoices by Processed Month</div>
+          <canvas id="pCustomInvoiceChart" width="360" height="160" style="display:block;width:100%;max-width:100%;height:160px;" role="img"></canvas>
+        </div>
+        <div class="print-card" style="background:#f4f3ef;border-radius:10px;padding:12px 14px;">
+          <div style="font-size:11.5px;font-weight:700;color:#4f4d47;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">Top vendor in range</div>
+          ${topVendor ? `<div style="font-size:22px;font-weight:700;color:#8e44ad;line-height:1.1;margin-bottom:8px;">${topVendor.vendor}</div><div style="font-size:12px;color:#56524b;line-height:1.5;">${fmtDol(topVendor.total)} &nbsp;·&nbsp; ${fmtNum(topVendor.count)} invoice${topVendor.count===1?'':'s'}${topVendor.needsReview ? ` &nbsp;·&nbsp; ${fmtNum(topVendor.needsReview)} need review` : ''}</div>` : `<div style="font-size:12px;color:#56524b;line-height:1.45;">No processed invoice months overlap this range.</div>`}
+        </div>
+      </div>`;
 
-  new Chart(document.getElementById('pCustomOtHrsChart'),{
-    type:'bar',
-    data:{labels:otLabels,datasets:[
-      {label:'Maintenance',data:otRows.map(w=>w.mHrs),backgroundColor:'#c0392b',stack:'a'},
-      {label:'Housekeeping',data:otRows.map(w=>w.hHrs),backgroundColor:'#2a5298',stack:'a'},
-      {label:'Grounds',data:otRows.map(w=>w.gHrs),backgroundColor:'#1a6b45',stack:'a'}
-    ]},
-    options:{responsive:false,plugins:{legend:{display:false},datalabels:{display:false}},
-      scales:{x:{stacked:true,ticks:{font:{size:10},maxRotation:55,autoSkip:otLabels.length>8}},y:{stacked:true,beginAtZero:true,ticks:{font:{size:10}}}}}
-  });
+    new Chart(document.getElementById('pCustomInvoiceChart'),{type:'bar',data:{labels:inv.labels,datasets:[barDataset('Paid invoices',inv.totals,CHART_COLORS.purple,{maxBarThickness:40})]},options:{responsive:false,plugins:{legend:{display:false},datalabels:{display:false}},scales:{y:{beginAtZero:true,ticks:tickStyle(10,{callback:v=>fmtK(v)}),grid:gridStyle()},x:{ticks:tickStyle(10,{autoSkip:false}),grid:{display:false}}}}});
 
-  new Chart(document.getElementById('pCustomOtPayChart'),{
-    type:'bar',
-    data:{labels:otLabels,datasets:[{label:'OT Pay',data:otRows.map(w=>w.pay),backgroundColor:'#e6a817'}]},
-    options:{responsive:false,plugins:{legend:{display:false},datalabels:{display:false}},
-      scales:{y:{beginAtZero:true,ticks:{font:{size:10},callback:v=>fmtK(v)}},x:{ticks:{font:{size:10},maxRotation:55,autoSkip:otLabels.length>8}}}}
-  });
-
-  new Chart(document.getElementById('pCustomInvoiceChart'),{
-    type:'bar',
-    data:{labels:inv.labels,datasets:[{label:'Paid invoices',data:inv.totals,backgroundColor:'#8e44ad'}]},
-    options:{responsive:false,plugins:{legend:{display:false},datalabels:{display:false}},
-      scales:{y:{beginAtZero:true,ticks:{font:{size:10},callback:v=>fmtK(v)}},x:{ticks:{font:{size:10},autoSkip:false}}}}
-  });
-
-  document.getElementById('pWeekTable').innerHTML = `
-    <div style="font-size:10.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#7d796f;margin-bottom:6px;margin-top:2px;">Weekly detail — ${rangeLabel}</div>
-    <table style="width:100%;border-collapse:collapse;font-size:14px;margin-bottom:12px;">
-      <thead>
-        <tr style="background:#2a5298;color:white;">
-          <th style="padding:7px 10px;text-align:left;font-weight:600;">Week</th>
-          <th style="padding:7px 10px;text-align:left;font-weight:600;">Inspections</th>
-          <th style="padding:7px 10px;text-align:left;font-weight:600;">Avg APPA</th>
-          <th style="padding:7px 10px;text-align:left;font-weight:600;">Open Positions</th>
-          <th style="padding:7px 10px;text-align:left;font-weight:600;">PO Requests</th>
-          <th style="padding:7px 10px;text-align:left;font-weight:600;">PO $</th>
-          <th style="padding:7px 10px;text-align:left;font-weight:600;">After-Hrs</th>
-          <th style="padding:7px 10px;text-align:left;font-weight:600;">WO Created</th>
-          <th style="padding:7px 10px;text-align:left;font-weight:600;">WO Closed</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${weekRows.length ? weekRows.map((w,i)=>`<tr style="background:${i%2===0?'white':'#f4f3ef'};">
-          <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;font-weight:600;">${w.w}</td>
-          <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${fmtNum(w.insp)}</td>
-          <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${w.appa !== null ? w.appa.toFixed(2) : 'N/A'}</td>
-          <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${w.pos}</td>
-          <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${fmtNum(w.po)}</td>
-          <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;font-family:monospace;">${fmtDol(w.poDol)}</td>
-          <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${fmtNum(w.ah)}</td>
-          <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${fmtNum(w.woCreated||0)}</td>
-          <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${fmtNum(w.woClosed||0)}</td>
-        </tr>`).join('') : `<tr><td colspan="9" style="padding:12px;color:#6b6a63;">No weekly records overlap this range.</td></tr>`}
-        ${weekRows.length ? `<tr style="background:#f4f3ef;font-weight:700;">
-          <td style="padding:7px 10px;">Total / Avg</td>
-          <td style="padding:7px 10px;">${fmtNum(insp)}</td>
-          <td style="padding:7px 10px;">${avgAppa==null?'N/A':avgAppa.toFixed(2)}</td>
-          <td style="padding:7px 10px;">Peak ${fmtNum(peakPos)}</td>
-          <td style="padding:7px 10px;">${fmtNum(poReq)}</td>
-          <td style="padding:7px 10px;font-family:monospace;">${fmtDol(poDol)}</td>
-          <td style="padding:7px 10px;">${fmtNum(ah)}</td>
-          <td style="padding:7px 10px;">${fmtNum(woCreated)}</td>
-          <td style="padding:7px 10px;">${fmtNum(woClosed)}</td>
-        </tr>` : ''}
-      </tbody>
-    </table>
-    <div style="font-size:10.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#7d796f;margin-bottom:6px;">Top vendors in range</div>
-    <table style="width:100%;border-collapse:collapse;font-size:14px;">
-      <thead>
-        <tr style="background:#2a5298;color:white;">
-          <th style="padding:7px 10px;text-align:left;font-weight:600;">Vendor</th>
-          <th style="padding:7px 10px;text-align:left;font-weight:600;">Invoices</th>
-          <th style="padding:7px 10px;text-align:left;font-weight:600;">Paid $</th>
-          <th style="padding:7px 10px;text-align:left;font-weight:600;">Needs Review</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${inv.vendors.length ? inv.vendors.map((v,i)=>`<tr style="background:${i%2===0?'white':'#f4f3ef'};">
-          <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;font-weight:600;">${v.vendor}</td>
-          <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${fmtNum(v.count)}</td>
-          <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;font-family:monospace;">${fmtDol(v.total)}</td>
-          <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${fmtNum(v.needsReview||0)}</td>
-        </tr>`).join('') : `<tr><td colspan="4" style="padding:12px;color:#6b6a63;">No processed invoice months overlap this range.</td></tr>`}
-      </tbody>
-    </table>`;
+    document.getElementById('pWeekTable').innerHTML = `
+      <div style="font-size:10.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#7d796f;margin-bottom:6px;">Top vendors in range</div>
+      <table style="width:100%;border-collapse:collapse;font-size:14px;">
+        <thead>
+          <tr style="background:#2a5298;color:white;">
+            <th style="padding:7px 10px;text-align:left;font-weight:600;">Vendor</th>
+            <th style="padding:7px 10px;text-align:left;font-weight:600;">Invoices</th>
+            <th style="padding:7px 10px;text-align:left;font-weight:600;">Paid $</th>
+            <th style="padding:7px 10px;text-align:left;font-weight:600;">Needs Review</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${inv.vendors.length ? inv.vendors.map((v,i)=>`<tr style="background:${i%2===0?'white':'#f4f3ef'};">
+            <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;font-weight:600;">${v.vendor}</td>
+            <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${fmtNum(v.count)}</td>
+            <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;font-family:monospace;">${fmtDol(v.total)}</td>
+            <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${fmtNum(v.needsReview||0)}</td>
+          </tr>`).join('') : `<tr><td colspan="4" style="padding:12px;color:#6b6a63;">No processed invoice months overlap this range.</td></tr>`}
+        </tbody>
+      </table>`;
+  }
 
   const pa = document.getElementById('printArea');
   pa.className = 'print-mode-custom';
@@ -1879,7 +2010,7 @@ function printYTD(){
       </div>
       ${printTbgLogo()}
       <div style="text-align:right;">
-        <div style="font-size:10.5px;color:#857f76;font-family:monospace;">Updated ${UPDATED}</div>
+        <div style="font-size:10.5px;color:#857f76;font-family:monospace;">Ops updated ${UPDATED}</div>
       </div>
     </div>`;
 
@@ -2103,7 +2234,7 @@ function printSummary(){
       </div>
       ${printTbgLogo()}
       <div style="text-align:right;">
-        <div style="font-size:10.5px;color:#857f76;font-family:monospace;">Updated ${UPDATED}</div>
+        <div style="font-size:10.5px;color:#857f76;font-family:monospace;">Ops updated ${UPDATED}</div>
       </div>
     </div>`;
 
