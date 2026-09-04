@@ -744,11 +744,13 @@ function hexToRgba(hex, alpha){
 }
 
 function emphasizedBarColors(count, activeIndex, baseHex, inactiveAlpha=.28){
-  return Array.from({length:count}, (_,i)=>i===activeIndex ? baseHex : hexToRgba(baseHex,inactiveAlpha));
+  const softenedAlpha = Math.max(inactiveAlpha, .42);
+  return Array.from({length:count}, (_,i)=>i===activeIndex ? baseHex : hexToRgba(baseHex,softenedAlpha));
 }
 
 function emphasizedPointColors(count, activeIndex, baseHex, inactiveAlpha=.38){
-  return Array.from({length:count}, (_,i)=>i===activeIndex ? baseHex : hexToRgba(baseHex,inactiveAlpha));
+  const softenedAlpha = Math.max(inactiveAlpha, .58);
+  return Array.from({length:count}, (_,i)=>i===activeIndex ? baseHex : hexToRgba(baseHex,softenedAlpha));
 }
 
 function emphasizedPointRadii(count, activeIndex, active=5, inactive=3){
