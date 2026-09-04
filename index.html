@@ -135,20 +135,46 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:radial-g
 .sticky-tab-shell .tab.active{background:linear-gradient(135deg,#2856a1 0%,#153a70 100%);border-color:#183f79;color:white;box-shadow:0 12px 22px rgba(26,61,120,.2);}
 
 .date-range-panel{background:linear-gradient(180deg,#fff,#fbfcff);border:1px solid #dce2ee;border-radius:16px;padding:14px 16px;margin-bottom:16px;box-shadow:0 12px 24px rgba(42,82,152,0.08);}
-.date-range-grid{display:grid;grid-template-columns:repeat(2,minmax(160px,220px)) auto;gap:10px;align-items:end;margin-bottom:10px;}
+.custom-range-panel{position:relative;overflow:hidden;padding:18px 18px 18px;background:linear-gradient(180deg,#ffffff 0%,#f8fbff 62%,#fcfbf7 100%);border:1px solid #dbe6f5;box-shadow:0 18px 36px rgba(26,61,120,0.12);}
+.custom-range-panel::before{content:'';position:absolute;left:-10%;top:-65px;width:62%;height:150px;background:radial-gradient(circle,rgba(60,110,194,.11),transparent 68%);pointer-events:none;}
+.custom-range-panel::after{content:'';position:absolute;right:-7%;bottom:-75px;width:44%;height:140px;background:radial-gradient(circle,rgba(213,175,99,.12),transparent 70%);pointer-events:none;}
+.custom-range-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:12px;position:relative;z-index:1;}
+.custom-range-title{display:flex;align-items:center;gap:10px;min-width:0;flex:1;}
+.custom-range-title-mark{width:18px;height:4px;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--gold));box-shadow:0 0 0 4px rgba(42,82,152,.08);flex-shrink:0;margin-top:6px;}
+.custom-range-kicker{display:block;font-size:10px;font-weight:800;letter-spacing:.10em;text-transform:uppercase;color:#7a756c;margin-bottom:4px;}
+.custom-range-heading{display:block;font-size:18px;font-weight:800;letter-spacing:-.02em;color:#22201b;line-height:1.1;}
+.custom-range-subhead{display:block;font-size:12px;color:#6f6a62;margin-top:4px;line-height:1.4;max-width:760px;}
+.date-range-grid{display:grid;grid-template-columns:repeat(2,minmax(160px,220px)) auto;gap:10px;align-items:end;margin-bottom:10px;position:relative;z-index:1;}
 .date-field{display:flex;flex-direction:column;gap:5px;}
-.date-field label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);}
-.date-field input{border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:#fff;}
+.date-field label{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#79736a;}
+.date-field input{border:1px solid #d6deeb;border-radius:10px;padding:10px 11px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:linear-gradient(180deg,#fff,#fcfdff);box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 6px 14px rgba(26,61,120,.05);}
 .range-btn{background:linear-gradient(135deg,#2a5298 0%,#183e78 100%);border:1px solid #1e4786;border-radius:10px;color:white;padding:8px 14px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;box-shadow:0 10px 18px rgba(26,61,120,.16);}
-.range-btn.secondary{background:linear-gradient(180deg,#f8f7f3,#efede6);border-color:var(--border);color:var(--text2);box-shadow:none;}
-.range-btn:hover{filter:brightness(.96);}
-.range-quick-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px;}
-.range-status{font-size:11px;color:var(--text2);font-family:'DM Mono',monospace;margin-top:9px;}
-.range-note{font-size:11px;color:var(--text3);margin-top:5px;line-height:1.35;}
+.range-btn.secondary{background:linear-gradient(180deg,#fbfaf6,#efede6);border-color:#dfddd4;color:#676157;box-shadow:0 7px 14px rgba(26,61,120,.04);}
+.range-btn:hover{filter:brightness(.96);transform:translateY(-1px);}
+.range-quick-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px;position:relative;z-index:1;}
+.range-note-card{margin-top:12px;padding:12px 13px;border-radius:14px;border:1px solid #e1e8f3;background:linear-gradient(180deg,rgba(255,255,255,.90),rgba(242,247,255,.92));box-shadow:inset 0 1px 0 rgba(255,255,255,.85),0 10px 20px rgba(26,61,120,.05);position:relative;z-index:1;}
+.range-status{font-size:11.5px;color:#556072;font-family:'DM Mono',monospace;font-weight:700;letter-spacing:.02em;margin:0;}
+.range-note{font-size:11px;color:#7a756c;margin-top:6px;line-height:1.42;}
+.custom-range-meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px;position:relative;z-index:1;}
+.range-meta-chip{background:linear-gradient(180deg,#fff,#f7f9fd);border:1px solid #dde5f0;border-radius:14px;padding:11px 12px;box-shadow:0 10px 20px rgba(26,61,120,.05);min-width:0;}
+.range-meta-chip.accent{background:linear-gradient(180deg,#fff,#f4f8ff);border-color:#d6e3f5;box-shadow:0 14px 24px rgba(42,82,152,.08);}
+.range-meta-label{font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#7b756d;display:block;}
+.range-meta-value{display:block;font-size:16px;font-weight:800;letter-spacing:-.02em;color:#22201b;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.range-meta-sub{display:block;font-size:10px;color:#7e796f;margin-top:4px;font-family:'DM Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#customDash .kpi{box-shadow:0 16px 30px rgba(26,61,120,.11);}
+#customDash .chart-card{box-shadow:0 18px 34px rgba(26,61,120,.11);}
+#customDash .chart-card::before{background:linear-gradient(90deg,#2a5298,#7b63c8);}
+#customDash .stat-pill{background:linear-gradient(180deg,#eff6ff,#e8f1fe);border-color:#d4e2f7;box-shadow:inset 0 1px 0 rgba(255,255,255,.85),0 6px 14px rgba(26,61,120,.06);}
+#customDash .range-empty-note{background:linear-gradient(180deg,#fff,#f5f9ff 55%,#fbf8ff 100%);border-color:#d6e2f3;box-shadow:0 12px 24px rgba(26,61,120,.08);}
+#customDash .invoice-kpi-card{box-shadow:0 12px 24px rgba(26,61,120,.07);}
+#customDash .section-head h2{color:#756f65;}
 @media(max-width:700px){
+  .custom-range-top{flex-direction:column;align-items:stretch;}
+  .custom-range-heading{font-size:16px;}
   .date-range-grid{grid-template-columns:1fr;}
   .range-btn{width:100%;}
   .range-quick-row .range-btn{width:auto;flex:1 1 calc(50% - 7px);padding-left:8px;padding-right:8px;}
+  .custom-range-meta{grid-template-columns:1fr 1fr;}
 }
 @media(max-width:700px){
   /* Header — hide TBG center logo on mobile to prevent overlap */
@@ -202,6 +228,7 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:radial-g
   .kpi-val{font-size:18px;}
   .header-text h1{font-size:12px;}
   .ql-btn{font-size:9px;padding:3px 7px;}
+  .custom-range-meta{grid-template-columns:1fr;}
 }
 
 @media print {
@@ -520,10 +547,16 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:radial-g
 
   <!-- CUSTOM RANGE PAGE -->
   <div id="customDash" style="display:none;">
-    <div class="date-range-panel">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-        <span style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);">Custom date range</span>
-        <div style="flex:1;height:1px;background:var(--border);"></div>
+    <div class="date-range-panel custom-range-panel">
+      <div class="custom-range-top">
+        <div class="custom-range-title">
+          <span class="custom-range-title-mark"></span>
+          <div>
+            <span class="custom-range-kicker">Custom date range</span>
+            <span class="custom-range-heading">Build a focused review window across ops, overtime &amp; invoices</span>
+            <span class="custom-range-subhead">Use a flexible time slice to spotlight a specific stretch of work, then compare the range totals, weekly trend lines, and invoice concentration in one place.</span>
+          </div>
+        </div>
         <button id="customPrintBtn" class="print-btn" type="button" onclick="printCustomRange()">🖨 Print Summary</button>
       </div>
       <div class="date-range-grid">
@@ -537,8 +570,16 @@ html,body{height:100%;}body{font-family:'DM Sans',sans-serif;background:radial-g
         <button class="range-btn secondary" type="button" onclick="setQuickRange(90)">Last 90 Days</button>
         <button class="range-btn secondary" type="button" onclick="setQuickRange('full')">Full Available Range</button>
       </div>
-      <div class="range-status" id="customRangeStatus">Showing data for the selected range.</div>
-      <div class="range-note">Note: operational dashboard rows are recorded weekly, so weekly charts/tables include full source weeks that overlap the selected dates. Invoice data is currently available by processed month on the dashboard, so invoice totals include processed-month buckets that overlap the selected range.</div>
+      <div class="range-note-card">
+        <div class="range-status" id="customRangeStatus">Showing data for the selected range.</div>
+        <div class="range-note">Weekly charts/tables include full source weeks that overlap the selected dates. Invoice data is currently available by processed month on the dashboard, so invoice totals include processed-month buckets that overlap the selected range.</div>
+      </div>
+      <div class="custom-range-meta">
+        <div class="range-meta-chip accent"><span class="range-meta-label">Selected span</span><span class="range-meta-value" id="customRangeSpanMeta">—</span><span class="range-meta-sub" id="customRangeSpanSub">Date window</span></div>
+        <div class="range-meta-chip"><span class="range-meta-label">Weekly coverage</span><span class="range-meta-value" id="customRangeCoverageMeta">—</span><span class="range-meta-sub" id="customRangeCoverageSub">Published overlap</span></div>
+        <div class="range-meta-chip"><span class="range-meta-label">Invoice buckets</span><span class="range-meta-value" id="customRangeInvoiceMeta">—</span><span class="range-meta-sub" id="customRangeInvoiceSub">Processed months</span></div>
+        <div class="range-meta-chip"><span class="range-meta-label">Top vendor</span><span class="range-meta-value" id="customRangeTopVendorMeta">—</span><span class="range-meta-sub" id="customRangeTopVendorSub">Range spend leader</span></div>
+      </div>
     </div>
 
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
@@ -1762,8 +1803,26 @@ function applyCustomRange(){
   if(!snapshot) return;
   const {startInput,endInput,start,end,weekRows,otRows,insp,avgAppa,peakPos,poReq,poDol,ah,woCreated,woClosed,otHrs,otPay,inv,rangeLabel}=snapshot;
   const hasWeeklyRows = weekRows.length > 0;
+  const selectedDays = Math.max(1, Math.round((dateOnly(end) - dateOnly(start)) / 86400000) + 1);
+  const invoiceBucketCount = inv.labels.length;
+  const bucketStart = inv.labels[0] || '—';
+  const bucketEnd = inv.labels[invoiceBucketCount-1] || bucketStart;
+  const topVendor = inv.vendors[0] || null;
   startInput.value=isoDate(start); endInput.value=isoDate(end);
-  document.getElementById('customRangeStatus').textContent = `Showing ${rangeLabel} · ${weekRows.length} weekly record${weekRows.length===1?'':'s'} included`;
+  document.getElementById('customRangeStatus').textContent = `Showing ${rangeLabel} · ${selectedDays} day${selectedDays===1?'':'s'} selected · ${weekRows.length} weekly record${weekRows.length===1?'':'s'} included`;
+  document.getElementById('customRangeSpanMeta').textContent = `${selectedDays} day${selectedDays===1?'':'s'}`;
+  document.getElementById('customRangeSpanSub').textContent = `${displayDate(start)} → ${displayDate(end)}`;
+  document.getElementById('customRangeCoverageMeta').textContent = hasWeeklyRows ? `${weekRows.length} week${weekRows.length===1?'':'s'}` : 'Invoice-only';
+  document.getElementById('customRangeCoverageSub').textContent = hasWeeklyRows ? `Published through ${weekRows[weekRows.length-1].w}` : 'No published weekly overlap yet';
+  document.getElementById('customRangeInvoiceMeta').textContent = `${invoiceBucketCount} month${invoiceBucketCount===1?'':'s'}`;
+  document.getElementById('customRangeInvoiceSub').textContent = invoiceBucketCount ? (bucketStart===bucketEnd ? bucketStart : `${bucketStart}–${bucketEnd}`) : 'No processed months';
+  document.getElementById('customRangeTopVendorMeta').textContent = topVendor ? topVendor.name : 'No vendor yet';
+  document.getElementById('customRangeTopVendorSub').textContent = topVendor ? `${fmtDolShort(topVendor.total)} · ${fmtNum(topVendor.count)} invoice${topVendor.count===1?'':'s'}` : 'Range spend leader';
+  const customDash=document.getElementById('customDash');
+  if(customDash){
+    customDash.classList.toggle('custom-has-weekly', hasWeeklyRows);
+    customDash.classList.toggle('custom-no-weekly', !hasWeeklyRows);
+  }
   const noRowsNote=document.getElementById('customNoWeeklyRowsNote');
   if(noRowsNote) noRowsNote.style.display = hasWeeklyRows ? 'none' : 'block';
   const customChartsRow=document.getElementById('customChartsRow');
