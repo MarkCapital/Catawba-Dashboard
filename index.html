@@ -2300,7 +2300,7 @@ function printYTD(){
           return `<tr style="background:${i%2===0?'white':'#f4f3ef'};">
             <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;font-weight:600;">${m.label}</td>
             <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${fmtNum(m.insp)}</td>
-            <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${m.appa.toFixed(2)}</td>
+            <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${m.appa == null ? 'N/A' : m.appa.toFixed(2)}</td>
             <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${m.poReq}</td>
             <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;font-family:monospace;">${fmtDol(m.poDol)}</td>
             <td style="padding:7px 10px;border-bottom:1px solid #e2e0d8;">${m.afterHrs}</td>
@@ -2428,7 +2428,7 @@ function printSummary(){
     </div>
     <div class="print-kpi-grid" style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:8px;">
       ${pCard('Inspections', mo.insp)}
-      ${pCard('Avg APPA score', mo.appa.toFixed(2))}
+      ${pCard('Avg APPA score', mo.appa == null ? 'N/A' : mo.appa.toFixed(2))}
       ${pCard('Open positions', mo.openPos)}
       ${pCard('PO requests', mo.poReq)}
       ${pCard('PO request $', fmtK(mo.poDol))}
